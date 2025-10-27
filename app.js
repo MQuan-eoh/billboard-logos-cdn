@@ -1099,6 +1099,59 @@ function handleGitHubFileSelection(files) {
   }
 }
 
+// Test GitHub Connection
+async function testGitHubConnection() {
+  const testBtn = document.getElementById("githubTestBtn");
+  const btnText = testBtn.querySelector(".btn-text");
+  const btnLoading = testBtn.querySelector(".btn-loading");
+
+  // Update UI to loading state
+  testBtn.disabled = true;
+  btnText.style.display = "none";
+  btnLoading.style.display = "inline";
+
+  try {
+    console.log("Testing GitHub connection...");
+
+    // Initialize GitHub service if not already done
+    if (!window.githubUploadService) {
+      await initGitHubService();
+    }
+
+    if (!window.githubUploadService) {
+      throw new Error("GitHub service not available");
+    }
+
+    // Test authentication
+    const isAuthenticated =
+      await window.githubUploadService.testAuthentication();
+
+    if (isAuthenticated) {
+      if (window.app) {
+        window.app.showToast(
+          "✅ GitHub connection successful! Repository found and accessible.",
+          "success"
+        );
+      }
+    } else {
+      throw new Error("Authentication failed or repository not accessible");
+    }
+  } catch (error) {
+    console.error("GitHub connection test failed:", error);
+    if (window.app) {
+      window.app.showToast(
+        "❌ GitHub connection failed: " + error.message,
+        "error"
+      );
+    }
+  } finally {
+    // Reset UI
+    testBtn.disabled = false;
+    btnText.style.display = "inline";
+    btnLoading.style.display = "none";
+  }
+}
+
 async function uploadLogoToGithub() {
   if (githubSelectedFiles.length === 0) {
     if (window.app) {

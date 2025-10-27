@@ -144,6 +144,17 @@
 
             <div class="github-controls">
               <button
+                class="btn btn-info"
+                onclick="testGitHubConnection()"
+                id="githubTestBtn"
+                style="margin-right: 10px"
+              >
+                <span class="btn-text">🔍 Test GitHub Connection</span>
+                <span class="btn-loading" style="display: none"
+                  >⏳ Testing...</span
+                >
+              </button>
+              <button
                 class="btn btn-github"
                 onclick="uploadLogoToGithub()"
                 id="githubUploadBtn"
