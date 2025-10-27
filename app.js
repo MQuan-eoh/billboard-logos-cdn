@@ -4,9 +4,7 @@ class BannerManagementApp {
     this.selectedFiles = [];
     this.currentBanners = [];
     this.isUploading = false;
-    this.firebaseService = window.FirebaseService;
     this.mqttClient = window.MqttClient;
-    this.firebaseReady = false; // indicates whether Firebase initialized successfully
 
     this.initializeApp();
   }
@@ -27,26 +25,13 @@ class BannerManagementApp {
     console.log("App initialized successfully");
   }
 
-  // Initialize Firebase and MQTT services
+  // Initialize GitHub CDN and MQTT services
   async initializeServices() {
     try {
-      // Initialize Firebase
-      console.log("Initializing Firebase service...");
-      const firebaseInit = await this.firebaseService.initialize();
-      this.firebaseReady = !!firebaseInit;
-
-      if (this.firebaseReady) {
-        this.showToast("Firebase connected successfully", "success");
-      } else {
-        // Do not abort initialization - run in demo/offline mode
-        console.warn(
-          "Firebase initialization failed - running in offline/demo mode"
-        );
-        this.showToast(
-          "Firebase not available - running in demo mode",
-          "warning"
-        );
-      }
+      // Initialize GitHub Upload Service
+      console.log("Initializing GitHub CDN service...");
+      await initGitHubService();
+      this.showToast("GitHub CDN service ready", "success");
 
       // Initialize MQTT
       console.log("Initializing MQTT client...");
@@ -337,21 +322,37 @@ class BannerManagementApp {
     }
   }
 
-  // Load current banners
+  // Load current banners from GitHub CDN
   async loadCurrentBanners() {
     try {
-      console.log("Loading current banners...");
-      if (!this.firebaseReady) {
-        console.warn("Firebase not ready - skipping remote banners load");
-        this.currentBanners = this.currentBanners || [];
-        this.renderBannersGrid();
-        return;
+      console.log("Loading current banners from GitHub CDN...");
+
+      // Try to load manifest from GitHub CDN
+      try {
+        const manifest = await this.fetchCurrentManifest();
+        if (manifest && manifest.logos) {
+          this.currentBanners = manifest.logos.map((logo) => ({
+            id: logo.name,
+            name: logo.name,
+            url: logo.url,
+            size: logo.size || "Unknown",
+            uploadedAt: logo.lastModified || new Date().toISOString(),
+          }));
+        } else {
+          this.currentBanners = [];
+        }
+      } catch (error) {
+        console.warn(
+          "Could not load from GitHub CDN, using empty list:",
+          error
+        );
+        this.currentBanners = [];
       }
 
-      const banners = await this.firebaseService.getBanners();
-      this.currentBanners = banners;
       this.renderBannersGrid();
-      console.log(`Loaded ${banners.length} banners`);
+      console.log(
+        `Loaded ${this.currentBanners.length} banners from GitHub CDN`
+      );
     } catch (error) {
       console.error("Error loading banners:", error);
       this.showToast("Error loading banners: " + error.message, "error");
@@ -429,17 +430,18 @@ class BannerManagementApp {
     }
   }
 
-  // Load settings
+  // Load settings (local storage only)
   async loadSettings() {
     try {
-      if (!this.firebaseReady) {
-        console.warn("Firebase not ready - using default settings");
-        document.getElementById("displayMode").value = "loop";
-        document.getElementById("loopDuration").value = 20;
-        return;
-      }
+      console.log("Loading settings from local storage...");
 
-      const settings = await this.firebaseService.getSettings();
+      // Try to load from localStorage
+      const savedSettings = localStorage.getItem("billboard-settings");
+      let settings = { displayMode: "loop", loopDuration: 10 };
+
+      if (savedSettings) {
+        settings = JSON.parse(savedSettings);
+      }
 
       document.getElementById("displayMode").value =
         settings.displayMode || "loop";
@@ -453,7 +455,7 @@ class BannerManagementApp {
     }
   }
 
-  // Sync settings
+  // Sync settings (local storage + MQTT)
   async syncSettings() {
     try {
       const displayMode = document.getElementById("displayMode").value;
@@ -464,18 +466,13 @@ class BannerManagementApp {
       const settings = {
         displayMode: displayMode,
         loopDuration: loopDuration,
+        lastUpdated: new Date().toISOString(),
       };
 
       console.log("Syncing settings:", settings);
 
-      if (!this.firebaseReady) {
-        console.warn(
-          "Firebase not available - skipping remote settings update"
-        );
-        this.showToast("Settings saved locally (demo)", "warning");
-      } else {
-        await this.firebaseService.updateSettings(settings);
-      }
+      // Save to localStorage
+      localStorage.setItem("billboard-settings", JSON.stringify(settings));
 
       // Send MQTT notification
       await this.mqttClient.publishSettingsSync(settings);

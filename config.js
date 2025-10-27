@@ -1,15 +1,14 @@
 // Configuration for Banner Management System
 const CONFIG = {
-  // Firebase Configuration (disabled for GitHub CDN approach)
-  firebase: {
-    enabled: false,
-    apiKey: "AIzaSyAo2Wk8RHcwWb37lwW7SmTOuHU_Ozi5dUw",
-    authDomain: "itsbillboard-transfer.firebaseapp.com",
-
-    projectId: "itsbillboard-transfer",
-    storageBucket: "itsbillboard-transfer.firebasestorage.app",
-    messagingSenderId: "970392551771",
-    appId: "1:970392551771:web:dc79da9f36bd40f4dd9a7e",
+  // GitHub CDN Configuration (Primary upload system)
+  github: {
+    enabled: true,
+    owner: "mquan-eoh",
+    repo: "billboard-logos-cdn",
+    branch: "main",
+    apiEndpoint: "https://api.github.com",
+    cdnEndpoint: "https://mquan-eoh.github.io/billboard-logos-cdn",
+    uploadPath: "logos/",
   },
 
   // MQTT Configuration
