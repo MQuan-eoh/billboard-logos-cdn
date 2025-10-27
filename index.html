@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banner Management System - ITS Billboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-animated"></div>
+
+    <div class="container">
+      <!-- Header -->
+      <header class="glass-header">
+        <div class="header-content">
+          <h1 class="app-title">ITS Billboard Management</h1>
+          <p class="app-subtitle">Quản lý banner quảng cáo từ xa</p>
+        </div>
+        <div class="connection-status" id="connectionStatus">
+          <span class="status-indicator offline" id="statusIndicator"></span>
+          <span class="status-text" id="statusText">Đang kết nối...</span>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Upload Section -->
+        <section class="glass-panel upload-section">
+          <h2 class="section-title">Upload Banner Mới</h2>
+
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">
+              <p class="upload-title">Kéo thả file hoặc click để chọn</p>
+              <p class="upload-subtitle">
+                Hỗ trợ: PNG, JPG, JPEG, GIF (Max: 5MB)
+              </p>
+            </div>
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              multiple
+              style="display: none"
+            />
+          </div>
+
+          <div class="upload-controls">
+            <button class="btn btn-primary" onclick="triggerFileSelect()">
+              Chọn Files
+            </button>
+            <button
+              class="btn btn-success"
+              id="uploadBtn"
+              onclick="uploadBanners()"
+              disabled
+            >
+              <span class="btn-text">Upload Banner</span>
+              <span class="btn-loading" style="display: none"
+                >⏳ Đang tải...</span
+              >
+            </button>
+          </div>
+
+          <!-- Upload Progress -->
+          <div
+            class="upload-progress"
+            id="uploadProgress"
+            style="display: none"
+          >
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0%</div>
+          </div>
+        </section>
+
+        <!-- Preview Section -->
+        <section
+          class="glass-panel preview-section"
+          id="previewSection"
+          style="display: none"
+        >
+          <h2 class="section-title">Preview Banner</h2>
+          <div class="preview-container" id="previewContainer"></div>
+        </section>
+
+        <!-- Logo Manifest Management -->
+        <section class="glass-panel logo-manifest-section">
+          <h2 class="section-title">🚀 Logo Manifest (GitHub CDN Sync)</h2>
+
+          <div class="manifest-status">
+            <div class="status-card">
+              <div class="status-header">
+                <h3>Trạng thái CDN</h3>
+                <span class="status-badge" id="manifestStatus"
+                  >Đang kiểm tra...</span
+                >
+              </div>
+              <div class="status-details">
+                <p>
+                  <strong>Manifest URL:</strong>
+                  <span id="manifestUrl">Loading...</span>
+                </p>
+                <p>
+                  <strong>Version:</strong> <span id="manifestVersion">-</span>
+                </p>
+                <p>
+                  <strong>Active Logos:</strong> <span id="activeLogos">-</span>
+                </p>
+                <p>
+                  <strong>Last Updated:</strong> <span id="lastUpdated">-</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="manifest-controls">
+            <div class="control-group">
+              <h3>Upload Logo to GitHub</h3>
+              <div class="upload-github">
+                <input
+                  type="file"
+                  id="githubFileInput"
+                  accept="image/*"
+                  style="display: none"
+                />
+                <div class="upload-info">
+                  <input
+                    type="text"
+                    id="logoName"
+                    placeholder="Tên logo (vd: company-logo)"
+                    class="setting-input"
+                  />
+                  <input
+                    type="number"
+                    id="logoPriority"
+                    placeholder="Độ ưu tiên (1-10)"
+                    class="setting-input"
+                    min="1"
+                    max="10"
+                    value="5"
+                  />
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="logoActive" checked />
+                    <span class="checkmark"></span>
+                    Active
+                  </label>
+                </div>
+                <div class="upload-buttons">
+                  <button class="btn btn-primary" onclick="selectLogoFile()">
+                    Chọn Logo
+                  </button>
+                  <button
+                    class="btn btn-success"
+                    id="uploadGithubBtn"
+                    onclick="uploadLogoToGithub()"
+                    disabled
+                  >
+                    Upload to GitHub
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <h3>Manifest Control</h3>
+              <div class="manifest-actions">
+                <button class="btn btn-info" onclick="fetchCurrentManifest()">
+                  📥 Tải Manifest
+                </button>
+                <button
+                  class="btn btn-warning"
+                  onclick="forceRefreshBillboard()"
+                >
+                  🔄 Force Refresh Billboard
+                </button>
+                <button class="btn btn-success" onclick="generateNewManifest()">
+                  📝 Generate New Manifest
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="manifest-editor"
+            id="manifestEditor"
+            style="display: none"
+          >
+            <h3>Edit Manifest JSON</h3>
+            <textarea
+              id="manifestJson"
+              rows="15"
+              class="manifest-textarea"
+            ></textarea>
+            <div class="editor-controls">
+              <button class="btn btn-primary" onclick="validateManifest()">
+                Validate JSON
+              </button>
+              <button class="btn btn-success" onclick="saveManifest()">
+                Save to GitHub
+              </button>
+              <button class="btn btn-secondary" onclick="closeManifestEditor()">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <div class="logos-list" id="logosList">
+            <h3>Current Logos in Manifest</h3>
+            <div class="logos-grid" id="logosGrid">
+              <div class="loading-placeholder">Loading logos...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Current Banners -->
+        <section class="glass-panel current-banners">
+          <h2 class="section-title">Banner Hiện Tại</h2>
+          <div class="banners-grid" id="bannersGrid">
+            <div class="loading-placeholder">Đang tải danh sách banner...</div>
+          </div>
+        </section>
+
+        <!-- Settings -->
+        <section class="glass-panel settings-section">
+          <h2 class="section-title">Cài Đặt</h2>
+
+          <div class="settings-grid">
+            <div class="setting-item">
+              <label class="setting-label">Chế độ hiển thị:</label>
+              <select class="setting-input" id="displayMode">
+                <option value="loop">Xoay vòng (Loop)</option>
+                <option value="fixed">Cố định (Fixed)</option>
+                <option value="scheduled">Theo lịch (Scheduled)</option>
+              </select>
+            </div>
+
+            <div class="setting-item">
+              <label class="setting-label">Thời gian xoay (giây):</label>
+              <input
+                type="number"
+                class="setting-input"
+                id="loopDuration"
+                value="10"
+                min="1"
+                max="60"
+              />
+            </div>
+
+            <div class="setting-item setting-item-full">
+              <button class="btn btn-warning" onclick="syncSettings()">
+                <span class="btn-text">Đồng bộ cài đặt</span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="glass-footer">
+        <div class="footer-content">
+          <p>&copy; 2025 ITS Company - Billboard Management System</p>
+          <div class="footer-links">
+            <span class="footer-link" onclick="showHelp()">Hướng dẫn</span>
+            <span class="footer-link" onclick="showAbout()">Về chúng tôi</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal" style="display: none">
+      <div class="modal-content glass-panel">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">Title</h3>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">Content</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal()">Đóng</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://unpkg.com/mqtt@4.3.7/dist/mqtt.min.js"></script>
+    <script src="config.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="mqtt-client.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
