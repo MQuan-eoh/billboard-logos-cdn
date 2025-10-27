@@ -5,7 +5,7 @@
     {
       "id": "logo1",
       "name": "EoH ERa Web Banner",
-      "url": "https://raw.githubusercontent.com/mquan-eoh/billboard-logos-cdn/logos/EoH_ERa_Web-Banner_1920x800-1.png",
+      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/EoH_ERa_Web-Banner_1920x800-1.png",
       "version": "1.0",
       "size": "1920x800",
       "format": "png",
@@ -13,12 +13,21 @@
     },
     {
       "id": "logo2",
-      "name": "Company Logo Secondary",
-      "url": "https://raw.githubusercontent.com/mquan-eoh/billboard-logos-cdn/logos/company-logo-2.png",
+      "name": "Industrial Dashboard Symbol",
+      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
       "version": "1.0",
       "size": "1920x1080",
       "format": "png",
-      "description": "Logo phụ của công ty"
+      "description": "Logo Industrial Dashboard"
+    },
+    {
+      "id": "logo3",
+      "name": "Special Event Logo",
+      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
+      "version": "1.0",
+      "size": "1920x1080",
+      "format": "png",
+      "description": "Logo sự kiện đặc biệt"
     }
   ],
   "settings": {
