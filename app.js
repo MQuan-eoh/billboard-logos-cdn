@@ -991,6 +991,201 @@ function closeManifestEditor() {
 }
 
 // ====================================
+// GITHUB UPLOAD INTEGRATION
+// ====================================
+
+// GitHub Upload Integration
+let githubSelectedFiles = [];
+
+async function authenticateGitHub() {
+  const tokenInput = document.getElementById("githubToken");
+  const token = tokenInput.value.trim();
+
+  if (!token) {
+    if (window.app) {
+      window.app.showToast("Vui lòng nhập GitHub token", "error");
+    }
+    return;
+  }
+
+  try {
+    const success = await window.initializeGitHubService(token);
+
+    if (success) {
+      document.getElementById("githubAuthCard").style.display = "none";
+      document.getElementById("githubUploadSection").style.display = "block";
+
+      if (window.app) {
+        window.app.showToast("✅ GitHub authentication successful", "success");
+      }
+    } else {
+      if (window.app) {
+        window.app.showToast("❌ GitHub authentication failed", "error");
+      }
+    }
+  } catch (error) {
+    console.error("GitHub auth error:", error);
+    if (window.app) {
+      window.app.showToast("GitHub auth error: " + error.message, "error");
+    }
+  }
+}
+
+function selectLogoFile() {
+  const fileInput = document.getElementById("githubFileInput");
+  if (fileInput) {
+    fileInput.click();
+  }
+}
+
+// Handle GitHub file selection
+document.addEventListener("DOMContentLoaded", () => {
+  const githubFileInput = document.getElementById("githubFileInput");
+  if (githubFileInput) {
+    githubFileInput.addEventListener("change", (e) => {
+      const files = Array.from(e.target.files);
+      handleGitHubFileSelection(files);
+    });
+  }
+});
+
+function handleGitHubFileSelection(files) {
+  console.log("GitHub files selected:", files.length);
+
+  githubSelectedFiles = files.filter((file) => {
+    // Validate file type
+    const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+    if (!validTypes.includes(file.type)) {
+      if (window.app) {
+        window.app.showToast(
+          `File ${file.name}: Loại file không hỗ trợ`,
+          "error"
+        );
+      }
+      return false;
+    }
+
+    // Validate file size (10MB limit for GitHub)
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size > maxSize) {
+      if (window.app) {
+        window.app.showToast(`File ${file.name}: Quá lớn (max 10MB)`, "error");
+      }
+      return false;
+    }
+
+    return true;
+  });
+
+  // Update upload button
+  const uploadBtn = document.getElementById("githubUploadBtn");
+  if (uploadBtn) {
+    if (githubSelectedFiles.length > 0) {
+      uploadBtn.disabled = false;
+      uploadBtn.querySelector(
+        ".btn-text"
+      ).textContent = `📤 Upload ${githubSelectedFiles.length} logo(s) to GitHub`;
+    } else {
+      uploadBtn.disabled = true;
+      uploadBtn.querySelector(".btn-text").textContent = "📤 Upload to GitHub";
+    }
+  }
+
+  if (window.app) {
+    window.app.showToast(
+      `Selected ${githubSelectedFiles.length} valid logo files`,
+      "info"
+    );
+  }
+}
+
+async function uploadLogoToGithub() {
+  if (githubSelectedFiles.length === 0) {
+    if (window.app) {
+      window.app.showToast("Chưa chọn file nào", "warning");
+    }
+    return;
+  }
+
+  const uploadBtn = document.getElementById("githubUploadBtn");
+  const btnText = uploadBtn.querySelector(".btn-text");
+  const btnLoading = uploadBtn.querySelector(".btn-loading");
+  const progressDiv = document.getElementById("githubProgress");
+  const progressFill = document.getElementById("githubProgressFill");
+  const progressText = document.getElementById("githubProgressText");
+  const progressStatus = document.getElementById("githubProgressStatus");
+
+  try {
+    // Show progress
+    progressDiv.style.display = "block";
+    btnText.style.display = "none";
+    btnLoading.style.display = "inline";
+    uploadBtn.disabled = true;
+
+    if (window.app) {
+      window.app.showToast(
+        `Starting GitHub upload of ${githubSelectedFiles.length} files...`,
+        "info"
+      );
+    }
+
+    // Upload with progress tracking
+    const result = await window.uploadLogosToGitHub(
+      githubSelectedFiles,
+      (current, total, status) => {
+        const percentage = Math.round((current / total) * 100);
+        progressFill.style.width = `${percentage}%`;
+        progressText.textContent = `${percentage}%`;
+        progressStatus.textContent = status || `Uploading ${current}/${total}`;
+      }
+    );
+
+    if (result.success) {
+      if (window.app) {
+        window.app.showToast(
+          `✅ GitHub upload completed: ${result.uploaded} successful, ${result.failed} failed`,
+          "success"
+        );
+      }
+
+      // Clear selection
+      githubSelectedFiles = [];
+      document.getElementById("githubFileInput").value = "";
+
+      // Force refresh manifest display
+      if (window.logoManifest) {
+        window.logoManifest.currentManifest = result.manifest;
+        window.logoManifest.updateManifestDisplay();
+        window.logoManifest.displayLogos();
+      }
+
+      // Auto refresh billboard
+      setTimeout(() => {
+        forceRefreshBillboard();
+      }, 2000);
+    } else {
+      if (window.app) {
+        window.app.showToast("❌ GitHub upload failed", "error");
+      }
+    }
+  } catch (error) {
+    console.error("GitHub upload error:", error);
+    if (window.app) {
+      window.app.showToast("GitHub upload error: " + error.message, "error");
+    }
+  } finally {
+    // Hide progress
+    progressDiv.style.display = "none";
+    btnText.style.display = "inline";
+    btnLoading.style.display = "none";
+    uploadBtn.disabled = false;
+
+    // Reset button text
+    btnText.textContent = "📤 Upload to GitHub";
+  }
+}
+
+// ====================================
 // ORIGINAL FUNCTIONS
 // ====================================
 

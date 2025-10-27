@@ -853,6 +853,119 @@ body {
   border-radius: 4px;
 }
 
+/* GitHub Upload Service Styles */
+.github-auth-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.github-auth-card h3 {
+  margin: 0 0 15px 0;
+  color: white;
+  font-size: 16px;
+}
+
+.auth-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.auth-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+}
+
+.auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.auth-note {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.auth-note a {
+  color: #4dabf7;
+  text-decoration: none;
+}
+
+.auth-note a:hover {
+  text-decoration: underline;
+}
+
+.github-upload-section {
+  margin-bottom: 20px;
+}
+
+.github-upload-section h3 {
+  margin: 0 0 15px 0;
+  color: white;
+  font-size: 16px;
+}
+
+.github-upload-area {
+  background: rgba(76, 175, 80, 0.1);
+  border: 2px dashed rgba(76, 175, 80, 0.5);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.github-upload-area:hover {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: rgba(76, 175, 80, 0.7);
+}
+
+.github-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.btn-github {
+  background: linear-gradient(45deg, #24292e, #333);
+  color: white;
+  border: 1px solid #444;
+}
+
+.btn-github:hover {
+  background: linear-gradient(45deg, #333, #444);
+}
+
+.btn-github:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.github-progress {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.progress-status {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 5px;
+  text-align: center;
+}
+
 /* Hidden elements */
 .hidden {
   display: none !important;

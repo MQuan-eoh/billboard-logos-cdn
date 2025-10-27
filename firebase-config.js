@@ -9,6 +9,12 @@ class FirebaseService {
 
   // Initialize Firebase
   async initialize() {
+    // Check if Firebase is enabled in config
+    if (!window.BannerConfig.firebase.enabled) {
+      console.log("[INFO] Firebase disabled - using GitHub CDN approach");
+      return false;
+    }
+
     try {
       console.log("Initializing Firebase...");
 
@@ -25,10 +31,7 @@ class FirebaseService {
       return true;
     } catch (error) {
       console.error("Firebase initialization failed:", error);
-      this.showToast(
-        "Firebase initialization failed: " + error.message,
-        "error"
-      );
+      console.log("Falling back to GitHub CDN approach");
       return false;
     }
   }

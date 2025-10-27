@@ -1,13 +1,15 @@
 // Configuration for Banner Management System
 const CONFIG = {
-  // Firebase Configuration (sẽ được setup sau)
+  // Firebase Configuration (disabled for GitHub CDN approach)
   firebase: {
-    apiKey: "your-firebase-api-key",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "your-app-id",
+    enabled: false,
+    apiKey: "AIzaSyAo2Wk8RHcwWb37lwW7SmTOuHU_Ozi5dUw",
+    authDomain: "itsbillboard-transfer.firebaseapp.com",
+
+    projectId: "itsbillboard-transfer",
+    storageBucket: "itsbillboard-transfer.firebasestorage.app",
+    messagingSenderId: "970392551771",
+    appId: "1:970392551771:web:dc79da9f36bd40f4dd9a7e",
   },
 
   // MQTT Configuration

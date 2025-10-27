@@ -89,6 +89,98 @@
         <section class="glass-panel logo-manifest-section">
           <h2 class="section-title">🚀 Logo Manifest (GitHub CDN Sync)</h2>
 
+          <!-- GitHub Authentication -->
+          <div class="github-auth-card" id="githubAuthCard">
+            <h3>GitHub Authentication</h3>
+            <div class="auth-form">
+              <input
+                type="password"
+                id="githubToken"
+                placeholder="Enter GitHub Personal Access Token"
+                class="auth-input"
+              />
+              <button class="btn btn-primary" onclick="authenticateGitHub()">
+                Authenticate
+              </button>
+            </div>
+            <p class="auth-note">
+              Cần GitHub token với quyền 'repo' để upload logos.
+              <a
+                href="https://github.com/settings/tokens"
+                target="_blank"
+                rel="noopener"
+                >Tạo token mới</a
+              >
+            </p>
+          </div>
+
+          <!-- GitHub Logo Upload -->
+          <div
+            class="github-upload-section"
+            id="githubUploadSection"
+            style="display: none"
+          >
+            <h3>Upload Logo to GitHub CDN</h3>
+
+            <div
+              class="upload-area github-upload-area"
+              onclick="selectLogoFile()"
+            >
+              <div class="upload-icon">🎨</div>
+              <div class="upload-text">
+                <p class="upload-title">Click để chọn logo files</p>
+                <p class="upload-subtitle">
+                  PNG, JPG, GIF - sẽ upload trực tiếp lên GitHub
+                </p>
+              </div>
+              <input
+                type="file"
+                id="githubFileInput"
+                accept="image/*"
+                multiple
+                style="display: none"
+              />
+            </div>
+
+            <div class="github-controls">
+              <button
+                class="btn btn-github"
+                onclick="uploadLogoToGithub()"
+                id="githubUploadBtn"
+                disabled
+              >
+                <span class="btn-text">📤 Upload to GitHub</span>
+                <span class="btn-loading" style="display: none"
+                  >⏳ Uploading...</span
+                >
+              </button>
+              <button
+                class="btn btn-secondary"
+                onclick="fetchCurrentManifest()"
+              >
+                🔄 Refresh Manifest
+              </button>
+              <button class="btn btn-warning" onclick="forceRefreshBillboard()">
+                ⚡ Force Billboard Refresh
+              </button>
+            </div>
+
+            <!-- GitHub Upload Progress -->
+            <div
+              class="github-progress"
+              id="githubProgress"
+              style="display: none"
+            >
+              <div class="progress-bar">
+                <div class="progress-fill" id="githubProgressFill"></div>
+              </div>
+              <div class="progress-text" id="githubProgressText">0%</div>
+              <div class="progress-status" id="githubProgressStatus">
+                Ready...
+              </div>
+            </div>
+          </div>
+
           <div class="manifest-status">
             <div class="status-card">
               <div class="status-header">
@@ -294,6 +386,7 @@
     <script src="config.js"></script>
     <script src="firebase-config.js"></script>
     <script src="mqtt-client.js"></script>
+    <script src="github-upload-service.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
