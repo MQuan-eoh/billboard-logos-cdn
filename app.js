@@ -6,6 +6,7 @@ class BannerManagementApp {
     this.isUploading = false;
     this.firebaseService = window.FirebaseService;
     this.mqttClient = window.MqttClient;
+    this.firebaseReady = false; // indicates whether Firebase initialized successfully
 
     this.initializeApp();
   }
@@ -32,12 +33,19 @@ class BannerManagementApp {
       // Initialize Firebase
       console.log("Initializing Firebase service...");
       const firebaseInit = await this.firebaseService.initialize();
+      this.firebaseReady = !!firebaseInit;
 
-      if (firebaseInit) {
+      if (this.firebaseReady) {
         this.showToast("Firebase connected successfully", "success");
       } else {
-        this.showToast("Firebase initialization failed", "error");
-        return;
+        // Do not abort initialization - run in demo/offline mode
+        console.warn(
+          "Firebase initialization failed - running in offline/demo mode"
+        );
+        this.showToast(
+          "Firebase not available - running in demo mode",
+          "warning"
+        );
       }
 
       // Initialize MQTT
@@ -256,6 +264,29 @@ class BannerManagementApp {
       for (const file of this.selectedFiles) {
         console.log(`Uploading file: ${file.name}`);
 
+        if (!this.firebaseReady) {
+          // Demo/offline mode: simulate upload and add to local banners list
+          console.warn(
+            "Firebase unavailable - simulating upload for:",
+            file.name
+          );
+          const simulated = {
+            id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            name: file.name,
+            url: URL.createObjectURL(file),
+            size: file.size,
+            uploadedAt: new Date().toISOString(),
+          };
+          this.currentBanners.push(simulated);
+          completedFiles++;
+          const overallProgress = (completedFiles / totalFiles) * 100;
+          progressFill.style.width = `${overallProgress}%`;
+          progressText.textContent = `${Math.round(overallProgress)}%`;
+          // simulate sending MQTT
+          await this.mqttClient.publishBannerUpdate(simulated).catch(() => {});
+          continue;
+        }
+
         // Upload file with progress tracking
         const result = await this.firebaseService.uploadFile(
           file,
@@ -310,6 +341,13 @@ class BannerManagementApp {
   async loadCurrentBanners() {
     try {
       console.log("Loading current banners...");
+      if (!this.firebaseReady) {
+        console.warn("Firebase not ready - skipping remote banners load");
+        this.currentBanners = this.currentBanners || [];
+        this.renderBannersGrid();
+        return;
+      }
+
       const banners = await this.firebaseService.getBanners();
       this.currentBanners = banners;
       this.renderBannersGrid();
@@ -366,7 +404,19 @@ class BannerManagementApp {
 
     try {
       console.log(`Deleting banner: ${bannerId}`);
-      await this.firebaseService.deleteBanner(bannerId);
+      if (!this.firebaseReady) {
+        console.warn(
+          "Firebase not available - removing local banner",
+          bannerId
+        );
+        this.currentBanners = this.currentBanners.filter(
+          (b) => b.id !== bannerId
+        );
+        this.renderBannersGrid();
+        this.showToast("Banner removed locally", "warning");
+      } else {
+        await this.firebaseService.deleteBanner(bannerId);
+      }
 
       // Send MQTT notification
       await this.mqttClient.publishBannerDelete(bannerId);
@@ -382,6 +432,13 @@ class BannerManagementApp {
   // Load settings
   async loadSettings() {
     try {
+      if (!this.firebaseReady) {
+        console.warn("Firebase not ready - using default settings");
+        document.getElementById("displayMode").value = "loop";
+        document.getElementById("loopDuration").value = 20;
+        return;
+      }
+
       const settings = await this.firebaseService.getSettings();
 
       document.getElementById("displayMode").value =
@@ -411,7 +468,14 @@ class BannerManagementApp {
 
       console.log("Syncing settings:", settings);
 
-      await this.firebaseService.updateSettings(settings);
+      if (!this.firebaseReady) {
+        console.warn(
+          "Firebase not available - skipping remote settings update"
+        );
+        this.showToast("Settings saved locally (demo)", "warning");
+      } else {
+        await this.firebaseService.updateSettings(settings);
+      }
 
       // Send MQTT notification
       await this.mqttClient.publishSettingsSync(settings);
@@ -567,12 +631,12 @@ function syncSettings() {
 class LogoManifestManager {
   constructor() {
     this.manifestUrl =
-      "https://raw.githubusercontent.com/MinhQuan7/ITS_OurdoorBillboard-/main/logo-manifest.json";
+      "https://mquan-eoh.github.io/billboard-logos-cdn/manifest.json";
     this.githubToken = null; // Will be loaded from config
     this.currentManifest = null;
     this.githubAPI = "https://api.github.com";
-    this.owner = "MinhQuan7";
-    this.repo = "ITS_OurdoorBillboard-";
+    this.owner = "mquan-eoh";
+    this.repo = "billboard-logos-cdn";
 
     this.loadGitHubToken();
     this.initializeManifestUI();
@@ -794,8 +858,8 @@ class LogoManifestManager {
         {
           id: "company-main",
           name: "Company Main Logo",
-          url: "https://raw.githubusercontent.com/MinhQuan7/ITS_OurdoorBillboard-/main/logos/company-logo.png",
-          filename: "company-logo.png",
+          url: "https://mquan-eoh.github.io/billboard-logos-cdn/logos/EoH_ERa_Web-Banner_1920x800-1.png",
+          filename: "EoH_ERa_Web-Banner_1920x800-1.png",
           size: 25600,
           type: "image/png",
           checksum: "abc123def456",
