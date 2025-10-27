@@ -4,30 +4,21 @@
   "logos": [
     {
       "id": "logo1",
-      "name": "Company Logo Primary",
-      "url": "https://raw.githubusercontent.com/YOUR_USERNAME/billboard-logos-cdn/main/logos/company-logo-1.png",
+      "name": "EoH ERa Web Banner",
+      "url": "https://raw.githubusercontent.com/mquan-eoh/billboard-logos-cdn/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
       "version": "1.0",
-      "size": "1920x1080",
+      "size": "1920x800",
       "format": "png",
-      "description": "Logo chính của công ty"
+      "description": "Logo chính EoH ERa"
     },
     {
       "id": "logo2",
       "name": "Company Logo Secondary",
-      "url": "https://raw.githubusercontent.com/YOUR_USERNAME/billboard-logos-cdn/main/logos/company-logo-2.png",
+      "url": "https://raw.githubusercontent.com/mquan-eoh/billboard-logos-cdn/main/logos/company-logo-2.png",
       "version": "1.0",
       "size": "1920x1080",
       "format": "png",
       "description": "Logo phụ của công ty"
-    },
-    {
-      "id": "logo3",
-      "name": "Special Event Logo",
-      "url": "https://raw.githubusercontent.com/YOUR_USERNAME/billboard-logos-cdn/main/logos/company-logo-3.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo sự kiện đặc biệt"
     }
   ],
   "settings": {
