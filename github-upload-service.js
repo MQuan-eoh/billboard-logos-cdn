@@ -806,19 +806,15 @@ class GitHubUploadService {
         throw new Error("No files were uploaded successfully");
       }
 
-      // Update manifest with all uploaded logos
+      // Clear all old banners/logos before adding new ones
       let currentManifest = await this.getCurrentManifest();
+      currentManifest.logos = [];
 
       for (const logoMetadata of results) {
         currentManifest = this.addLogoToManifest(currentManifest, logoMetadata);
       }
 
       await this.uploadManifest(currentManifest);
-
-      // Trigger deployment
-      await this.triggerWorkflow();
-
-      console.log("GitHubUploadService: Complete upload workflow finished");
 
       return {
         success: true,
