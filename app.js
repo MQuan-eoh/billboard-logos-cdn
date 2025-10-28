@@ -622,8 +622,26 @@ async function uploadLogoToGithub() {
       "info"
     );
 
+    // Get current settings from UI before upload
+    const displayModeEl = document.getElementById("displayMode");
+    const loopDurationEl = document.getElementById("loopDuration");
+
+    const displayMode = displayModeEl ? displayModeEl.value : "loop";
+    const loopDuration = loopDurationEl ? parseInt(loopDurationEl.value) : 10;
+
+    // Map displayMode to logoMode for manifest
+    const logoMode =
+      displayMode === "loop"
+        ? "loop"
+        : displayMode === "fixed"
+        ? "fixed"
+        : "scheduled";
+
+    console.log("Uploading with settings:", { logoMode, loopDuration });
+
     const result = await window.uploadLogosToGitHub(
       githubSelectedFiles,
+      { logoMode, logoLoopDuration: loopDuration }, // Pass settings to upload function
       (current, total, status) => {
         const percentage = Math.round((current / total) * 100);
         progressFill.style.width = `${percentage}%`;
@@ -667,7 +685,7 @@ async function uploadLogoToGithub() {
           console.log(
             "Admin-web: Sent banner sync notification to desktop apps"
           );
-          showToast("📱 Remote sync notification sent to displays", "info");
+          showToast(" Remote sync notification sent to displays", "info");
         }
       } catch (mqttError) {
         console.warn(
