@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1761634118890",
+  "version": "1.0.1761635743833",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
@@ -84,6 +84,20 @@
       "uploadedAt": "2025-10-28T06:48:38.248Z",
       "githubPath": "logos/4-1761634114957.jpg",
       "githubSha": "48bdfc8d06e6bbc6f9ca133cc183f3305e677287"
+    },
+    {
+      "id": "background6-1761635739051",
+      "name": "background6",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/background6-1761635739051.png",
+      "filename": "background6-1761635739051.png",
+      "size": 4092287,
+      "type": "image/png",
+      "checksum": "background6png40922871761635743420",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-28T07:15:43.421Z",
+      "githubPath": "logos/background6-1761635739051.png",
+      "githubSha": "5ee735164758943734365ffe8025d9cb479d0f93"
     }
   ],
   "settings": {
@@ -109,7 +123,7 @@
       ]
     }
   },
-  "lastUpdated": "2025-10-28T06:48:38.890Z",
+  "lastUpdated": "2025-10-28T07:15:43.833Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
