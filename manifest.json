@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1761636653334",
+  "version": "1.0.1761637111129",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
@@ -126,6 +126,20 @@
       "uploadedAt": "2025-10-28T07:30:52.918Z",
       "githubPath": "logos/z7085121758183-3cef29c288a9bfb27eecd7aeeb7a36c9-1761636649522.jpg",
       "githubSha": "bc0510e332b1be51e9232865d138032e08526279"
+    },
+    {
+      "id": "565640542-1362303825896826-6400460134318525991-n-1761637107005",
+      "name": "565640542_1362303825896826_6400460134318525991_n",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/565640542-1362303825896826-6400460134318525991-n-1761637107005.jpg",
+      "filename": "565640542-1362303825896826-6400460134318525991-n-1761637107005.jpg",
+      "size": 98085,
+      "type": "image/jpeg",
+      "checksum": "56564054213623038258968266400460134318525991njpg980851761637110619",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-28T07:38:30.619Z",
+      "githubPath": "logos/565640542-1362303825896826-6400460134318525991-n-1761637107005.jpg",
+      "githubSha": "b5db1b91228e16d0d36445f7a249c86a1eac8cc3"
     }
   ],
   "settings": {
@@ -151,7 +165,7 @@
       ]
     }
   },
-  "lastUpdated": "2025-10-28T07:30:53.334Z",
+  "lastUpdated": "2025-10-28T07:38:31.129Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
