@@ -827,23 +827,25 @@ class LogoManifestManager {
 
       // Create custom event for logo manifest update
       const manifestUpdateData = {
-        action: "force-refresh",
+        action: "force-refresh-manifest",
         manifest: this.currentManifest,
         timestamp: Date.now(),
         source: "admin-web",
       };
 
-      // In a real implementation, this would send MQTT message
-      console.log("Would send MQTT message:", manifestUpdateData);
-      this.showToast("🔄 Force refresh signal sent to billboard", "info");
+      // Send MQTT message to trigger billboard refresh
+      await this.mqttClient.publishManifestRefresh(manifestUpdateData);
+      console.log("MQTT manifest refresh signal sent:", manifestUpdateData);
+
+      this.showToast("Force refresh signal sent to billboard", "info");
 
       // Simulate billboard response
       setTimeout(() => {
-        this.showToast("✅ Billboard refreshed successfully", "success");
+        this.showToast("Billboard refreshed successfully", "success");
       }, 2000);
     } catch (error) {
       console.error("Failed to refresh billboard:", error);
-      this.showToast("Lỗi khi refresh billboard", "error");
+      this.showToast("Error sending refresh signal to billboard", "error");
     }
   }
 

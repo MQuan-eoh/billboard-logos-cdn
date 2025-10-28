@@ -192,6 +192,35 @@ class MqttClient {
     }
   }
 
+  // Publish manifest refresh signal
+  async publishManifestRefresh(manifestData) {
+    if (!this.connected || !this.client) {
+      throw new Error("MQTT not connected");
+    }
+
+    try {
+      console.log("Publishing manifest refresh signal:", manifestData);
+
+      const message = {
+        type: "manifest_refresh",
+        action: manifestData.action,
+        manifest: manifestData.manifest,
+        source: manifestData.source,
+        timestamp: manifestData.timestamp,
+      };
+
+      // Use dedicated topic for manifest refresh
+      const manifestTopic = "its/billboard/manifest/refresh";
+      await this.publish(manifestTopic, message, 1); // QoS 1 for reliable delivery
+
+      console.log("Manifest refresh signal published via MQTT:", message);
+      return true;
+    } catch (error) {
+      console.error("Error publishing manifest refresh:", error);
+      throw error;
+    }
+  }
+
   // Publish status message
   async publishStatus(status) {
     if (!this.connected || !this.client) {
