@@ -394,6 +394,35 @@ function forceRefreshBillboard() {
   }
 }
 
+// Enhanced: Test banner sync with desktop apps
+async function testBannerSync() {
+  console.log("Testing banner sync with desktop displays...");
+
+  try {
+    if (window.mqttClient && window.mqttClient.connected) {
+      const testPayload = {
+        type: "banner-sync-test",
+        action: "test-remote-sync",
+        timestamp: new Date().toISOString(),
+        message: "Testing remote banner synchronization from admin-web",
+      };
+
+      await window.mqttClient.publish(
+        "iot/billboard/banner-sync",
+        JSON.stringify(testPayload)
+      );
+      console.log("Banner sync test command sent via MQTT");
+      showToast("🧪 Banner sync test sent to displays", "info");
+    } else {
+      console.warn("MQTT not connected, skipping banner sync test");
+      showToast("⚠️ MQTT not connected, cannot test sync", "warning");
+    }
+  } catch (error) {
+    console.error("Error testing banner sync:", error);
+    showToast("❌ Failed to test banner sync", "error");
+  }
+}
+
 function showHelp() {
   showModal(
     "Hướng dẫn sử dụng",
@@ -577,6 +606,34 @@ async function uploadLogoToGithub() {
         window.logoManifest.currentManifest = result.manifest;
         window.logoManifest.updateManifestDisplay();
         window.logoManifest.displayLogos();
+      }
+
+      // Enhanced: Trigger remote banner sync notification via MQTT
+      try {
+        if (window.mqttClient && window.mqttClient.connected) {
+          const bannerUpdatePayload = {
+            type: "banner-update",
+            action: "upload-complete",
+            bannerCount: result.uploaded,
+            timestamp: new Date().toISOString(),
+            manifest: result.manifest,
+          };
+
+          await window.mqttClient.publish(
+            "iot/billboard/banner-sync",
+            JSON.stringify(bannerUpdatePayload)
+          );
+
+          console.log(
+            "Admin-web: Sent banner sync notification to desktop apps"
+          );
+          showToast("📱 Remote sync notification sent to displays", "info");
+        }
+      } catch (mqttError) {
+        console.warn(
+          "Admin-web: Failed to send MQTT sync notification:",
+          mqttError
+        );
       }
 
       setTimeout(() => forceRefreshBillboard(), 2000);
