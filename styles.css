@@ -1043,3 +1043,42 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Repository Information Display */
+.repo-info {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.repo-info-content h4 {
+  margin: 0 0 10px 0;
+  color: #10b981;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.repo-info-content p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.repo-info-content strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.repo-info-content a {
+  color: #4dabf7;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.repo-info-content a:hover {
+  border-bottom-color: #4dabf7;
+}

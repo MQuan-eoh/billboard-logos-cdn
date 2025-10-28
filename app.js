@@ -474,7 +474,16 @@ async function authenticateGitHub() {
     if (success) {
       document.getElementById("githubAuthCard").style.display = "none";
       document.getElementById("githubUploadSection").style.display = "block";
-      showToast("✅ GitHub authentication successful", "success");
+
+      // Show repository information
+      const status = window.getGitHubServiceStatus();
+      showToast(
+        `✅ GitHub authentication successful - Using repository: ${status.repository}`,
+        "success"
+      );
+
+      // Update the UI to show which repository is being used
+      updateRepositoryDisplay(status);
     } else {
       showToast("❌ GitHub authentication failed", "error");
     }
@@ -681,3 +690,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   console.log("Simplified app initialized successfully!");
 });
+
+// Repository display update function
+function updateRepositoryDisplay(status) {
+  // Create or update repository info display
+  let repoInfo = document.getElementById("repoInfo");
+  if (!repoInfo) {
+    repoInfo = document.createElement("div");
+    repoInfo.id = "repoInfo";
+    repoInfo.className = "repo-info";
+
+    const uploadSection = document.getElementById("githubUploadSection");
+    if (uploadSection) {
+      uploadSection.insertBefore(repoInfo, uploadSection.firstChild);
+    }
+  }
+
+  repoInfo.innerHTML = `
+    <div class="repo-info-content">
+      <h4>📂 Repository Information</h4>
+      <p><strong>Repository:</strong> <a href="https://github.com/${
+        status.repository
+      }" target="_blank">${status.repository}</a></p>
+      <p><strong>Branch:</strong> ${status.branch}</p>
+      <p><strong>Upload Path:</strong> ${status.uploadPath}</p>
+      <p><strong>CDN URL:</strong> <a href="${
+        window.GitHubConfig?.api?.cdnEndpoint ||
+        `https://${status.repository.split("/")[0]}.github.io/${
+          status.repository.split("/")[1]
+        }`
+      }" target="_blank">View CDN</a></p>
+    </div>
+  `;
+}
