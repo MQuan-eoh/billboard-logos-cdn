@@ -394,6 +394,37 @@ function forceRefreshBillboard() {
   }
 }
 
+// Cleanup manifest function
+async function cleanupBrokenLogos() {
+  try {
+    showToast("🧹 Starting manifest cleanup...", "info");
+
+    const cleanedManifest = await window.cleanupAndUploadManifest();
+
+    if (cleanedManifest) {
+      showToast(
+        `✅ Manifest cleaned! Removed ${
+          cleanedManifest.metadata?.removedLogos?.length || 0
+        } broken logos`,
+        "success"
+      );
+
+      // Refresh manifest display
+      if (window.logoManifest) {
+        window.logoManifest.currentManifest = cleanedManifest;
+        window.logoManifest.updateManifestDisplay();
+        window.logoManifest.displayLogos();
+      }
+
+      // Force refresh billboard
+      setTimeout(() => forceRefreshBillboard(), 1000);
+    }
+  } catch (error) {
+    console.error("Manifest cleanup failed:", error);
+    showToast("❌ Manifest cleanup failed: " + error.message, "error");
+  }
+}
+
 // Enhanced: Test banner sync with desktop apps
 async function testBannerSync() {
   console.log("Testing banner sync with desktop displays...");

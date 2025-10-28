@@ -734,34 +734,53 @@ class GitHubUploadService {
     try {
       console.log("GitHubUploadService: Triggering deployment workflow...");
 
-      const response = await fetch(
-        `${this.config.apiEndpoint}/repos/${this.config.owner}/${this.config.repo}/actions/workflows/deploy-manifest.yml/dispatches`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `token ${this.token}`,
-            Accept: "application/vnd.github.v3+json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ref: this.config.branch,
-            inputs: {
-              force_rebuild: "true",
-            },
-          }),
-        }
-      );
+      // Try different workflow file names
+      const workflowNames = [
+        "jekyll-gh-pages.yml",
+        "deploy-manifest.yml",
+        "pages-build-deployment",
+      ];
 
-      if (response.ok) {
-        console.log("GitHubUploadService: Workflow triggered successfully");
-        return true;
-      } else {
-        console.warn(
-          "GitHubUploadService: Workflow trigger failed:",
-          response.statusText
+      for (const workflowName of workflowNames) {
+        console.log(`GitHubUploadService: Trying workflow: ${workflowName}`);
+
+        const response = await fetch(
+          `${this.config.apiEndpoint}/repos/${this.config.owner}/${this.config.repo}/actions/workflows/${workflowName}/dispatches`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `token ${this.token}`,
+              Accept: "application/vnd.github.v3+json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ref: this.config.branch,
+              inputs: {
+                force_rebuild: "true",
+              },
+            }),
+          }
         );
-        return false;
+
+        if (response.ok) {
+          console.log(
+            `GitHubUploadService: Workflow '${workflowName}' triggered successfully`
+          );
+          return true;
+        } else if (response.status !== 404) {
+          console.warn(
+            `GitHubUploadService: Workflow '${workflowName}' trigger failed:`,
+            response.status,
+            response.statusText
+          );
+        }
       }
+
+      // If all workflows fail, just log warning and continue
+      console.warn(
+        "GitHubUploadService: No suitable workflow found, GitHub Pages will auto-deploy on push"
+      );
+      return false;
     } catch (error) {
       console.error("GitHubUploadService: Error triggering workflow:", error);
       return false;
