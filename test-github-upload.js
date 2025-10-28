@@ -57,8 +57,29 @@ async function testGitHubUpload() {
       return;
     }
 
-    // Test 3: Repository access test (requires token)
-    console.log("📋 Test 3: Repository access");
+    // Test 3: Manifest structure validation
+    console.log("📋 Test 3: Manifest structure validation");
+    const defaultManifest = service.createDefaultManifest();
+    console.log("📄 Default manifest:", defaultManifest);
+
+    // Test addLogoToManifest with empty manifest
+    const mockLogo = {
+      id: "test-logo",
+      name: "Test Logo",
+      url: "https://example.com/test.png",
+      filename: "test.png",
+      size: 1000,
+      type: "image/png",
+      priority: 1,
+      active: true,
+      uploadedAt: new Date().toISOString(),
+    };
+
+    const updatedManifest = service.addLogoToManifest({}, mockLogo);
+    console.log("✅ Manifest update test passed:", updatedManifest);
+
+    // Test 4: Repository access test (requires token)
+    console.log("📋 Test 4: Repository access");
     const token = prompt("Enter GitHub token for testing (or cancel to skip):");
 
     if (token) {
@@ -69,7 +90,7 @@ async function testGitHubUpload() {
         console.log("✅ Authentication successful");
 
         // Test file upload
-        console.log("📋 Test 4: File upload simulation");
+        console.log("📋 Test 5: File upload simulation");
         const mockFile = createMockFile();
 
         try {
@@ -81,7 +102,7 @@ async function testGitHubUpload() {
           console.log("✅ Upload test successful:", uploadResult);
 
           // Test manifest update
-          console.log("📋 Test 5: Manifest update");
+          console.log("📋 Test 6: Manifest update");
           const manifestResult = await service.updateManifest(uploadResult);
           console.log("✅ Manifest update successful");
         } catch (uploadError) {
@@ -94,8 +115,8 @@ async function testGitHubUpload() {
       console.log("⏭️ Skipping authentication tests");
     }
 
-    // Test 4: URL generation
-    console.log("📋 Test 4: URL generation");
+    // Test 7: URL generation
+    console.log("📋 Test 7: URL generation");
     if (window.GitHubConfig) {
       console.log(
         "🔗 Repository URL:",

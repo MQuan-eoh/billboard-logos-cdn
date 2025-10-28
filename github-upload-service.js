@@ -482,7 +482,10 @@ class GitHubUploadService {
 
       if (fileInfo) {
         const content = atob(fileInfo.content);
-        return JSON.parse(content);
+        const manifest = JSON.parse(content);
+
+        // Validate and fix manifest structure if needed
+        return this.validateAndFixManifest(manifest);
       } else {
         // Return default manifest
         return this.createDefaultManifest();
@@ -494,6 +497,44 @@ class GitHubUploadService {
       );
       return this.createDefaultManifest();
     }
+  }
+
+  /**
+   * Validate and fix manifest structure
+   */
+  validateAndFixManifest(manifest) {
+    const fixedManifest = { ...manifest };
+
+    // Ensure required properties exist
+    if (!fixedManifest.version) {
+      fixedManifest.version = `1.0.${Date.now()}`;
+    }
+
+    if (!fixedManifest.lastUpdated) {
+      fixedManifest.lastUpdated = new Date().toISOString();
+    }
+
+    if (!fixedManifest.logos || !Array.isArray(fixedManifest.logos)) {
+      fixedManifest.logos = [];
+    }
+
+    if (!fixedManifest.settings) {
+      fixedManifest.settings = {
+        logoMode: "loop",
+        logoLoopDuration: 30,
+        schedules: [],
+      };
+    }
+
+    if (!fixedManifest.metadata) {
+      fixedManifest.metadata = {
+        author: "Admin Web Interface",
+        description: "Billboard logo manifest",
+        apiVersion: "v1",
+      };
+    }
+
+    return fixedManifest;
   }
 
   /**
@@ -523,6 +564,11 @@ class GitHubUploadService {
   addLogoToManifest(manifest, logoMetadata) {
     const updatedManifest = { ...manifest };
 
+    // Ensure logos array exists
+    if (!updatedManifest.logos) {
+      updatedManifest.logos = [];
+    }
+
     // Remove existing logo with same ID if exists
     updatedManifest.logos = updatedManifest.logos.filter(
       (logo) => logo.id !== logoMetadata.id
@@ -537,6 +583,15 @@ class GitHubUploadService {
     // Update manifest metadata
     updatedManifest.version = `1.0.${Date.now()}`;
     updatedManifest.lastUpdated = new Date().toISOString();
+
+    // Ensure metadata object exists before setting properties
+    if (!updatedManifest.metadata) {
+      updatedManifest.metadata = {
+        author: "Admin Web Interface",
+        description: "Billboard logo manifest",
+        apiVersion: "v1",
+      };
+    }
     updatedManifest.metadata.lastModifiedBy = "Admin Web Interface";
 
     return updatedManifest;
