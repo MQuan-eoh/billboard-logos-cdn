@@ -1,144 +1,77 @@
-# ITS Billboard Admin Web - GitHub CDN Setup Guide
+# ITS Billboard Admin Web - Simplified Version
 
-## 🚀 Trang quản lý banner quảng cáo từ xa cho Billboard Outdoor
+## 🚀 Hệ thống quản lý banner đơn giản với GitHub CDN
 
-Admin web này cho phép upload và quản lý banner quảng cáo cho màn hình billboard outdoor từ bất kỳ đâu thông qua internet.
+**THAY ĐỔI QUAN TRỌNG**: Đã loại bỏ duplicate upload sections để đơn giản hóa.
+Chỉ sử dụng **GitHub CDN workflow duy nhất**.
 
-## ✨ Tính năng
+## ✨ Tính năng sau tối giản hóa
 
-- 🎨 **Glass Effect UI** - Giao diện hiện đại với hiệu ứng kính mờ
-- 📁 **Drag & Drop Upload** - Kéo thả file dễ dàng
-- ⚡ **Real-time Sync** - Đồng bộ real-time qua MQTT
-- � **GitHub CDN** - Lưu trữ và sync qua GitHub Pages (miễn phí unlimited)
-- 📱 **Responsive Design** - Hoạt động trên mọi thiết bị
-- 🔒 **Secure** - Xác thực qua GitHub Personal Access Token
+- 🎨 **GitHub CDN Upload Only** - Một workflow duy nhất, không confusing
+- ⚡ **Real-time Sync** - MQTT communication với desktop app
+- 📱 **Clean Interface** - Giao diện được đơn giản hóa đáng kể
+- 🔒 **GitHub Authentication** - Secure upload qua GitHub Personal Access Token
 
-## 🛠️ Setup Instructions
+## 🛠️ Cách sử dụng đơn giản
 
-### Bước 1: Setup GitHub Repository
+### Bước 1: GitHub Authentication
 
-1. Tạo repository mới: `billboard-logos-cdn`
-2. Đặt repository là **Public** (để sử dụng GitHub Pages miễn phí)
-3. Enable GitHub Pages trong Settings → Pages → Source: GitHub Actions
-4. Tạo GitHub Personal Access Token với quyền `repo`
+1. Mở `admin-web/index.html`
+2. Nhập GitHub Personal Access Token
+3. Click "Authenticate"
 
-### Bước 2: Cấu hình GitHub Token
+### Bước 2: Upload Banner
 
-1. Truy cập [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
-2. Generate new token (classic)
-3. Chọn scopes: `repo` (full control of private repositories)
+1. Click "� Test Connection" để kiểm tra
+2. Click để chọn banner files
+3. Click "📤 Upload Banner"
+4. Banner sẽ tự động sync xuống desktop app
 
-### Bước 3: Cấu hình GitHub Actions Workflow
+### Bước 3: Quản lý Banner
 
-Repository sẽ tự động tạo GitHub Actions workflow để build manifest khi có upload mới:
+- Xem danh sách banner trong "Current Banners in CDN"
+- Enable/Disable banner theo nhu cầu
+- Click "⚡ Force Billboard Refresh" nếu cần
 
-1. File `.github/workflows/deploy-manifest.yml` đã được tạo sẵn
-2. Workflow sẽ tự động chạy khi có file mới được upload
-3. Manifest sẽ được deploy lên GitHub Pages
+## 🎛️ Settings đồng bộ
 
-### Bước 4: Cấu hình Desktop App
-
-Desktop app đã được tích hợp sẵn logo sync service. Chỉ cần đảm bảo:
-
-1. **MQTT connection** hoạt động (đã dùng HiveMQ free broker)
-2. **Logo manifest service** đã enable để poll GitHub CDN
-3. **GitHub Pages URL** được cấu hình đúng trong logoManifestService.ts
-
-## 📋 Hướng dẫn sử dụng
-
-### Upload Logo với GitHub CDN
-
-1. **Mở admin web**: `admin-web/index.html`
-2. **Test GitHub Connection**: Bấm "🔍 Test GitHub Connection" để kiểm tra
-3. **Chọn logo files**: Drag & drop hoặc click để chọn
-4. **Upload**: Bấm "📤 Upload to GitHub"
-5. **Kiểm tra**: Logo sẽ hiển thị trên desktop app sau ~30 giây
-
-6. Truy cập admin web
-7. Kéo thả file ảnh hoặc click "Chọn Files"
-8. Preview và click "Upload Banner"
-9. Banner sẽ tự động sync xuống desktop app
-
-### Quản lý Logo
-
-- **Xem danh sách**: Section "Banner Hiện Tại" sẽ load từ GitHub CDN
-- **Upload mới**: Sử dụng GitHub Upload section
-- **Cài đặt hiển thị**: Chọn chế độ Loop/Fixed/Scheduled (lưu local)
-
-### Cài đặt đồng bộ
-
-- **Chế độ hiển thị**: Loop (xoay vòng), Fixed (cố định), Scheduled (theo lịch)
-- **Thời gian xoay**: 1-60 giây
+- **Display Mode**: Loop/Fixed/Scheduled
+- **Loop Duration**: 1-60 giây
 - Click "Đồng bộ cài đặt" để áp dụng via MQTT
 
-## 🔧 Technical Architecture
+## 🔧 Technical Workflow (Đơn giản hóa)
 
 ```
-Admin Web (Local/GitHub Pages)
+Admin Web (GitHub Auth)
     ↓ Upload via GitHub API
-GitHub Repository (billboard-logos-cdn)
-    ↓ GitHub Actions build manifest
-GitHub Pages CDN (Free, unlimited)
-    ↓ Logo Manifest Service polls every 30s
-Desktop App (logoManifestService.ts)
-    ↓ Hot-reload display
-Billboard LED Screen (384x384)
+GitHub Repository + GitHub Pages CDN
+    ↓ MQTT Notification
+Desktop App (Auto refresh)
+    ↓ Display update
+Billboard Screen
 ```
 
-## 🎛️ MQTT Topics
+## 📞 Troubleshooting
 
-- `its/billboard/banner/update` - New logo uploaded
-- `its/billboard/banner/delete` - Logo deleted
-- `its/billboard/banner/sync` - Settings synchronized
-- `its/billboard/status` - App status updates
-
-## 📱 Browser Support
-
-- ✅ Chrome/Edge 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Mobile browsers
-
-## 🔒 Security Notes
-
-- GitHub Personal Access Token authentication
-- Repository access controls
-- HTTPS mandatory cho GitHub Pages
-- MQTT over WSS (encrypted)
-
-## 🆘 Troubleshooting
-
-### Admin Web không upload được lên GitHub
+### Không upload được:
 
 1. Kiểm tra GitHub token có quyền `repo`
-2. Đảm bảo repository `billboard-logos-cdn` tồn tại và accessible
-3. Check console browser cho error details
-4. Test GitHub connection trước khi upload
+2. Repository `billboard-logos-cdn` phải tồn tại và public
+3. Test connection trước khi upload
 
-### Desktop App không nhận được logo mới
+### Desktop app không nhận:
 
-1. Kiểm tra logoManifestService.ts đã chạy
-2. Verify GitHub Pages URL trong service
-3. Check manifest polling interval (30s default)
-4. Restart desktop app nếu cần
+1. Kiểm tra MQTT connection status
+2. Verify logoManifestService đang chạy
+3. Check GitHub Pages URL accessibility
 
-### Upload file bị lỗi
+## 🎯 Lợi ích sau tối giản hóa
 
-1. File size hợp lý (< 10MB)
-2. Format hỗ trợ: PNG, JPG, JPEG, GIF
-3. Stable internet connection
-4. GitHub API rate limit chưa vượt
-
-## 📞 Support
-
-Nếu gặp vấn đề, check:
-
-1. Browser console logs
-2. Desktop app logs (logoManifestService)
-3. GitHub repository access
-4. Network connectivity
-5. GitHub Actions workflow status
+✅ **User Experience**: Không còn bối rối về 2 upload sections  
+✅ **Maintenance**: Code đơn giản hơn, ít bugs  
+✅ **Performance**: Faster load, ít duplicate logic  
+✅ **Clarity**: Một workflow duy nhất, dễ hiểu
 
 ---
 
-**🎯 Mục tiêu**: Zero-cost solution với 99.9% uptime cho billboard management!
+**💡 Kết luận**: Chỉ sử dụng GitHub CDN workflow - reliable, scalable, và FREE!

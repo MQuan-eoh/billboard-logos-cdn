@@ -1,686 +1,199 @@
-// Main Application JavaScript for Banner Management System
-class BannerManagementApp {
-  constructor() {
-    this.selectedFiles = [];
-    this.currentBanners = [];
-    this.isUploading = false;
-    // Use global MQTT client instance
-    this.mqttClient = window.MqttClient;
+// Simplified Banner Management System - GitHub CDN Only
+// Removed duplicate upload logic, only GitHub CDN workflow
 
-    this.initializeApp();
-  }
+// ====================================
+// SIMPLIFIED CORE FUNCTIONS
+// ====================================
 
-  // Initialize the application
-  async initializeApp() {
-    console.log("Initializing Banner Management App...");
+// Show toast notification
+function showToast(message, type = "info", duration = 5000) {
+  const toastContainer = document.getElementById("toastContainer");
 
-    // Setup UI event listeners
-    this.setupEventListeners();
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
 
-    // Initialize services
-    await this.initializeServices();
+  const emoji = {
+    success: "✅",
+    error: "❌",
+    warning: "⚠️",
+    info: "ℹ️",
+  };
 
-    // Load initial data
-    await this.loadInitialData();
+  toast.innerHTML = `
+        <span class="toast-emoji">${emoji[type] || emoji.info}</span>
+        <span class="toast-message">${message}</span>
+    `;
 
-    console.log("App initialized successfully");
-  }
+  toastContainer.appendChild(toast);
 
-  // Initialize GitHub CDN and MQTT services
-  async initializeServices() {
-    try {
-      // Initialize GitHub Upload Service
-      console.log("Initializing GitHub CDN service...");
-      // Note: GitHub service is available globally as window.GitHubUploadService
-      // No token required for basic functionality
-      this.showToast("GitHub CDN service ready", "success");
-
-      // Initialize MQTT
-      console.log("Initializing MQTT client...");
-      if (this.mqttClient) {
-        try {
-          await this.mqttClient.connect();
-
-          // Setup MQTT status monitoring
-          this.mqttClient.onStatusChange((status) => {
-            this.updateConnectionStatus(status);
-          });
-
-          this.showToast("MQTT connected successfully", "success");
-        } catch (error) {
-          console.warn("MQTT connection failed:", error);
-          this.showToast(
-            "MQTT connection failed, continuing in offline mode",
-            "warning"
-          );
-        }
-      } else {
-        console.warn("MQTT client not available");
-        this.showToast("MQTT client not available", "warning");
-      }
-    } catch (error) {
-      console.error("Service initialization error:", error);
-      this.showToast(
-        "Service initialization failed: " + error.message,
-        "error"
-      );
+  // Auto remove toast
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.parentNode.removeChild(toast);
     }
+  }, duration);
+
+  console.log(`[${type.toUpperCase()}] ${message}`);
+}
+
+// Show modal
+function showModal(title, content) {
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalBody = document.getElementById("modalBody");
+
+  modalTitle.textContent = title;
+  modalBody.innerHTML = content;
+  modal.style.display = "block";
+}
+
+// Close modal
+function closeModal() {
+  const modal = document.getElementById("modal");
+  modal.style.display = "none";
+}
+
+// Update connection status in UI
+function updateConnectionStatus(status) {
+  const statusIndicator = document.getElementById("statusIndicator");
+  const statusText = document.getElementById("statusText");
+
+  if (!statusIndicator || !statusText) return;
+
+  statusIndicator.className = "status-indicator";
+
+  switch (status.status) {
+    case "connected":
+      statusIndicator.classList.add("online");
+      statusText.textContent = "Đã kết nối";
+      break;
+    case "connecting":
+    case "reconnecting":
+      statusIndicator.classList.add("connecting");
+      statusText.textContent = "Đang kết nối...";
+      break;
+    case "disconnected":
+      statusIndicator.classList.add("offline");
+      statusText.textContent = "Mất kết nối";
+      break;
+    case "error":
+      statusIndicator.classList.add("offline");
+      statusText.textContent = "Lỗi kết nối";
+      break;
+    default:
+      statusIndicator.classList.add("offline");
+      statusText.textContent = "Không xác định";
   }
+}
 
-  // Setup UI event listeners
-  setupEventListeners() {
-    // File input
-    const fileInput = document.getElementById("fileInput");
-    fileInput.addEventListener("change", (e) => this.handleFileSelect(e));
+// Load settings (local storage only)
+async function loadSettings() {
+  try {
+    console.log("Loading settings from local storage...");
 
-    // Upload area drag & drop
-    const uploadArea = document.getElementById("uploadArea");
-    uploadArea.addEventListener("click", () => this.triggerFileSelect());
-    uploadArea.addEventListener("dragover", (e) => this.handleDragOver(e));
-    uploadArea.addEventListener("dragleave", (e) => this.handleDragLeave(e));
-    uploadArea.addEventListener("drop", (e) => this.handleDrop(e));
+    const savedSettings = localStorage.getItem("billboard-settings");
+    let settings = { displayMode: "loop", loopDuration: 10 };
 
-    // Settings inputs
-    const displayMode = document.getElementById("displayMode");
-    const loopDuration = document.getElementById("loopDuration");
-
-    displayMode.addEventListener("change", () => this.updateSettingsPreview());
-    loopDuration.addEventListener("input", () => this.updateSettingsPreview());
-
-    // Keyboard shortcuts
-    document.addEventListener("keydown", (e) =>
-      this.handleKeyboardShortcuts(e)
-    );
-
-    console.log("Event listeners setup complete");
-  }
-
-  // Load initial data
-  async loadInitialData() {
-    try {
-      // Load current banners
-      await this.loadCurrentBanners();
-
-      // Load settings
-      await this.loadSettings();
-    } catch (error) {
-      console.error("Error loading initial data:", error);
-      this.showToast("Error loading data: " + error.message, "error");
-    }
-  }
-
-  // Handle file selection
-  handleFileSelect(event) {
-    const files = Array.from(event.target.files);
-    this.processSelectedFiles(files);
-  }
-
-  // Handle drag over
-  handleDragOver(event) {
-    event.preventDefault();
-    const uploadArea = document.getElementById("uploadArea");
-    uploadArea.classList.add("dragover");
-  }
-
-  // Handle drag leave
-  handleDragLeave(event) {
-    event.preventDefault();
-    const uploadArea = document.getElementById("uploadArea");
-    uploadArea.classList.remove("dragover");
-  }
-
-  // Handle file drop
-  handleDrop(event) {
-    event.preventDefault();
-    const uploadArea = document.getElementById("uploadArea");
-    uploadArea.classList.remove("dragover");
-
-    const files = Array.from(event.dataTransfer.files);
-    this.processSelectedFiles(files);
-  }
-
-  // Process selected files
-  processSelectedFiles(files) {
-    const config = window.BannerConfig.upload;
-    const validFiles = [];
-    const errors = [];
-
-    files.forEach((file) => {
-      // Check file type
-      if (!config.allowedTypes.includes(file.type)) {
-        errors.push(`${file.name}: Loại file không được hỗ trợ`);
-        return;
-      }
-
-      // Check file size
-      if (file.size > config.maxFileSize) {
-        errors.push(
-          `${file.name}: File quá lớn (max ${
-            config.maxFileSize / 1024 / 1024
-          }MB)`
-        );
-        return;
-      }
-
-      validFiles.push(file);
-    });
-
-    // Show errors if any
-    if (errors.length > 0) {
-      this.showToast(errors.join("\n"), "error");
+    if (savedSettings) {
+      settings = JSON.parse(savedSettings);
     }
 
-    // Update selected files
-    this.selectedFiles = validFiles;
+    const displayModeEl = document.getElementById("displayMode");
+    const loopDurationEl = document.getElementById("loopDuration");
 
-    // Update UI
-    this.updateFilePreview();
-    this.updateUploadButton();
+    if (displayModeEl) displayModeEl.value = settings.displayMode || "loop";
+    if (loopDurationEl) loopDurationEl.value = settings.loopDuration || 10;
+
+    console.log("Settings loaded:", settings);
+  } catch (error) {
+    console.error("Error loading settings:", error);
+    showToast("Error loading settings: " + error.message, "error");
   }
+}
 
-  // Update file preview
-  updateFilePreview() {
-    const previewSection = document.getElementById("previewSection");
-    const previewContainer = document.getElementById("previewContainer");
+// Sync settings (local storage + MQTT)
+async function syncSettings() {
+  try {
+    const displayModeEl = document.getElementById("displayMode");
+    const loopDurationEl = document.getElementById("loopDuration");
 
-    if (this.selectedFiles.length === 0) {
-      previewSection.classList.add("hidden");
-      return;
-    }
+    const displayMode = displayModeEl ? displayModeEl.value : "loop";
+    const loopDuration = loopDurationEl ? parseInt(loopDurationEl.value) : 10;
 
-    previewSection.classList.remove("hidden");
-    previewContainer.innerHTML = "";
-
-    this.selectedFiles.forEach((file, index) => {
-      const previewItem = document.createElement("div");
-      previewItem.className = "preview-item";
-
-      const img = document.createElement("img");
-      img.className = "preview-image";
-      img.src = URL.createObjectURL(file);
-      img.alt = file.name;
-
-      const info = document.createElement("div");
-      info.className = "preview-info";
-      info.innerHTML = `
-                <div class="preview-name">${file.name}</div>
-                <div class="preview-size">${this.formatFileSize(
-                  file.size
-                )}</div>
-                <button class="btn btn-small btn-danger" onclick="app.removeFile(${index})">Xóa</button>
-            `;
-
-      previewItem.appendChild(img);
-      previewItem.appendChild(info);
-      previewContainer.appendChild(previewItem);
-    });
-  }
-
-  // Update upload button state
-  updateUploadButton() {
-    const uploadBtn = document.getElementById("uploadBtn");
-    const btnText = uploadBtn.querySelector(".btn-text");
-
-    if (this.selectedFiles.length > 0 && !this.isUploading) {
-      uploadBtn.disabled = false;
-      btnText.textContent = `Upload ${this.selectedFiles.length} banner(s)`;
-    } else {
-      uploadBtn.disabled = true;
-      btnText.textContent = "Upload Banner";
-    }
-  }
-
-  // Remove file from selection
-  removeFile(index) {
-    this.selectedFiles.splice(index, 1);
-    this.updateFilePreview();
-    this.updateUploadButton();
-  }
-
-  // Upload banners
-  async uploadBanners() {
-    if (this.selectedFiles.length === 0 || this.isUploading) {
-      return;
-    }
-
-    this.isUploading = true;
-    this.updateUploadButton();
-
-    const uploadProgress = document.getElementById("uploadProgress");
-    const progressFill = document.getElementById("progressFill");
-    const progressText = document.getElementById("progressText");
-    const uploadBtn = document.getElementById("uploadBtn");
-    const btnText = uploadBtn.querySelector(".btn-text");
-    const btnLoading = uploadBtn.querySelector(".btn-loading");
-
-    try {
-      uploadProgress.classList.remove("hidden");
-      btnText.style.display = "none";
-      btnLoading.style.display = "inline";
-
-      const totalFiles = this.selectedFiles.length;
-      let completedFiles = 0;
-
-      for (const file of this.selectedFiles) {
-        console.log(`Uploading file: ${file.name}`);
-
-        if (
-          !window.GitHubUploadService ||
-          !window.GitHubUploadService.isAuthenticated
-        ) {
-          // Demo/offline mode: simulate upload and add to local banners list
-          console.warn(
-            "GitHub service unavailable - simulating upload for:",
-            file.name
-          );
-          const simulated = {
-            id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-            name: file.name,
-            url: URL.createObjectURL(file),
-            size: file.size,
-            uploadedAt: new Date().toISOString(),
-          };
-          this.currentBanners.push(simulated);
-          completedFiles++;
-          const overallProgress = (completedFiles / totalFiles) * 100;
-          progressFill.style.width = `${overallProgress}%`;
-          progressText.textContent = `${Math.round(overallProgress)}%`;
-          // simulate sending MQTT
-          await this.mqttClient.publishBannerUpdate(simulated).catch(() => {});
-          continue;
-        }
-
-        // Upload file with progress tracking using GitHub service
-        const result = await window.GitHubUploadService.uploadLogo(file, {
-          name: file.name.replace(/\.[^/.]+$/, ""),
-          priority: 1,
-          active: true,
-        });
-
-        console.log(`File uploaded successfully:`, result);
-
-        // Send MQTT notification for this banner
-        try {
-          await this.mqttClient.publishBannerUpdate({
-            id: result.id,
-            url: result.url,
-            metadata: result.metadata,
-          });
-        } catch (error) {
-          console.warn("Failed to publish MQTT update:", error);
-        }
-
-        completedFiles++;
-      }
-
-      // Complete upload
-      progressFill.style.width = "100%";
-      progressText.textContent = "100%";
-
-      this.showToast(
-        `Successfully uploaded ${totalFiles} banner(s)`,
-        "success"
-      );
-
-      // Reset UI
-      this.selectedFiles = [];
-      this.updateFilePreview();
-
-      // Reload current banners
-      await this.loadCurrentBanners();
-    } catch (error) {
-      console.error("Upload error:", error);
-      this.showToast("Upload failed: " + error.message, "error");
-    } finally {
-      this.isUploading = false;
-      uploadProgress.classList.add("hidden");
-      btnText.style.display = "inline";
-      btnLoading.style.display = "none";
-      this.updateUploadButton();
-    }
-  }
-
-  // Load current banners from GitHub CDN
-  async loadCurrentBanners() {
-    try {
-      console.log("Loading current banners from GitHub CDN...");
-
-      // Try to load manifest from GitHub CDN
-      try {
-        // Use the global LogoManifestManager instance to fetch manifest
-        let manifest = null;
-        if (window.logoManifest) {
-          manifest = await window.logoManifest.fetchCurrentManifest();
-        }
-
-        if (manifest && manifest.logos) {
-          this.currentBanners = manifest.logos.map((logo) => ({
-            id: logo.name || logo.id,
-            name: logo.name || logo.filename,
-            url: logo.url,
-            size: logo.size || "Unknown",
-            uploadedAt:
-              logo.uploadedAt || logo.lastModified || new Date().toISOString(),
-          }));
-        } else {
-          this.currentBanners = [];
-        }
-      } catch (error) {
-        console.warn(
-          "Could not load from GitHub CDN, using empty list:",
-          error
-        );
-        this.currentBanners = [];
-      }
-
-      this.renderBannersGrid();
-      console.log(
-        `Loaded ${this.currentBanners.length} banners from GitHub CDN`
-      );
-    } catch (error) {
-      console.error("Error loading banners:", error);
-      this.showToast("Error loading banners: " + error.message, "error");
-    }
-  }
-
-  // Render banners grid
-  renderBannersGrid() {
-    const bannersGrid = document.getElementById("bannersGrid");
-
-    if (this.currentBanners.length === 0) {
-      bannersGrid.innerHTML =
-        '<div class="loading-placeholder">Chưa có banner nào được upload</div>';
-      return;
-    }
-
-    bannersGrid.innerHTML = "";
-
-    this.currentBanners.forEach((banner) => {
-      const bannerItem = document.createElement("div");
-      bannerItem.className = "banner-item";
-
-      bannerItem.innerHTML = `
-                <img src="${banner.url}" alt="${
-        banner.name
-      }" class="banner-image" 
-                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZGRkIi8+CiAgICA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZHk9Ii4zZW0iIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM5OTkiPkVycm9yPC90ZXh0Pgo8L3N2Zz4K'">
-                <div class="banner-info">
-                    <div class="banner-name">${banner.name}</div>
-                    <div class="banner-size">${this.formatFileSize(
-                      banner.size
-                    )}</div>
-                    <div class="banner-actions">
-                        <button class="btn btn-small btn-danger" onclick="app.deleteBanner('${
-                          banner.id
-                        }')">Xóa</button>
-                    </div>
-                </div>
-            `;
-
-      bannersGrid.appendChild(bannerItem);
-    });
-  }
-
-  // Delete banner
-  async deleteBanner(bannerId) {
-    if (!confirm("Bạn có chắc muốn xóa banner này?")) {
-      return;
-    }
-
-    try {
-      console.log(`Deleting banner: ${bannerId}`);
-      if (
-        !window.GitHubUploadService ||
-        !window.GitHubUploadService.isAuthenticated
-      ) {
-        console.warn(
-          "GitHub service not available - removing local banner",
-          bannerId
-        );
-        this.currentBanners = this.currentBanners.filter(
-          (b) => b.id !== bannerId
-        );
-        this.renderBannersGrid();
-        this.showToast("Banner removed locally", "warning");
-      } else {
-        // Note: GitHub service doesn't have a direct deleteBanner method
-        // This would require implementing delete functionality
-        console.warn("GitHub banner deletion not implemented yet");
-        this.showToast("GitHub banner deletion not implemented", "warning");
-      }
-
-      // Send MQTT notification
-      try {
-        await this.mqttClient.publishBannerDelete(bannerId);
-      } catch (error) {
-        console.warn("Failed to publish MQTT delete notification:", error);
-      }
-
-      this.showToast("Banner deleted successfully", "success");
-      await this.loadCurrentBanners();
-    } catch (error) {
-      console.error("Error deleting banner:", error);
-      this.showToast("Error deleting banner: " + error.message, "error");
-    }
-  }
-
-  // Load settings (local storage only)
-  async loadSettings() {
-    try {
-      console.log("Loading settings from local storage...");
-
-      // Try to load from localStorage
-      const savedSettings = localStorage.getItem("billboard-settings");
-      let settings = { displayMode: "loop", loopDuration: 10 };
-
-      if (savedSettings) {
-        settings = JSON.parse(savedSettings);
-      }
-
-      document.getElementById("displayMode").value =
-        settings.displayMode || "loop";
-      document.getElementById("loopDuration").value =
-        settings.loopDuration || 10;
-
-      console.log("Settings loaded:", settings);
-    } catch (error) {
-      console.error("Error loading settings:", error);
-      this.showToast("Error loading settings: " + error.message, "error");
-    }
-  }
-
-  // Sync settings (local storage + MQTT)
-  async syncSettings() {
-    try {
-      const displayMode = document.getElementById("displayMode").value;
-      const loopDuration = parseInt(
-        document.getElementById("loopDuration").value
-      );
-
-      const settings = {
-        displayMode: displayMode,
-        loopDuration: loopDuration,
-        lastUpdated: new Date().toISOString(),
-      };
-
-      console.log("Syncing settings:", settings);
-
-      // Save to localStorage
-      localStorage.setItem("billboard-settings", JSON.stringify(settings));
-
-      // Send MQTT notification
-      try {
-        await this.mqttClient.publishSettingsSync(settings);
-      } catch (error) {
-        console.warn("Failed to publish MQTT settings sync:", error);
-      }
-
-      this.showToast("Settings synced successfully", "success");
-    } catch (error) {
-      console.error("Error syncing settings:", error);
-      this.showToast("Error syncing settings: " + error.message, "error");
-    }
-  }
-
-  // Update settings preview
-  updateSettingsPreview() {
-    const displayMode = document.getElementById("displayMode").value;
-    const loopDuration = parseInt(
-      document.getElementById("loopDuration").value
-    );
-
-    // You can add real-time preview logic here
-    console.log("Settings preview updated:", { displayMode, loopDuration });
-  }
-
-  // Update connection status in UI
-  updateConnectionStatus(status) {
-    const statusIndicator = document.getElementById("statusIndicator");
-    const statusText = document.getElementById("statusText");
-
-    statusIndicator.className = "status-indicator";
-
-    switch (status.status) {
-      case "connected":
-        statusIndicator.classList.add("online");
-        statusText.textContent = "Đã kết nối";
-        break;
-      case "connecting":
-      case "reconnecting":
-        statusIndicator.classList.add("connecting");
-        statusText.textContent = "Đang kết nối...";
-        break;
-      case "disconnected":
-        statusIndicator.classList.add("offline");
-        statusText.textContent = "Mất kết nối";
-        break;
-      case "error":
-        statusIndicator.classList.add("offline");
-        statusText.textContent = "Lỗi kết nối";
-        break;
-      default:
-        statusIndicator.classList.add("offline");
-        statusText.textContent = "Không xác định";
-    }
-  }
-
-  // Handle keyboard shortcuts
-  handleKeyboardShortcuts(event) {
-    // Ctrl+U: Upload
-    if (event.ctrlKey && event.key === "u") {
-      event.preventDefault();
-      this.triggerFileSelect();
-    }
-
-    // Ctrl+S: Sync settings
-    if (event.ctrlKey && event.key === "s") {
-      event.preventDefault();
-      this.syncSettings();
-    }
-
-    // Esc: Close modal
-    if (event.key === "Escape") {
-      this.closeModal();
-    }
-  }
-
-  // Utility: Format file size
-  formatFileSize(bytes) {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-  }
-
-  // Show toast notification
-  showToast(message, type = "info", duration = 5000) {
-    const toastContainer = document.getElementById("toastContainer");
-
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-
-    const emoji = {
-      success: "✅",
-      error: "❌",
-      warning: "⚠️",
-      info: "ℹ️",
+    const settings = {
+      displayMode: displayMode,
+      loopDuration: loopDuration,
+      lastUpdated: new Date().toISOString(),
     };
 
-    toast.innerHTML = `
-            <span class="toast-emoji">${emoji[type] || emoji.info}</span>
-            <span class="toast-message">${message}</span>
-        `;
+    console.log("Syncing settings:", settings);
 
-    toastContainer.appendChild(toast);
+    // Save to localStorage
+    localStorage.setItem("billboard-settings", JSON.stringify(settings));
 
-    // Auto remove toast
-    setTimeout(() => {
-      if (toast.parentNode) {
-        toast.parentNode.removeChild(toast);
+    // Send MQTT notification
+    try {
+      if (window.MqttClient) {
+        await window.MqttClient.publishSettingsSync(settings);
       }
-    }, duration);
+    } catch (error) {
+      console.warn("Failed to publish MQTT settings sync:", error);
+    }
 
-    console.log(`[${type.toUpperCase()}] ${message}`);
-  }
-
-  // Show modal
-  showModal(title, content) {
-    const modal = document.getElementById("modal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalBody = document.getElementById("modalBody");
-
-    modalTitle.textContent = title;
-    modalBody.innerHTML = content;
-    modal.classList.remove("hidden");
-  }
-
-  // Close modal
-  closeModal() {
-    const modal = document.getElementById("modal");
-    modal.classList.add("hidden");
-  }
-}
-
-// Global functions for HTML onclick handlers
-function triggerFileSelect() {
-  document.getElementById("fileInput").click();
-}
-
-function uploadBanners() {
-  if (window.app) {
-    window.app.uploadBanners();
-  }
-}
-
-function syncSettings() {
-  if (window.app) {
-    window.app.syncSettings();
+    showToast("Settings synced successfully", "success");
+  } catch (error) {
+    console.error("Error syncing settings:", error);
+    showToast("Error syncing settings: " + error.message, "error");
   }
 }
 
 // ====================================
-// LOGO MANIFEST SERVICE (GitHub CDN Sync)
+// MQTT INITIALIZATION
+// ====================================
+
+// Initialize MQTT connection
+async function initializeMQTT() {
+  try {
+    console.log("Initializing MQTT client...");
+
+    if (window.MqttClient) {
+      try {
+        await window.MqttClient.connect();
+
+        // Setup MQTT status monitoring
+        window.MqttClient.onStatusChange((status) => {
+          updateConnectionStatus(status);
+        });
+
+        showToast("MQTT connected successfully", "success");
+      } catch (error) {
+        console.warn("MQTT connection failed:", error);
+        showToast(
+          "MQTT connection failed, continuing in offline mode",
+          "warning"
+        );
+      }
+    } else {
+      console.warn("MQTT client not available");
+      showToast("MQTT client not available", "warning");
+    }
+  } catch (error) {
+    console.error("MQTT initialization error:", error);
+    showToast("MQTT initialization failed: " + error.message, "error");
+  }
+}
+
+// ====================================
+// LOGO MANIFEST SERVICE (GitHub CDN Sync) - Simplified
 // ====================================
 
 class LogoManifestManager {
   constructor() {
     this.manifestUrl =
       "https://mquan-eoh.github.io/billboard-logos-cdn/manifest.json";
-    this.githubToken = null; // Will be loaded from config
     this.currentManifest = null;
-    this.githubAPI = "https://api.github.com";
-    this.owner = "mquan-eoh";
-    this.repo = "billboard-logos-cdn";
 
-    this.loadGitHubToken();
     this.initializeManifestUI();
-  }
-
-  async loadGitHubToken() {
-    // In a real app, this would be loaded from secure config
-    // For demo purposes, we'll use a placeholder
-    console.log("GitHub token should be configured for production use");
   }
 
   initializeManifestUI() {
@@ -707,15 +220,15 @@ class LogoManifestManager {
         this.updateManifestDisplay();
         this.displayLogos();
         this.updateManifestStatus("online");
-        return this.currentManifest; // Return the manifest
+        return this.currentManifest;
       } else {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
     } catch (error) {
       console.error("Failed to fetch manifest:", error);
       this.updateManifestStatus("error");
-      this.showToast("Không thể tải manifest từ GitHub", "error");
-      return null; // Return null on error
+      showToast("Không thể tải manifest từ GitHub", "error");
+      return null;
     }
   }
 
@@ -782,7 +295,6 @@ class LogoManifestManager {
           <p>Status: ${logo.active ? "Active" : "Inactive"}</p>
         </div>
         <div class="logo-actions">
-          <button class="btn btn-small btn-primary" onclick="window.logoManifest.editLogo(${index})">Edit</button>
           <button class="btn btn-small ${
             logo.active ? "btn-warning" : "btn-success"
           }" 
@@ -797,75 +309,10 @@ class LogoManifestManager {
     });
   }
 
-  showManifestEditor() {
-    const editor = document.getElementById("manifestEditor");
-    const textarea = document.getElementById("manifestJson");
-
-    if (editor && textarea) {
-      textarea.value = JSON.stringify(this.currentManifest, null, 2);
-      editor.classList.remove("hidden");
-      editor.style.display = "block";
-    }
-  }
-
-  async validateManifest() {
-    const textarea = document.getElementById("manifestJson");
-    if (!textarea) return;
-
-    try {
-      const manifest = JSON.parse(textarea.value);
-      console.log("Manifest is valid JSON:", manifest);
-      this.showToast("Manifest JSON hợp lệ", "success");
-      return true;
-    } catch (error) {
-      console.error("Manifest validation failed:", error);
-      this.showToast(`Lỗi JSON: ${error.message}`, "error");
-      return false;
-    }
-  }
-
-  async saveManifest() {
-    if (!(await this.validateManifest())) return;
-
-    const textarea = document.getElementById("manifestJson");
-    if (!textarea) return;
-
-    try {
-      const newManifest = JSON.parse(textarea.value);
-
-      // Update timestamp
-      newManifest.lastUpdated = new Date().toISOString();
-
-      // In a real implementation, this would commit to GitHub
-      console.log("Would save manifest to GitHub:", newManifest);
-      this.showToast(
-        "⚠️ Demo mode: GitHub commit không được thực hiện",
-        "warning"
-      );
-
-      // Update local copy
-      this.currentManifest = newManifest;
-      this.updateManifestDisplay();
-      this.displayLogos();
-      this.closeManifestEditor();
-    } catch (error) {
-      console.error("Failed to save manifest:", error);
-      this.showToast("Lỗi khi lưu manifest", "error");
-    }
-  }
-
-  closeManifestEditor() {
-    const editor = document.getElementById("manifestEditor");
-    if (editor) {
-      editor.style.display = "none";
-    }
-  }
-
   async forceRefreshBillboard() {
     try {
       console.log("Sending force refresh signal to billboard...");
 
-      // Create custom event for logo manifest update
       const manifestUpdateData = {
         action: "force-refresh-manifest",
         manifest: this.currentManifest,
@@ -877,59 +324,23 @@ class LogoManifestManager {
       try {
         await window.MqttClient.publishManifestRefresh(manifestUpdateData);
         console.log("MQTT manifest refresh signal sent:", manifestUpdateData);
-        this.showToast("Force refresh signal sent to billboard", "info");
+        showToast("Force refresh signal sent to billboard", "info");
 
         // Simulate billboard response
         setTimeout(() => {
-          this.showToast("Billboard refreshed successfully", "success");
+          showToast("Billboard refreshed successfully", "success");
         }, 2000);
       } catch (error) {
         console.warn("Failed to send MQTT refresh signal:", error);
-        this.showToast(
+        showToast(
           "Failed to send refresh signal, but manifest is updated",
           "warning"
         );
       }
     } catch (error) {
       console.error("Failed to refresh billboard:", error);
-      this.showToast("Error sending refresh signal to billboard", "error");
+      showToast("Error sending refresh signal to billboard", "error");
     }
-  }
-
-  async generateNewManifest() {
-    const newManifest = {
-      version: "1.0." + Date.now(),
-      lastUpdated: new Date().toISOString(),
-      logos: [
-        {
-          id: "company-main",
-          name: "Company Main Logo",
-          url: "https://mquan-eoh.github.io/billboard-logos-cdn/logos/EoH_ERa_Web-Banner_1920x800-1.png",
-          filename: "EoH_ERa_Web-Banner_1920x800-1.png",
-          size: 25600,
-          type: "image/png",
-          checksum: "abc123def456",
-          priority: 1,
-          active: true,
-          uploadedAt: new Date().toISOString(),
-        },
-      ],
-      settings: {
-        logoMode: "loop",
-        logoLoopDuration: 30,
-        schedules: [],
-      },
-      metadata: {
-        author: "Admin Web Interface",
-        description: "Auto-generated manifest",
-        apiVersion: "v1",
-      },
-    };
-
-    this.currentManifest = newManifest;
-    this.updateManifestDisplay();
-    this.displayLogos();
-    this.showToast("✅ New manifest generated", "success");
   }
 
   toggleLogoStatus(index) {
@@ -943,7 +354,7 @@ class LogoManifestManager {
     const status = this.currentManifest.logos[index].active
       ? "enabled"
       : "disabled";
-    this.showToast(`Logo ${status} successfully`, "success");
+    showToast(`Logo ${status} successfully`, "success");
   }
 
   deleteLogo(index) {
@@ -954,49 +365,20 @@ class LogoManifestManager {
       this.currentManifest.logos.splice(index, 1);
       this.updateManifestDisplay();
       this.displayLogos();
-      this.showToast(`Logo "${logoName}" đã được xóa`, "success");
-    }
-  }
-
-  editLogo(index) {
-    if (!this.currentManifest?.logos?.[index]) return;
-
-    const logo = this.currentManifest.logos[index];
-    const newName = prompt("Tên logo:", logo.name);
-    const newPriority = prompt("Độ ưu tiên (1-10):", logo.priority);
-
-    if (newName && newPriority) {
-      logo.name = newName;
-      logo.priority = parseInt(newPriority);
-      this.displayLogos();
-      this.showToast("Logo updated successfully", "success");
-    }
-  }
-
-  showToast(message, type = "info") {
-    if (window.app && window.app.showToast) {
-      window.app.showToast(message, type);
-    } else {
-      console.log(`[${type.toUpperCase()}] ${message}`);
+      showToast(`Logo "${logoName}" đã được xóa`, "success");
     }
   }
 }
+
+// ====================================
+// GLOBAL FUNCTIONS FOR HTML HANDLERS
+// ====================================
 
 // Global functions for Logo Manifest
 function selectLogoFile() {
   const fileInput = document.getElementById("githubFileInput");
   if (fileInput) {
     fileInput.click();
-  }
-}
-
-function uploadLogoToGithub() {
-  console.log("Upload logo to GitHub functionality - Demo mode");
-  if (window.logoManifest) {
-    window.logoManifest.showToast(
-      "⚠️ Demo mode: GitHub upload không khả dụng",
-      "warning"
-    );
   }
 }
 
@@ -1012,35 +394,40 @@ function forceRefreshBillboard() {
   }
 }
 
-function generateNewManifest() {
-  if (window.logoManifest) {
-    window.logoManifest.generateNewManifest();
-  }
+function showHelp() {
+  showModal(
+    "Hướng dẫn sử dụng",
+    `
+        <h4>Cách sử dụng Banner Management System:</h4>
+        <ul>
+            <li><strong>GitHub Authentication:</strong> Nhập GitHub token để upload banner</li>
+            <li><strong>Upload Banner:</strong> Chọn files và click "Upload Banner"</li>
+            <li><strong>Quản lý Banner:</strong> Enable/Disable hoặc xóa banner trong CDN</li>
+            <li><strong>Cài đặt:</strong> Thay đổi chế độ hiển thị và sync settings</li>
+        </ul>
+        <p><strong>Lưu ý:</strong> Chỉ sử dụng GitHub CDN workflow - đơn giản và hiệu quả</p>
+    `
+  );
 }
 
-function validateManifest() {
-  if (window.logoManifest) {
-    window.logoManifest.validateManifest();
-  }
-}
-
-function saveManifest() {
-  if (window.logoManifest) {
-    window.logoManifest.saveManifest();
-  }
-}
-
-function closeManifestEditor() {
-  if (window.logoManifest) {
-    window.logoManifest.closeManifestEditor();
-  }
+function showAbout() {
+  showModal(
+    "Về chúng tôi",
+    `
+        <h4>ITS Billboard Management System</h4>
+        <p><strong>Version:</strong> ${window.BannerConfig.app.version}</p>
+        <p><strong>Công ty:</strong> ITS Company</p>
+        <p><strong>Mô tả:</strong> Hệ thống quản lý banner quảng cáo đơn giản với GitHub CDN</p>
+        <br>
+        <p><strong>Workflow:</strong> GitHub CDN → MQTT → Billboard Display</p>
+    `
+  );
 }
 
 // ====================================
-// GITHUB UPLOAD INTEGRATION
+// GITHUB UPLOAD INTEGRATION - Simplified
 // ====================================
 
-// GitHub Upload Integration
 let githubSelectedFiles = [];
 
 async function authenticateGitHub() {
@@ -1048,9 +435,7 @@ async function authenticateGitHub() {
   const token = tokenInput.value.trim();
 
   if (!token) {
-    if (window.app) {
-      window.app.showToast("Vui lòng nhập GitHub token", "error");
-    }
+    showToast("Vui lòng nhập GitHub token", "error");
     return;
   }
 
@@ -1060,63 +445,29 @@ async function authenticateGitHub() {
     if (success) {
       document.getElementById("githubAuthCard").style.display = "none";
       document.getElementById("githubUploadSection").style.display = "block";
-
-      if (window.app) {
-        window.app.showToast("✅ GitHub authentication successful", "success");
-      }
+      showToast("✅ GitHub authentication successful", "success");
     } else {
-      if (window.app) {
-        window.app.showToast("❌ GitHub authentication failed", "error");
-      }
+      showToast("❌ GitHub authentication failed", "error");
     }
   } catch (error) {
     console.error("GitHub auth error:", error);
-    if (window.app) {
-      window.app.showToast("GitHub auth error: " + error.message, "error");
-    }
+    showToast("GitHub auth error: " + error.message, "error");
   }
 }
-
-function selectLogoFile() {
-  const fileInput = document.getElementById("githubFileInput");
-  if (fileInput) {
-    fileInput.click();
-  }
-}
-
-// Handle GitHub file selection
-document.addEventListener("DOMContentLoaded", () => {
-  const githubFileInput = document.getElementById("githubFileInput");
-  if (githubFileInput) {
-    githubFileInput.addEventListener("change", (e) => {
-      const files = Array.from(e.target.files);
-      handleGitHubFileSelection(files);
-    });
-  }
-});
 
 function handleGitHubFileSelection(files) {
   console.log("GitHub files selected:", files.length);
 
   githubSelectedFiles = files.filter((file) => {
-    // Validate file type
     const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
     if (!validTypes.includes(file.type)) {
-      if (window.app) {
-        window.app.showToast(
-          `File ${file.name}: Loại file không hỗ trợ`,
-          "error"
-        );
-      }
+      showToast(`File ${file.name}: Loại file không hỗ trợ`, "error");
       return false;
     }
 
-    // Validate file size (10MB limit for GitHub)
-    const maxSize = 10 * 1024 * 1024;
+    const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
-      if (window.app) {
-        window.app.showToast(`File ${file.name}: Quá lớn (max 10MB)`, "error");
-      }
+      showToast(`File ${file.name}: Quá lớn (max 10MB)`, "error");
       return false;
     }
 
@@ -1130,72 +481,47 @@ function handleGitHubFileSelection(files) {
       uploadBtn.disabled = false;
       uploadBtn.querySelector(
         ".btn-text"
-      ).textContent = `📤 Upload ${githubSelectedFiles.length} logo(s) to GitHub`;
+      ).textContent = `📤 Upload ${githubSelectedFiles.length} banner(s)`;
     } else {
       uploadBtn.disabled = true;
-      uploadBtn.querySelector(".btn-text").textContent = "📤 Upload to GitHub";
+      uploadBtn.querySelector(".btn-text").textContent = "📤 Upload Banner";
     }
   }
 
-  if (window.app) {
-    window.app.showToast(
-      `Selected ${githubSelectedFiles.length} valid logo files`,
-      "info"
-    );
-  }
+  showToast(
+    `Selected ${githubSelectedFiles.length} valid banner files`,
+    "info"
+  );
 }
 
-// Test GitHub Connection
 async function testGitHubConnection() {
   const testBtn = document.getElementById("githubTestBtn");
   const btnText = testBtn.querySelector(".btn-text");
   const btnLoading = testBtn.querySelector(".btn-loading");
 
-  // Update UI to loading state
   testBtn.disabled = true;
   btnText.style.display = "none";
   btnLoading.style.display = "inline";
 
   try {
-    console.log("Testing GitHub connection...");
-
-    // Check if GitHub service is available
-    if (!window.GitHubUploadService) {
-      throw new Error(
-        "GitHub service not available. Make sure github-upload-service.js is loaded."
-      );
-    }
-
-    if (!window.GitHubUploadService.isAuthenticated) {
+    if (!window.GitHubUploadService?.isAuthenticated) {
       throw new Error(
         "GitHub service not authenticated. Please authenticate first."
       );
     }
 
-    // Test authentication
     const isAuthenticated =
       await window.GitHubUploadService.testAuthentication();
 
     if (isAuthenticated) {
-      if (window.app) {
-        window.app.showToast(
-          "✅ GitHub connection successful! Repository found and accessible.",
-          "success"
-        );
-      }
+      showToast("✅ GitHub connection successful!", "success");
     } else {
       throw new Error("Authentication failed or repository not accessible");
     }
   } catch (error) {
     console.error("GitHub connection test failed:", error);
-    if (window.app) {
-      window.app.showToast(
-        "❌ GitHub connection failed: " + error.message,
-        "error"
-      );
-    }
+    showToast("❌ GitHub connection failed: " + error.message, "error");
   } finally {
-    // Reset UI
     testBtn.disabled = false;
     btnText.style.display = "inline";
     btnLoading.style.display = "none";
@@ -1204,9 +530,7 @@ async function testGitHubConnection() {
 
 async function uploadLogoToGithub() {
   if (githubSelectedFiles.length === 0) {
-    if (window.app) {
-      window.app.showToast("Chưa chọn file nào", "warning");
-    }
+    showToast("Chưa chọn file nào", "warning");
     return;
   }
 
@@ -1219,20 +543,16 @@ async function uploadLogoToGithub() {
   const progressStatus = document.getElementById("githubProgressStatus");
 
   try {
-    // Show progress
     progressDiv.style.display = "block";
     btnText.style.display = "none";
     btnLoading.style.display = "inline";
     uploadBtn.disabled = true;
 
-    if (window.app) {
-      window.app.showToast(
-        `Starting GitHub upload of ${githubSelectedFiles.length} files...`,
-        "info"
-      );
-    }
+    showToast(
+      `Starting GitHub upload of ${githubSelectedFiles.length} files...`,
+      "info"
+    );
 
-    // Upload with progress tracking
     const result = await window.uploadLogosToGitHub(
       githubSelectedFiles,
       (current, total, status) => {
@@ -1244,109 +564,63 @@ async function uploadLogoToGithub() {
     );
 
     if (result.success) {
-      if (window.app) {
-        window.app.showToast(
-          `✅ GitHub upload completed: ${result.uploaded} successful, ${result.failed} failed`,
-          "success"
-        );
-      }
+      showToast(
+        `✅ Upload completed: ${result.uploaded} successful, ${result.failed} failed`,
+        "success"
+      );
 
-      // Clear selection
       githubSelectedFiles = [];
       document.getElementById("githubFileInput").value = "";
 
-      // Force refresh manifest display
+      // Refresh manifest display
       if (window.logoManifest) {
         window.logoManifest.currentManifest = result.manifest;
         window.logoManifest.updateManifestDisplay();
         window.logoManifest.displayLogos();
       }
 
-      // Auto refresh billboard
-      setTimeout(() => {
-        forceRefreshBillboard();
-      }, 2000);
+      setTimeout(() => forceRefreshBillboard(), 2000);
     } else {
-      if (window.app) {
-        window.app.showToast("❌ GitHub upload failed", "error");
-      }
+      showToast("❌ GitHub upload failed", "error");
     }
   } catch (error) {
     console.error("GitHub upload error:", error);
-    if (window.app) {
-      window.app.showToast("GitHub upload error: " + error.message, "error");
-    }
+    showToast("GitHub upload error: " + error.message, "error");
   } finally {
-    // Hide progress
     progressDiv.style.display = "none";
     btnText.style.display = "inline";
     btnLoading.style.display = "none";
     uploadBtn.disabled = false;
-
-    // Reset button text
-    btnText.textContent = "📤 Upload to GitHub";
+    btnText.textContent = "📤 Upload Banner";
   }
 }
 
 // ====================================
-// ORIGINAL FUNCTIONS
+// APPLICATION INITIALIZATION
 // ====================================
-
-function showHelp() {
-  if (window.app) {
-    window.app.showModal(
-      "Hướng dẫn sử dụng",
-      `
-            <h4>Cách sử dụng Banner Management System:</h4>
-            <ul>
-                <li><strong>Upload Banner:</strong> Kéo thả file ảnh hoặc click "Chọn Files"</li>
-                <li><strong>Quản lý Banner:</strong> Xem danh sách và xóa banner trong phần "Banner Hiện Tại"</li>
-                <li><strong>Cài đặt:</strong> Thay đổi chế độ hiển thị và thời gian xoay banner</li>
-                <li><strong>Phím tắt:</strong> Ctrl+U (Upload), Ctrl+S (Sync), Esc (Đóng modal)</li>
-            </ul>
-            <p><strong>Lưu ý:</strong> File ảnh hỗ trợ PNG, JPG, GIF với kích thước tối đa 5MB</p>
-        `
-    );
-  }
-}
-
-function showAbout() {
-  if (window.app) {
-    window.app.showModal(
-      "Về chúng tôi",
-      `
-            <h4>ITS Billboard Management System</h4>
-            <p><strong>Version:</strong> ${window.BannerConfig.app.version}</p>
-            <p><strong>Công ty:</strong> ITS Company</p>
-            <p><strong>Mô tả:</strong> Hệ thống quản lý banner quảng cáo từ xa cho billboard outdoor</p>
-            <br>
-            <p><strong>Công nghệ sử dụng:</strong></p>
-            <ul>
-                <li>Firebase Storage & Firestore</li>
-                <li>MQTT Real-time Communication</li>
-                <li>Glass Effect UI Design</li>
-                <li>Progressive Web App</li>
-            </ul>
-        `
-    );
-  }
-}
-
-function closeModal() {
-  if (window.app) {
-    window.app.closeModal();
-  }
-}
 
 // Initialize app when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM loaded, initializing services...");
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("DOM loaded, initializing simplified banner management app...");
 
-  // Initialize Logo Manifest Manager first
+  // Setup GitHub file input handler
+  const githubFileInput = document.getElementById("githubFileInput");
+  if (githubFileInput) {
+    githubFileInput.addEventListener("change", (e) => {
+      const files = Array.from(e.target.files);
+      handleGitHubFileSelection(files);
+    });
+  }
+
+  // Initialize Logo Manifest Manager
   console.log("Initializing Logo Manifest Manager...");
   window.logoManifest = new LogoManifestManager();
 
-  // Then initialize the main app
-  console.log("Initializing main app...");
-  window.app = new BannerManagementApp();
+  // Initialize MQTT
+  await initializeMQTT();
+
+  // Load settings
+  await loadSettings();
+
+  console.log("Simplified app initialized successfully!");
 });

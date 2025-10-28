@@ -1,14 +1,17 @@
-// Configuration for Banner Management System
+// Simplified Configuration for Banner Management System
+// GitHub CDN + MQTT Only - Removed Legacy Upload Settings
+
 const CONFIG = {
   // GitHub CDN Configuration (Primary upload system)
   github: {
     enabled: true,
-    owner: "MQuan-eoh",
+    owner: "MQuan-eoh", // Will be auto-updated with authenticated user
     repo: "billboard-logos-cdn",
     branch: "main",
     apiEndpoint: "https://api.github.com",
     cdnEndpoint: "https://MQuan-eoh.github.io/billboard-logos-cdn",
     uploadPath: "logos/",
+    maxFileSize: 10 * 1024 * 1024, // 10MB for GitHub
   },
 
   // MQTT Configuration
@@ -18,6 +21,7 @@ const CONFIG = {
       bannerUpdate: "its/billboard/banner/update",
       bannerDelete: "its/billboard/banner/delete",
       bannerSync: "its/billboard/banner/sync",
+      manifestRefresh: "its/billboard/manifest/refresh",
       status: "its/billboard/status",
     },
     options: {
@@ -28,20 +32,16 @@ const CONFIG = {
     },
   },
 
-  // Upload Settings
-  upload: {
-    maxFileSize: 5 * 1024 * 1024, // 5MB
-    allowedTypes: ["image/png", "image/jpeg", "image/jpg", "image/gif"],
-    allowedExtensions: [".png", ".jpg", ".jpeg", ".gif"],
-  },
-
   // App Settings
   app: {
-    version: "1.0.0",
-    name: "ITS Billboard Management",
-    maxBanners: 20,
+    version: "2.0.0-simplified",
+    name: "ITS Billboard Management - GitHub CDN",
+    workflow: "GitHub CDN Only",
     defaultLoopDuration: 10,
   },
+
+  // Allowed file types
+  allowedTypes: ["image/png", "image/jpeg", "image/jpg", "image/gif"],
 };
 
 // Generate unique client ID for MQTT
