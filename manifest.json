@@ -1,37 +1,52 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1761645393396",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "logo1",
-      "name": "EoH ERa Web Banner",
-      "url": "https://github.com/MQuan-eoh/billboard-logos-cdn/blob/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
-      "version": "1.0",
-      "size": "1920x800",
-      "format": "png",
-      "description": "Logo chính EoH ERa"
+      "id": "z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1761645383075",
+      "name": "z7085121749220_c83d918f22452e1f42f4482f2e22fb03",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1761645383075.jpg",
+      "filename": "z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1761645383075.jpg",
+      "size": 380580,
+      "type": "image/jpeg",
+      "checksum": "z7085121749220c83d918f22452e1f42f4482f2e22fb03jpg3805801761645386079",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-28T09:56:26.079Z",
+      "githubPath": "logos/z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1761645383075.jpg",
+      "githubSha": "5e43780debe668458d08d0b2c521eb186088b74d"
     },
     {
-      "id": "logo2",
-      "name": "Industrial Dashboard Symbol",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo Industrial Dashboard"
+      "id": "z7085121748382-2e70b519ccb0599d9938ad438aea41f7-1761645386087",
+      "name": "z7085121748382_2e70b519ccb0599d9938ad438aea41f7",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121748382-2e70b519ccb0599d9938ad438aea41f7-1761645386087.jpg",
+      "filename": "z7085121748382-2e70b519ccb0599d9938ad438aea41f7-1761645386087.jpg",
+      "size": 561794,
+      "type": "image/jpeg",
+      "checksum": "z70851217483822e70b519ccb0599d9938ad438aea41f7jpg5617941761645390141",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-28T09:56:30.141Z",
+      "githubPath": "logos/z7085121748382-2e70b519ccb0599d9938ad438aea41f7-1761645386087.jpg",
+      "githubSha": "e7ef7cb5f24cb93b5da58111b48f0885c83c6ea3"
     },
     {
-      "id": "logo3",
-      "name": "Special Event Logo",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo sự kiện đặc biệt"
+      "id": "z7085121756040-358cffc35564647bef9a6fef40de1c01-1761645390146",
+      "name": "z7085121756040_358cffc35564647bef9a6fef40de1c01",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121756040-358cffc35564647bef9a6fef40de1c01-1761645390146.jpg",
+      "filename": "z7085121756040-358cffc35564647bef9a6fef40de1c01-1761645390146.jpg",
+      "size": 430656,
+      "type": "image/jpeg",
+      "checksum": "z7085121756040358cffc35564647bef9a6fef40de1c01jpg4306561761645392978",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-28T09:56:32.978Z",
+      "githubPath": "logos/z7085121756040-358cffc35564647bef9a6fef40de1c01-1761645390146.jpg",
+      "githubSha": "fbde9ee1c51f195b9dadb7e530e142d51f5e791b"
     }
   ],
   "settings": {
-    "logoMode": "scheduled",
+    "logoMode": "loop",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -51,6 +66,14 @@
           "endTime": "22:00"
         }
       ]
-    }
+    },
+    "logoLoopDuration": 4
+  },
+  "lastUpdated": "2025-10-28T09:56:33.396Z",
+  "metadata": {
+    "author": "Admin Web Interface",
+    "description": "Billboard logo manifest",
+    "apiVersion": "v1",
+    "lastModifiedBy": "Admin Web Interface"
   }
 }
