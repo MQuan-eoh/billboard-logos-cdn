@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1761625585223",
+  "version": "1.0.0",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
@@ -28,20 +28,6 @@
       "size": "1920x1080",
       "format": "png",
       "description": "Logo sự kiện đặc biệt"
-    },
-    {
-      "id": "eoh-era-web-banner-1920x800-1-1761625581787",
-      "name": "EoH_ERa_Web-Banner_1920x800-1",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/eoh-era-web-banner-1920x800-1-1761625581787.png",
-      "filename": "eoh-era-web-banner-1920x800-1-1761625581787.png",
-      "size": 733002,
-      "type": "image/png",
-      "checksum": "eoherawebbanner1920x8001png7330021761625584797",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-10-28T04:26:24.797Z",
-      "githubPath": "logos/eoh-era-web-banner-1920x800-1-1761625581787.png",
-      "githubSha": "01b768a1a1ba4b07b8043049b12f9ae33d317fbb"
     }
   ],
   "settings": {
@@ -66,12 +52,5 @@
         }
       ]
     }
-  },
-  "lastUpdated": "2025-10-28T04:26:25.223Z",
-  "metadata": {
-    "author": "Admin Web Interface",
-    "description": "Billboard logo manifest",
-    "apiVersion": "v1",
-    "lastModifiedBy": "Admin Web Interface"
   }
 }
