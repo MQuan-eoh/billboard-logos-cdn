@@ -96,11 +96,40 @@ class GitHubUploadService {
 
         if (repoResponse.status === 404) {
           console.warn(
-            `GitHubUploadService: Repository ${this.config.owner}/${this.config.repo} not found. Please create it first.`
+            `GitHubUploadService: Repository ${this.config.owner}/${this.config.repo} not found.`
           );
-          throw new Error(
-            `Repository ${this.config.owner}/${this.config.repo} not found. Please create the repository first.`
+          console.log("GitHubUploadService: Attempting to create repository...");
+          
+          // Try to create the repository
+          const createRepoResponse = await fetch(
+            `${this.config.apiEndpoint}/user/repos`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `token ${this.token}`,
+                Accept: "application/vnd.github.v3+json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: this.config.repo,
+                description: "Billboard logos CDN repository",
+                auto_init: true,
+                public: true,
+              }),
+            }
           );
+
+          if (createRepoResponse.ok) {
+            console.log("GitHubUploadService: Repository created successfully");
+            // Wait a moment for the repository to be ready
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            return true;
+          } else {
+            const createError = await createRepoResponse.json().catch(() => ({}));
+            throw new Error(
+              `Repository ${this.config.owner}/${this.config.repo} not found and could not be created: ${createError.message || createRepoResponse.statusText}`
+            );
+          }
         }
 
         return response.ok && repoResponse.ok;
@@ -199,11 +228,21 @@ class GitHubUploadService {
       );
 
       if (!uploadResponse.ok) {
-        const errorData = await uploadResponse.json();
+        const errorData = await uploadResponse.json().catch(() => ({ 
+          message: `HTTP ${uploadResponse.status}: ${uploadResponse.statusText}` 
+        }));
         console.error("GitHubUploadService: Upload error response:", errorData);
-        throw new Error(
-          `Upload failed: ${errorData.message || uploadResponse.statusText}`
-        );
+        
+        // Provide more specific error messages
+        if (uploadResponse.status === 404) {
+          throw new Error(`Repository or path not found. Please check if the repository '${this.config.owner}/${this.config.repo}' exists and you have write access.`);
+        } else if (uploadResponse.status === 401) {
+          throw new Error("Authentication failed. Please check your GitHub token.");
+        } else if (uploadResponse.status === 403) {
+          throw new Error("Access denied. Please check if you have write permissions to the repository.");
+        } else {
+          throw new Error(`Upload failed: ${errorData.message || uploadResponse.statusText}`);
+        }
       }
 
       const uploadResult = await uploadResponse.json();
