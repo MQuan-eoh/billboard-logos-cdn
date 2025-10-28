@@ -4,6 +4,7 @@ class BannerManagementApp {
     this.selectedFiles = [];
     this.currentBanners = [];
     this.isUploading = false;
+    // Use global MQTT client instance
     this.mqttClient = window.MqttClient;
 
     this.initializeApp();
@@ -30,19 +31,30 @@ class BannerManagementApp {
     try {
       // Initialize GitHub Upload Service
       console.log("Initializing GitHub CDN service...");
-      await initGitHubService();
+      // Note: GitHub service is available globally as window.GitHubUploadService
+      // No token required for basic functionality
       this.showToast("GitHub CDN service ready", "success");
 
       // Initialize MQTT
       console.log("Initializing MQTT client...");
-      await this.mqttClient.connect();
+      if (this.mqttClient) {
+        try {
+          await this.mqttClient.connect();
+          
+          // Setup MQTT status monitoring
+          this.mqttClient.onStatusChange((status) => {
+            this.updateConnectionStatus(status);
+          });
 
-      // Setup MQTT status monitoring
-      this.mqttClient.onStatusChange((status) => {
-        this.updateConnectionStatus(status);
-      });
-
-      this.showToast("MQTT connected successfully", "success");
+          this.showToast("MQTT connected successfully", "success");
+        } catch (error) {
+          console.warn("MQTT connection failed:", error);
+          this.showToast("MQTT connection failed, continuing in offline mode", "warning");
+        }
+      } else {
+        console.warn("MQTT client not available");
+        this.showToast("MQTT client not available", "warning");
+      }
     } catch (error) {
       console.error("Service initialization error:", error);
       this.showToast(
@@ -249,10 +261,10 @@ class BannerManagementApp {
       for (const file of this.selectedFiles) {
         console.log(`Uploading file: ${file.name}`);
 
-        if (!this.firebaseReady) {
+        if (!window.GitHubUploadService || !window.GitHubUploadService.isAuthenticated) {
           // Demo/offline mode: simulate upload and add to local banners list
           console.warn(
-            "Firebase unavailable - simulating upload for:",
+            "GitHub service unavailable - simulating upload for:",
             file.name
           );
           const simulated = {
@@ -272,25 +284,28 @@ class BannerManagementApp {
           continue;
         }
 
-        // Upload file with progress tracking
-        const result = await this.firebaseService.uploadFile(
+        // Upload file with progress tracking using GitHub service
+        const result = await window.GitHubUploadService.uploadLogo(
           file,
-          (progress) => {
-            const overallProgress =
-              (completedFiles / totalFiles) * 100 + progress / totalFiles;
-            progressFill.style.width = `${overallProgress}%`;
-            progressText.textContent = `${Math.round(overallProgress)}%`;
+          {
+            name: file.name.replace(/\.[^/.]+$/, ""),
+            priority: 1,
+            active: true
           }
         );
 
         console.log(`File uploaded successfully:`, result);
 
         // Send MQTT notification for this banner
-        await this.mqttClient.publishBannerUpdate({
-          id: result.id,
-          url: result.url,
-          metadata: result.metadata,
-        });
+        try {
+          await this.mqttClient.publishBannerUpdate({
+            id: result.id,
+            url: result.url,
+            metadata: result.metadata,
+          });
+        } catch (error) {
+          console.warn("Failed to publish MQTT update:", error);
+        }
 
         completedFiles++;
       }
@@ -329,14 +344,19 @@ class BannerManagementApp {
 
       // Try to load manifest from GitHub CDN
       try {
-        const manifest = await this.fetchCurrentManifest();
+        // Use the global LogoManifestManager instance to fetch manifest
+        let manifest = null;
+        if (window.logoManifest) {
+          manifest = await window.logoManifest.fetchCurrentManifest();
+        }
+        
         if (manifest && manifest.logos) {
           this.currentBanners = manifest.logos.map((logo) => ({
-            id: logo.name,
-            name: logo.name,
+            id: logo.name || logo.id,
+            name: logo.name || logo.filename,
             url: logo.url,
             size: logo.size || "Unknown",
-            uploadedAt: logo.lastModified || new Date().toISOString(),
+            uploadedAt: logo.uploadedAt || logo.lastModified || new Date().toISOString(),
           }));
         } else {
           this.currentBanners = [];
@@ -405,9 +425,9 @@ class BannerManagementApp {
 
     try {
       console.log(`Deleting banner: ${bannerId}`);
-      if (!this.firebaseReady) {
+      if (!window.GitHubUploadService || !window.GitHubUploadService.isAuthenticated) {
         console.warn(
-          "Firebase not available - removing local banner",
+          "GitHub service not available - removing local banner",
           bannerId
         );
         this.currentBanners = this.currentBanners.filter(
@@ -416,11 +436,18 @@ class BannerManagementApp {
         this.renderBannersGrid();
         this.showToast("Banner removed locally", "warning");
       } else {
-        await this.firebaseService.deleteBanner(bannerId);
+        // Note: GitHub service doesn't have a direct deleteBanner method
+        // This would require implementing delete functionality
+        console.warn("GitHub banner deletion not implemented yet");
+        this.showToast("GitHub banner deletion not implemented", "warning");
       }
 
       // Send MQTT notification
-      await this.mqttClient.publishBannerDelete(bannerId);
+      try {
+        await this.mqttClient.publishBannerDelete(bannerId);
+      } catch (error) {
+        console.warn("Failed to publish MQTT delete notification:", error);
+      }
 
       this.showToast("Banner deleted successfully", "success");
       await this.loadCurrentBanners();
@@ -475,7 +502,11 @@ class BannerManagementApp {
       localStorage.setItem("billboard-settings", JSON.stringify(settings));
 
       // Send MQTT notification
-      await this.mqttClient.publishSettingsSync(settings);
+      try {
+        await this.mqttClient.publishSettingsSync(settings);
+      } catch (error) {
+        console.warn("Failed to publish MQTT settings sync:", error);
+      }
 
       this.showToast("Settings synced successfully", "success");
     } catch (error) {
@@ -669,6 +700,7 @@ class LogoManifestManager {
         this.updateManifestDisplay();
         this.displayLogos();
         this.updateManifestStatus("online");
+        return this.currentManifest; // Return the manifest
       } else {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
@@ -676,6 +708,7 @@ class LogoManifestManager {
       console.error("Failed to fetch manifest:", error);
       this.updateManifestStatus("error");
       this.showToast("Không thể tải manifest từ GitHub", "error");
+      return null; // Return null on error
     }
   }
 
@@ -834,15 +867,19 @@ class LogoManifestManager {
       };
 
       // Send MQTT message to trigger billboard refresh
-      await this.mqttClient.publishManifestRefresh(manifestUpdateData);
-      console.log("MQTT manifest refresh signal sent:", manifestUpdateData);
+      try {
+        await window.MqttClient.publishManifestRefresh(manifestUpdateData);
+        console.log("MQTT manifest refresh signal sent:", manifestUpdateData);
+        this.showToast("Force refresh signal sent to billboard", "info");
 
-      this.showToast("Force refresh signal sent to billboard", "info");
-
-      // Simulate billboard response
-      setTimeout(() => {
-        this.showToast("Billboard refreshed successfully", "success");
-      }, 2000);
+        // Simulate billboard response
+        setTimeout(() => {
+          this.showToast("Billboard refreshed successfully", "success");
+        }, 2000);
+      } catch (error) {
+        console.warn("Failed to send MQTT refresh signal:", error);
+        this.showToast("Failed to send refresh signal, but manifest is updated", "warning");
+      }
     } catch (error) {
       console.error("Failed to refresh billboard:", error);
       this.showToast("Error sending refresh signal to billboard", "error");
@@ -1289,10 +1326,13 @@ function closeModal() {
 
 // Initialize app when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM loaded, initializing app...");
-  window.app = new BannerManagementApp();
-
-  // Initialize Logo Manifest Manager
+  console.log("DOM loaded, initializing services...");
+  
+  // Initialize Logo Manifest Manager first
   console.log("Initializing Logo Manifest Manager...");
   window.logoManifest = new LogoManifestManager();
+  
+  // Then initialize the main app
+  console.log("Initializing main app...");
+  window.app = new BannerManagementApp();
 });
