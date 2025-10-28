@@ -430,7 +430,7 @@ async function testBannerSync() {
   console.log("Testing banner sync with desktop displays...");
 
   try {
-    if (window.mqttClient && window.mqttClient.connected) {
+    if (window.MqttClient && window.MqttClient.connected) {
       const testPayload = {
         type: "banner-sync-test",
         action: "test-remote-sync",
@@ -438,7 +438,7 @@ async function testBannerSync() {
         message: "Testing remote banner synchronization from admin-web",
       };
 
-      await window.mqttClient.publish(
+      await window.MqttClient.publish(
         "iot/billboard/banner-sync",
         JSON.stringify(testPayload)
       );
@@ -650,7 +650,7 @@ async function uploadLogoToGithub() {
 
       // Enhanced: Trigger remote banner sync notification via MQTT
       try {
-        if (window.mqttClient && window.mqttClient.connected) {
+        if (window.MqttClient && window.MqttClient.connected) {
           const bannerUpdatePayload = {
             type: "banner-update",
             action: "upload-complete",
@@ -659,7 +659,7 @@ async function uploadLogoToGithub() {
             manifest: result.manifest,
           };
 
-          await window.mqttClient.publish(
+          await window.MqttClient.publish(
             "iot/billboard/banner-sync",
             JSON.stringify(bannerUpdatePayload)
           );

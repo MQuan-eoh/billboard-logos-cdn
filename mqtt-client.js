@@ -192,10 +192,20 @@ class MqttClient {
     }
   }
 
-  // Publish manifest refresh signal
+  // Publish manifest refresh signal with auto-reconnect
   async publishManifestRefresh(manifestData) {
+    // Try to ensure connection before publishing
     if (!this.connected || !this.client) {
-      throw new Error("MQTT not connected");
+      console.warn("MQTT not connected, attempting to reconnect...");
+      try {
+        await this.connect();
+        console.log("MQTT reconnected successfully");
+      } catch (error) {
+        console.error("Failed to reconnect MQTT:", error);
+        // Continue without MQTT - not critical for manifest updates
+        console.warn("Continuing without MQTT refresh signal...");
+        return false;
+      }
     }
 
     try {
@@ -217,7 +227,8 @@ class MqttClient {
       return true;
     } catch (error) {
       console.error("Error publishing manifest refresh:", error);
-      throw error;
+      // Don't throw - allow manifest update to continue without MQTT
+      return false;
     }
   }
 
