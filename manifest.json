@@ -1,20 +1,48 @@
 {
-  "version": "1.0.1761643018215",
+  "version": "1.0.1761643136060",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "z7058714406262-4f1a5d7265b9fab41bbe9b39e3c222c0-1761643014651",
-      "name": "z7058714406262_4f1a5d7265b9fab41bbe9b39e3c222c0",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7058714406262-4f1a5d7265b9fab41bbe9b39e3c222c0-1761643014651.jpg",
-      "filename": "z7058714406262-4f1a5d7265b9fab41bbe9b39e3c222c0-1761643014651.jpg",
-      "size": 135412,
-      "type": "image/jpeg",
-      "checksum": "z70587144062624f1a5d7265b9fab41bbe9b39e3c222c0jpg1354121761643017008",
+      "id": "liquidglass-1761643128356",
+      "name": "liquidGlass",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/liquidglass-1761643128356.png",
+      "filename": "liquidglass-1761643128356.png",
+      "size": 6918,
+      "type": "image/png",
+      "checksum": "liquidglasspng69181761643130030",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-10-28T09:16:57.008Z",
-      "githubPath": "logos/z7058714406262-4f1a5d7265b9fab41bbe9b39e3c222c0-1761643014651.jpg",
-      "githubSha": "405260ae6b2f77206347f6fefb4722fe2797a47f"
+      "uploadedAt": "2025-10-28T09:18:50.030Z",
+      "githubPath": "logos/liquidglass-1761643128356.png",
+      "githubSha": "04e7656a1e8b66f217ca0de9f6cdea6f31af26ed"
+    },
+    {
+      "id": "lidquidglassbutton-1761643130040",
+      "name": "lidquidGlassButton",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/lidquidglassbutton-1761643130040.png",
+      "filename": "lidquidglassbutton-1761643130040.png",
+      "size": 1280455,
+      "type": "image/png",
+      "checksum": "lidquidglassbuttonpng12804551761643133156",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-28T09:18:53.156Z",
+      "githubPath": "logos/lidquidglassbutton-1761643130040.png",
+      "githubSha": "62dee2833c327208022f95d75521901244d077fb"
+    },
+    {
+      "id": "gaya-desain-glassmorphism-840x430-1761643133159",
+      "name": "Gaya-Desain-Glassmorphism-840x430",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/gaya-desain-glassmorphism-840x430-1761643133159.png",
+      "filename": "gaya-desain-glassmorphism-840x430-1761643133159.png",
+      "size": 27910,
+      "type": "image/png",
+      "checksum": "gayadesainglassmorphism840x430png279101761643135686",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-28T09:18:55.686Z",
+      "githubPath": "logos/gaya-desain-glassmorphism-840x430-1761643133159.png",
+      "githubSha": "a6c61c5b6fa05b19997f942b120780bcea21265a"
     }
   ],
   "settings": {
@@ -40,7 +68,7 @@
       ]
     }
   },
-  "lastUpdated": "2025-10-28T09:16:58.215Z",
+  "lastUpdated": "2025-10-28T09:18:56.060Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
