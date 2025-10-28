@@ -192,6 +192,29 @@ class MqttClient {
     }
   }
 
+  // Publish app reset command
+  async publishAppReset() {
+    if (!this.connected || !this.client) {
+      throw new Error("MQTT not connected");
+    }
+
+    try {
+      const message = {
+        action: "reset_app",
+        timestamp: Date.now(),
+        source: "admin_web",
+        reason: "Manual reset from admin interface",
+      };
+
+      await this.publish("its/billboard/commands", message);
+      console.log("App reset command published via MQTT:", message);
+      return true;
+    } catch (error) {
+      console.error("Error publishing app reset:", error);
+      throw error;
+    }
+  }
+
   // Publish manifest refresh signal with auto-reconnect
   async publishManifestRefresh(manifestData) {
     // Try to ensure connection before publishing

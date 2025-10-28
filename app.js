@@ -147,6 +147,60 @@ async function syncSettings() {
   }
 }
 
+// Reset App function
+async function resetApp() {
+  const resetBtn = document.querySelector('button[onclick="resetApp()"]');
+  const btnText = resetBtn.querySelector(".btn-text");
+  const btnLoading = resetBtn.querySelector(".btn-loading");
+
+  // Show confirmation dialog
+  const confirmed = confirm(
+    "⚠️ XÁC NHẬN RESET APP\n\n" +
+      "Hành động này sẽ:\n" +
+      "- Khởi động lại billboard display\n" +
+      "- Tải lại tất cả settings và manifest\n" +
+      "- Ngắt kết nối MQTT tạm thời\n\n" +
+      "Bạn có chắc chắn muốn tiếp tục?"
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  try {
+    console.log("Resetting app...");
+
+    // Update button state
+    resetBtn.disabled = true;
+    btnText.style.display = "none";
+    btnLoading.style.display = "inline";
+
+    showToast("🔄 Sending reset command to billboard...", "info");
+
+    // Send MQTT reset command
+    if (window.MqttClient && window.MqttClient.connected) {
+      await window.MqttClient.publishAppReset();
+
+      showToast("✅ Reset command sent successfully", "success");
+
+      // Simulate waiting for reset
+      setTimeout(() => {
+        showToast("🔄 Billboard is restarting...", "info");
+      }, 2000);
+    } else {
+      throw new Error("MQTT not connected");
+    }
+  } catch (error) {
+    console.error("Reset app failed:", error);
+    showToast("❌ Reset failed: " + error.message, "error");
+  } finally {
+    // Reset button state
+    resetBtn.disabled = false;
+    btnText.style.display = "inline";
+    btnLoading.style.display = "none";
+  }
+}
+
 // ====================================
 // MQTT INITIALIZATION
 // ====================================
