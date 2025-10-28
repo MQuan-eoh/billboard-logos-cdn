@@ -40,7 +40,7 @@ class BannerManagementApp {
       if (this.mqttClient) {
         try {
           await this.mqttClient.connect();
-          
+
           // Setup MQTT status monitoring
           this.mqttClient.onStatusChange((status) => {
             this.updateConnectionStatus(status);
@@ -49,7 +49,10 @@ class BannerManagementApp {
           this.showToast("MQTT connected successfully", "success");
         } catch (error) {
           console.warn("MQTT connection failed:", error);
-          this.showToast("MQTT connection failed, continuing in offline mode", "warning");
+          this.showToast(
+            "MQTT connection failed, continuing in offline mode",
+            "warning"
+          );
         }
       } else {
         console.warn("MQTT client not available");
@@ -261,7 +264,10 @@ class BannerManagementApp {
       for (const file of this.selectedFiles) {
         console.log(`Uploading file: ${file.name}`);
 
-        if (!window.GitHubUploadService || !window.GitHubUploadService.isAuthenticated) {
+        if (
+          !window.GitHubUploadService ||
+          !window.GitHubUploadService.isAuthenticated
+        ) {
           // Demo/offline mode: simulate upload and add to local banners list
           console.warn(
             "GitHub service unavailable - simulating upload for:",
@@ -285,14 +291,11 @@ class BannerManagementApp {
         }
 
         // Upload file with progress tracking using GitHub service
-        const result = await window.GitHubUploadService.uploadLogo(
-          file,
-          {
-            name: file.name.replace(/\.[^/.]+$/, ""),
-            priority: 1,
-            active: true
-          }
-        );
+        const result = await window.GitHubUploadService.uploadLogo(file, {
+          name: file.name.replace(/\.[^/.]+$/, ""),
+          priority: 1,
+          active: true,
+        });
 
         console.log(`File uploaded successfully:`, result);
 
@@ -349,14 +352,15 @@ class BannerManagementApp {
         if (window.logoManifest) {
           manifest = await window.logoManifest.fetchCurrentManifest();
         }
-        
+
         if (manifest && manifest.logos) {
           this.currentBanners = manifest.logos.map((logo) => ({
             id: logo.name || logo.id,
             name: logo.name || logo.filename,
             url: logo.url,
             size: logo.size || "Unknown",
-            uploadedAt: logo.uploadedAt || logo.lastModified || new Date().toISOString(),
+            uploadedAt:
+              logo.uploadedAt || logo.lastModified || new Date().toISOString(),
           }));
         } else {
           this.currentBanners = [];
@@ -425,7 +429,10 @@ class BannerManagementApp {
 
     try {
       console.log(`Deleting banner: ${bannerId}`);
-      if (!window.GitHubUploadService || !window.GitHubUploadService.isAuthenticated) {
+      if (
+        !window.GitHubUploadService ||
+        !window.GitHubUploadService.isAuthenticated
+      ) {
         console.warn(
           "GitHub service not available - removing local banner",
           bannerId
@@ -878,7 +885,10 @@ class LogoManifestManager {
         }, 2000);
       } catch (error) {
         console.warn("Failed to send MQTT refresh signal:", error);
-        this.showToast("Failed to send refresh signal, but manifest is updated", "warning");
+        this.showToast(
+          "Failed to send refresh signal, but manifest is updated",
+          "warning"
+        );
       }
     } catch (error) {
       console.error("Failed to refresh billboard:", error);
@@ -1149,18 +1159,22 @@ async function testGitHubConnection() {
   try {
     console.log("Testing GitHub connection...");
 
-    // Initialize GitHub service if not already done
-    if (!window.githubUploadService) {
-      await initGitHubService();
+    // Check if GitHub service is available
+    if (!window.GitHubUploadService) {
+      throw new Error(
+        "GitHub service not available. Make sure github-upload-service.js is loaded."
+      );
     }
 
-    if (!window.githubUploadService) {
-      throw new Error("GitHub service not available");
+    if (!window.GitHubUploadService.isAuthenticated) {
+      throw new Error(
+        "GitHub service not authenticated. Please authenticate first."
+      );
     }
 
     // Test authentication
     const isAuthenticated =
-      await window.githubUploadService.testAuthentication();
+      await window.GitHubUploadService.testAuthentication();
 
     if (isAuthenticated) {
       if (window.app) {
@@ -1327,11 +1341,11 @@ function closeModal() {
 // Initialize app when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM loaded, initializing services...");
-  
+
   // Initialize Logo Manifest Manager first
   console.log("Initializing Logo Manifest Manager...");
   window.logoManifest = new LogoManifestManager();
-  
+
   // Then initialize the main app
   console.log("Initializing main app...");
   window.app = new BannerManagementApp();
