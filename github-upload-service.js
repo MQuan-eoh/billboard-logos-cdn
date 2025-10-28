@@ -7,7 +7,7 @@
 class GitHubUploadService {
   constructor() {
     this.config = {
-      owner: "mquan-eoh",
+      owner: "MQuan-eoh",
       repo: "billboard-logos-cdn",
       branch: "main",
       apiEndpoint: "https://api.github.com",
@@ -27,11 +27,15 @@ class GitHubUploadService {
     try {
       this.token = token;
 
-      // Test authentication
+      // Test authentication and auto-correct owner if needed
       const authTest = await this.testAuthentication();
       if (authTest) {
         this.isAuthenticated = true;
         console.log("GitHubUploadService: Authentication successful");
+        console.log(
+          "GitHubUploadService: Using repository:",
+          `${this.config.owner}/${this.config.repo}`
+        );
         return true;
       } else {
         console.error("GitHubUploadService: Authentication failed");
@@ -66,6 +70,13 @@ class GitHubUploadService {
       if (response.ok) {
         const userData = await response.json();
         console.log("GitHubUploadService: Authenticated user:", userData.login);
+
+        // Update the owner with the actual authenticated username
+        this.config.owner = userData.login;
+        console.log(
+          "GitHubUploadService: Updated owner to:",
+          this.config.owner
+        );
 
         // Test repository access
         const repoResponse = await fetch(

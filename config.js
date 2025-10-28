@@ -3,11 +3,11 @@ const CONFIG = {
   // GitHub CDN Configuration (Primary upload system)
   github: {
     enabled: true,
-    owner: "mquan-eoh",
+    owner: "MQuan-eoh",
     repo: "billboard-logos-cdn",
     branch: "main",
     apiEndpoint: "https://api.github.com",
-    cdnEndpoint: "https://mquan-eoh.github.io/billboard-logos-cdn",
+    cdnEndpoint: "https://MQuan-eoh.github.io/billboard-logos-cdn",
     uploadPath: "logos/",
   },
 
