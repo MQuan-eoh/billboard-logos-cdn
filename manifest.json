@@ -1,38 +1,24 @@
 {
-  "version": "1.0.1761710912526",
+  "version": "1.0.1761711172486",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "notify-1761710905602",
-      "name": "NOTIFY",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/notify-1761710905602.png",
-      "filename": "notify-1761710905602.png",
-      "size": 658658,
-      "type": "image/png",
-      "checksum": "notifypng6586581761710908940",
+      "id": "z7085121756040-358cffc35564647bef9a6fef40de1c01-1761711169119",
+      "name": "z7085121756040_358cffc35564647bef9a6fef40de1c01",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121756040-358cffc35564647bef9a6fef40de1c01-1761711169119.jpg",
+      "filename": "z7085121756040-358cffc35564647bef9a6fef40de1c01-1761711169119.jpg",
+      "size": 430656,
+      "type": "image/jpeg",
+      "checksum": "z7085121756040358cffc35564647bef9a6fef40de1c01jpg4306561761711172092",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-10-29T04:08:28.940Z",
-      "githubPath": "logos/notify-1761710905602.png",
-      "githubSha": "a53be43c420fbb507f341ab0dc413c4c9334e94e"
-    },
-    {
-      "id": "black-red-modern-daily-podcast-youtube-thumbnail-1-1761710908944",
-      "name": "Black Red Modern Daily Podcast YouTube Thumbnail (1)",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/black-red-modern-daily-podcast-youtube-thumbnail--1--1761710908944.png",
-      "filename": "black-red-modern-daily-podcast-youtube-thumbnail--1--1761710908944.png",
-      "size": 356380,
-      "type": "image/png",
-      "checksum": "blackredmoderndailypodcastyoutubethumbnail1png3563801761710912180",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-10-29T04:08:32.180Z",
-      "githubPath": "logos/black-red-modern-daily-podcast-youtube-thumbnail--1--1761710908944.png",
-      "githubSha": "05da52c6689895c155d4864d7546de47461cbde4"
+      "uploadedAt": "2025-10-29T04:12:52.092Z",
+      "githubPath": "logos/z7085121756040-358cffc35564647bef9a6fef40de1c01-1761711169119.jpg",
+      "githubSha": "fbde9ee1c51f195b9dadb7e530e142d51f5e791b"
     }
   ],
   "settings": {
-    "logoMode": "loop",
+    "logoMode": "fixed",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -55,7 +41,7 @@
     },
     "logoLoopDuration": 4
   },
-  "lastUpdated": "2025-10-29T04:08:32.526Z",
+  "lastUpdated": "2025-10-29T04:12:52.486Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
