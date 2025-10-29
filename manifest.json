@@ -1,37 +1,24 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1761721428745",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "logo1",
-      "name": "EoH ERa Web Banner",
-      "url": "https://github.com/MQuan-eoh/billboard-logos-cdn/blob/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
-      "version": "1.0",
-      "size": "1920x800",
-      "format": "png",
-      "description": "Logo chính EoH ERa"
-    },
-    {
-      "id": "logo2",
-      "name": "Industrial Dashboard Symbol",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo Industrial Dashboard"
-    },
-    {
-      "id": "logo3",
-      "name": "Special Event Logo",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo sự kiện đặc biệt"
+      "id": "565640542-1362303825896826-6400460134318525991-n-1761721425815",
+      "name": "565640542_1362303825896826_6400460134318525991_n",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/565640542-1362303825896826-6400460134318525991-n-1761721425815.jpg",
+      "filename": "565640542-1362303825896826-6400460134318525991-n-1761721425815.jpg",
+      "size": 98085,
+      "type": "image/jpeg",
+      "checksum": "56564054213623038258968266400460134318525991njpg980851761721428351",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-29T07:03:48.351Z",
+      "githubPath": "logos/565640542-1362303825896826-6400460134318525991-n-1761721425815.jpg",
+      "githubSha": "b5db1b91228e16d0d36445f7a249c86a1eac8cc3"
     }
   ],
   "settings": {
-    "logoMode": "scheduled",
+    "logoMode": "fixed",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -51,6 +38,14 @@
           "endTime": "22:00"
         }
       ]
-    }
+    },
+    "logoLoopDuration": 4
+  },
+  "lastUpdated": "2025-10-29T07:03:48.745Z",
+  "metadata": {
+    "author": "Admin Web Interface",
+    "description": "Billboard logo manifest",
+    "apiVersion": "v1",
+    "lastModifiedBy": "Admin Web Interface"
   }
 }
