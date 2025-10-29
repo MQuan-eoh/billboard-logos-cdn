@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1761729224927",
+  "version": "1.0.1761730318725",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "eoh-era-web-banner-1920x800-1-1761729220099",
+      "id": "eoh-era-web-banner-1920x800-1-1761730314689",
       "name": "EoH_ERa_Web-Banner_1920x800-1",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/eoh-era-web-banner-1920x800-1-1761729220099.png",
-      "filename": "eoh-era-web-banner-1920x800-1-1761729220099.png",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/eoh-era-web-banner-1920x800-1-1761730314689.png",
+      "filename": "eoh-era-web-banner-1920x800-1-1761730314689.png",
       "size": 733002,
       "type": "image/png",
-      "checksum": "eoherawebbanner1920x8001png7330021761729223814",
+      "checksum": "eoherawebbanner1920x8001png7330021761730318343",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-10-29T09:13:43.814Z",
-      "githubPath": "logos/eoh-era-web-banner-1920x800-1-1761729220099.png",
+      "uploadedAt": "2025-10-29T09:31:58.343Z",
+      "githubPath": "logos/eoh-era-web-banner-1920x800-1-1761730314689.png",
       "githubSha": "01b768a1a1ba4b07b8043049b12f9ae33d317fbb"
     }
   ],
@@ -41,7 +41,7 @@
     },
     "logoLoopDuration": 4
   },
-  "lastUpdated": "2025-10-29T09:13:44.927Z",
+  "lastUpdated": "2025-10-29T09:31:58.725Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
