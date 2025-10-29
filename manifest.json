@@ -1,20 +1,34 @@
 {
-  "version": "1.0.1761708056631",
+  "version": "1.0.1761710912526",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "565640542-1362303825896826-6400460134318525991-n-1761708053310",
-      "name": "565640542_1362303825896826_6400460134318525991_n",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/565640542-1362303825896826-6400460134318525991-n-1761708053310.jpg",
-      "filename": "565640542-1362303825896826-6400460134318525991-n-1761708053310.jpg",
-      "size": 98085,
-      "type": "image/jpeg",
-      "checksum": "56564054213623038258968266400460134318525991njpg980851761708055939",
+      "id": "notify-1761710905602",
+      "name": "NOTIFY",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/notify-1761710905602.png",
+      "filename": "notify-1761710905602.png",
+      "size": 658658,
+      "type": "image/png",
+      "checksum": "notifypng6586581761710908940",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-10-29T03:20:55.939Z",
-      "githubPath": "logos/565640542-1362303825896826-6400460134318525991-n-1761708053310.jpg",
-      "githubSha": "b5db1b91228e16d0d36445f7a249c86a1eac8cc3"
+      "uploadedAt": "2025-10-29T04:08:28.940Z",
+      "githubPath": "logos/notify-1761710905602.png",
+      "githubSha": "a53be43c420fbb507f341ab0dc413c4c9334e94e"
+    },
+    {
+      "id": "black-red-modern-daily-podcast-youtube-thumbnail-1-1761710908944",
+      "name": "Black Red Modern Daily Podcast YouTube Thumbnail (1)",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/black-red-modern-daily-podcast-youtube-thumbnail--1--1761710908944.png",
+      "filename": "black-red-modern-daily-podcast-youtube-thumbnail--1--1761710908944.png",
+      "size": 356380,
+      "type": "image/png",
+      "checksum": "blackredmoderndailypodcastyoutubethumbnail1png3563801761710912180",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-29T04:08:32.180Z",
+      "githubPath": "logos/black-red-modern-daily-podcast-youtube-thumbnail--1--1761710908944.png",
+      "githubSha": "05da52c6689895c155d4864d7546de47461cbde4"
     }
   ],
   "settings": {
@@ -41,7 +55,7 @@
     },
     "logoLoopDuration": 4
   },
-  "lastUpdated": "2025-10-29T03:20:56.631Z",
+  "lastUpdated": "2025-10-29T04:08:32.526Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
