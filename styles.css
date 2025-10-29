@@ -1083,3 +1083,73 @@ body {
 .repo-info-content a:hover {
   border-bottom-color: #4dabf7;
 }
+
+/* App Control Sections */
+.app-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.update-control-section,
+.reset-control-section {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  padding: 20px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.update-control-section h5,
+.reset-control-section h5 {
+  margin-bottom: 15px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.update-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.update-buttons .btn {
+  flex: 1;
+  min-width: 150px;
+}
+
+#updateStatus {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  border-radius: 10px;
+}
+
+#updateStatusText {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  margin: 0;
+}
+
+#updateProgress {
+  margin-top: 15px;
+}
+
+.control-note {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(255, 193, 7, 0.1);
+  border-left: 3px solid #ffc107;
+  border-radius: 5px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.control-note strong {
+  color: #ffc107;
+}

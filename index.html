@@ -219,16 +219,63 @@
             <div class="setting-item setting-item-full">
               <h4>Điều khiển ứng dụng</h4>
               <div class="app-controls">
-                <button class="btn btn-danger" onclick="resetApp()">
-                  <span class="btn-text">🔄 Reset App</span>
-                  <span class="btn-loading" style="display: none"
-                    >⏳ Resetting...</span
+                <!-- Update Control -->
+                <div class="update-control-section">
+                  <h5>🔄 Cập nhật ứng dụng</h5>
+                  <div class="update-buttons">
+                    <button
+                      class="btn btn-info"
+                      onclick="checkForUpdates()"
+                      id="checkUpdateBtn"
+                    >
+                      <span class="btn-text">� Kiểm tra cập nhật</span>
+                      <span class="btn-loading" style="display: none"
+                        >⏳ Checking...</span
+                      >
+                    </button>
+                    <button
+                      class="btn btn-success"
+                      onclick="forceUpdate()"
+                      id="forceUpdateBtn"
+                      disabled
+                    >
+                      <span class="btn-text">⬇️ Cập nhật ngay</span>
+                      <span class="btn-loading" style="display: none"
+                        >⏳ Updating...</span
+                      >
+                    </button>
+                  </div>
+                  <div
+                    id="updateStatus"
+                    style="margin-top: 10px; display: none"
                   >
-                </button>
-                <p class="control-note">
-                  <strong>⚠️ CẢNH BÁO:</strong> Reset app sẽ khởi động lại
-                  billboard display. Chỉ sử dụng khi cần thiết.
-                </p>
+                    <p id="updateStatusText"></p>
+                    <div id="updateProgress" style="display: none">
+                      <div class="progress-bar">
+                        <div
+                          class="progress-fill"
+                          id="updateProgressFill"
+                        ></div>
+                      </div>
+                      <p id="updateProgressText"></p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Reset App Control -->
+                <div class="reset-control-section">
+                  <h5>🔄 Khởi động lại ứng dụng</h5>
+                  <button class="btn btn-danger" onclick="resetApp()">
+                    <span class="btn-text">🔄 Reset App</span>
+                    <span class="btn-loading" style="display: none"
+                      >⏳ Resetting...</span
+                    >
+                  </button>
+                  <p class="control-note">
+                    <strong>⚠️ CẢNH BÁO:</strong> Reset app sẽ khởi động lại
+                    billboard display. Chỉ sử dụng khi cần thiết.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
