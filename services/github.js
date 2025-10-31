@@ -1,46 +1,36 @@
 /**
- * GitHub Upload Service - Global Wrapper
- * Bridges ES6 GitHubService with Global Context
- * 
- * This wraps the modular GitHubService class and exposes it globally
- * for use in HTML event handlers and legacy code
+ * GitHub Service for Logo Management
+ * Handles GitHub repository configuration and logo upload operations
+ * Unified service merging github-config.js and github-upload-service.js
  */
 
-class GitHubUploadService {
-  constructor() {
-    this.config = window.ConfigLoader?.getGitHubConfig() || window.GitHubConfig;
+import { GITHUB_CONFIG } from "../config/github.js";
+
+export class GitHubService {
+  constructor(configOverride = {}) {
+    this.config = {
+      owner: configOverride.owner || GITHUB_CONFIG.owner || "MQuan-eoh",
+      repo: configOverride.repo || GITHUB_CONFIG.repo || "billboard-logos-cdn",
+      branch: configOverride.branch || GITHUB_CONFIG.branch || "main",
+      apiEndpoint: configOverride.apiEndpoint || "https://api.github.com",
+      uploadPath:
+        configOverride.uploadPath || GITHUB_CONFIG.uploadPath || "logos/",
+      cdnEndpoint: configOverride.cdnEndpoint || GITHUB_CONFIG.cdnEndpoint,
+    };
+
     this.token = null;
     this.isAuthenticated = false;
     this.authenticatedUser = null;
-    this.listeners = {};
 
-    console.log("[GitHubUploadService] Initialized with config:", {
-      owner: this.config.repository.owner,
-      repo: this.config.repository.repo,
+    console.log("[GitHub] Service initialized with config:", {
+      owner: this.config.owner,
+      repo: this.config.repo,
+      branch: this.config.branch,
     });
   }
 
   /**
-   * Register event listener
-   */
-  on(event, callback) {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
-    }
-    this.listeners[event].push(callback);
-  }
-
-  /**
-   * Emit event
-   */
-  _emit(event, data) {
-    if (this.listeners[event]) {
-      this.listeners[event].forEach((callback) => callback(data));
-    }
-  }
-
-  /**
-   * Initialize with GitHub token
+   * Initialize service with GitHub token
    */
   async initialize(token) {
     try {
@@ -49,16 +39,18 @@ class GitHubUploadService {
 
       if (authTest) {
         this.isAuthenticated = true;
-        console.log("[GitHubUploadService] Authentication successful");
-        this._emit("authenticated", { user: this.authenticatedUser });
+        console.log("[GitHub] Authentication successful");
+        console.log(
+          "[GitHub] Using repository:",
+          `${this.config.owner}/${this.config.repo}`
+        );
         return true;
+      } else {
+        console.error("[GitHub] Authentication failed");
+        return false;
       }
-
-      console.error("[GitHubUploadService] Authentication failed");
-      return false;
     } catch (error) {
-      console.error("[GitHubUploadService] Initialization failed:", error);
-      this._emit("error", { message: error.message });
+      console.error("[GitHub] Initialization failed:", error);
       return false;
     }
   }
@@ -70,8 +62,8 @@ class GitHubUploadService {
     if (!this.token) return false;
 
     try {
-      console.log("[GitHubUploadService] Testing authentication...");
-      const response = await fetch(`${this.config.api.endpoint}/user`, {
+      console.log("[GitHub] Testing authentication...");
+      const response = await fetch(`${this.config.apiEndpoint}/user`, {
         headers: {
           Authorization: `token ${this.token}`,
           Accept: "application/vnd.github.v3+json",
@@ -81,30 +73,26 @@ class GitHubUploadService {
       if (response.ok) {
         const userData = await response.json();
         this.authenticatedUser = userData;
-        console.log(
-          "[GitHubUploadService] Authenticated user:",
-          userData.login
-        );
+        console.log("[GitHub] Authenticated user:", userData.login);
 
-        console.log(
-          "[GitHubUploadService] Testing repository access..."
-        );
+        console.log("[GitHub] Testing repository access...");
         const repoAccess = await this.testRepositoryAccess();
 
         if (repoAccess.success) {
-          console.log("[GitHubUploadService] Repository access confirmed");
+          console.log("[GitHub] Repository access confirmed");
           return true;
         } else {
           console.log(
-            "[GitHubUploadService] Repository access denied, trying alternatives..."
+            "[GitHub] Repository access denied, trying alternatives..."
           );
-          return await this.handleRepositoryFallback();
+          const fallbackSuccess = await this.handleRepositoryFallback();
+          return fallbackSuccess;
         }
       }
 
       return response.ok;
     } catch (error) {
-      console.error("[GitHubUploadService] Auth test failed:", error);
+      console.error("[GitHub] Auth test failed:", error);
       return false;
     }
   }
@@ -115,7 +103,7 @@ class GitHubUploadService {
   async testRepositoryAccess() {
     try {
       const repoResponse = await fetch(
-        `${this.config.api.endpoint}/repos/${this.config.repository.owner}/${this.config.repository.repo}`,
+        `${this.config.apiEndpoint}/repos/${this.config.owner}/${this.config.repo}`,
         {
           headers: {
             Authorization: `token ${this.token}`,
@@ -135,10 +123,7 @@ class GitHubUploadService {
         };
       }
     } catch (error) {
-      console.error(
-        "[GitHubUploadService] Repository access test failed:",
-        error
-      );
+      console.error("[GitHub] Repository access test failed:", error);
       return { success: false, error: error.message };
     }
   }
@@ -149,43 +134,43 @@ class GitHubUploadService {
   async handleRepositoryFallback() {
     if (
       this.authenticatedUser &&
-      this.authenticatedUser.login !== this.config.repository.owner
+      this.authenticatedUser.login !== this.config.owner
     ) {
       console.log(
-        `[GitHubUploadService] Trying user's own repository: ${this.authenticatedUser.login}/${this.config.repository.repo}`
+        `[GitHub] Trying user's own repository: ${this.authenticatedUser.login}/${this.config.repo}`
       );
 
-      const originalOwner = this.config.repository.owner;
-      this.config.repository.owner = this.authenticatedUser.login;
+      const originalOwner = this.config.owner;
+      this.config.owner = this.authenticatedUser.login;
 
       const userRepoAccess = await this.testRepositoryAccess();
 
       if (userRepoAccess.success) {
-        console.log("[GitHubUploadService] Using user repository");
-        this.config.api.cdnEndpoint = `https://${this.authenticatedUser.login}.github.io/${this.config.repository.repo}`;
+        console.log("[GitHub] Using user repository");
+        this.config.cdnEndpoint = `https://${this.authenticatedUser.login}.github.io/${this.config.repo}`;
         return true;
       } else if (userRepoAccess.status === 404) {
-        console.log("[GitHubUploadService] Attempting to create repository...");
+        console.log("[GitHub] Attempting to create repository...");
         const createSuccess = await this.createRepository();
         if (createSuccess) return true;
       }
 
-      this.config.repository.owner = originalOwner;
+      this.config.owner = originalOwner;
     }
 
     throw new Error(
-      `Cannot access repository ${this.config.repository.owner}/${this.config.repository.repo}. ` +
+      `Cannot access repository ${this.config.owner}/${this.config.repo}. ` +
         `Token for user '${this.authenticatedUser?.login}' does not have write access.`
     );
   }
 
   /**
-   * Create repository
+   * Create repository for authenticated user
    */
   async createRepository() {
     try {
       const createRepoResponse = await fetch(
-        `${this.config.api.endpoint}/user/repos`,
+        `${this.config.apiEndpoint}/user/repos`,
         {
           method: "POST",
           headers: {
@@ -194,7 +179,7 @@ class GitHubUploadService {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: this.config.repository.repo,
+            name: this.config.repo,
             description: "Billboard logos CDN repository",
             auto_init: true,
             public: true,
@@ -203,28 +188,28 @@ class GitHubUploadService {
       );
 
       if (createRepoResponse.ok) {
-        console.log("[GitHubUploadService] Repository created successfully");
+        console.log("[GitHub] Repository created successfully");
         await this.enableGitHubPages();
         await new Promise((resolve) => setTimeout(resolve, 3000));
         return true;
+      } else {
+        const createError = await createRepoResponse.json().catch(() => ({}));
+        console.error("[GitHub] Repository creation failed:", createError);
+        return false;
       }
-
-      const createError = await createRepoResponse.json().catch(() => ({}));
-      console.error("[GitHubUploadService] Repository creation failed:", createError);
-      return false;
     } catch (error) {
-      console.error("[GitHubUploadService] Error creating repository:", error);
+      console.error("[GitHub] Error creating repository:", error);
       return false;
     }
   }
 
   /**
-   * Enable GitHub Pages
+   * Enable GitHub Pages for repository
    */
   async enableGitHubPages() {
     try {
       const pagesResponse = await fetch(
-        `${this.config.api.endpoint}/repos/${this.config.repository.owner}/${this.config.repository.repo}/pages`,
+        `${this.config.apiEndpoint}/repos/${this.config.owner}/${this.config.repo}/pages`,
         {
           method: "POST",
           headers: {
@@ -234,27 +219,27 @@ class GitHubUploadService {
           },
           body: JSON.stringify({
             source: {
-              branch: this.config.repository.branch,
+              branch: this.config.branch,
             },
           }),
         }
       );
 
       if (pagesResponse.ok) {
-        console.log("[GitHubUploadService] GitHub Pages enabled");
+        console.log("[GitHub] GitHub Pages enabled");
         return true;
+      } else {
+        console.warn("[GitHub] Could not enable GitHub Pages");
+        return false;
       }
-
-      console.warn("[GitHubUploadService] Could not enable GitHub Pages");
-      return false;
     } catch (error) {
-      console.error("[GitHubUploadService] Error enabling GitHub Pages:", error);
+      console.error("[GitHub] Error enabling GitHub Pages:", error);
       return false;
     }
   }
 
   /**
-   * Upload logo file
+   * Upload logo file to repository
    */
   async uploadLogo(file, metadata = {}) {
     if (!this.isAuthenticated) {
@@ -262,12 +247,14 @@ class GitHubUploadService {
     }
 
     try {
-      console.log(`[GitHubUploadService] Uploading ${file.name}...`);
+      console.log(`[GitHub] Uploading ${file.name}...`);
 
       const base64Content = await this.fileToBase64(file);
       const filename =
         metadata.filename || this.generateUniqueFilename(file.name);
-      const filePath = this.config.repository.uploadPath + filename;
+      const filePath = this.config.uploadPath + filename;
+
+      console.log("[GitHub] Generated filename:", filename);
 
       const existingFile = await this.getFileInfo(filePath);
 
@@ -276,14 +263,14 @@ class GitHubUploadService {
           ? `Update logo: ${filename}`
           : `Upload logo: ${filename}`,
         content: base64Content,
-        branch: this.config.repository.branch,
+        branch: this.config.branch,
       };
 
       if (existingFile) {
         commitData.sha = existingFile.sha;
       }
 
-      const uploadUrl = `${this.config.api.endpoint}/repos/${this.config.repository.owner}/${this.config.repository.repo}/contents/${filePath}`;
+      const uploadUrl = `${this.config.apiEndpoint}/repos/${this.config.owner}/${this.config.repo}/contents/${filePath}`;
 
       const uploadResponse = await fetch(uploadUrl, {
         method: "PUT",
@@ -302,7 +289,7 @@ class GitHubUploadService {
 
         if (uploadResponse.status === 404) {
           throw new Error(
-            `Repository not found: ${this.config.repository.owner}/${this.config.repository.repo}`
+            `Repository or path not found. Check if '${this.config.owner}/${this.config.repo}' exists.`
           );
         } else if (uploadResponse.status === 401) {
           throw new Error("Authentication failed. Check your GitHub token.");
@@ -316,7 +303,7 @@ class GitHubUploadService {
       }
 
       const uploadResult = await uploadResponse.json();
-      console.log(`[GitHubUploadService] File uploaded: ${filename}`);
+      console.log(`[GitHub] File uploaded: ${filename}`);
 
       const logoMetadata = {
         id: this.generateLogoId(filename),
@@ -332,17 +319,15 @@ class GitHubUploadService {
         githubSha: uploadResult.content.sha,
       };
 
-      this._emit("logoUploaded", logoMetadata);
       return logoMetadata;
     } catch (error) {
-      console.error("[GitHubUploadService] Upload failed:", error);
-      this._emit("error", { message: error.message });
+      console.error("[GitHub] Upload failed:", error);
       throw error;
     }
   }
 
   /**
-   * Upload logo batch
+   * Upload multiple logos in batch
    */
   async uploadLogoBatch(files, onProgress = null) {
     const results = [];
@@ -359,11 +344,9 @@ class GitHubUploadService {
         const result = await this.uploadLogo(file);
         results.push(result);
 
-        console.log(
-          `[GitHubUploadService] Batch upload ${i + 1}/${files.length} completed`
-        );
+        console.log(`[GitHub] Batch upload ${i + 1}/${files.length} completed`);
       } catch (error) {
-        console.error(`[GitHubUploadService] Batch upload ${i + 1} failed:`, error);
+        console.error(`[GitHub] Batch upload ${i + 1} failed:`, error);
         errors.push({ file: file.name, error: error.message });
       }
     }
@@ -376,7 +359,7 @@ class GitHubUploadService {
   }
 
   /**
-   * Get current manifest
+   * Get current manifest from repository
    */
   async getCurrentManifest() {
     try {
@@ -387,20 +370,17 @@ class GitHubUploadService {
         const content = atob(fileInfo.content);
         const manifest = JSON.parse(content);
         return this.validateAndFixManifest(manifest);
+      } else {
+        return this.createDefaultManifest();
       }
-
-      return this.createDefaultManifest();
     } catch (error) {
-      console.warn(
-        "[GitHubUploadService] Could not load manifest, using default:",
-        error
-      );
+      console.warn("[GitHub] Could not load manifest, using default:", error);
       return this.createDefaultManifest();
     }
   }
 
   /**
-   * Validate and fix manifest
+   * Validate and fix manifest structure
    */
   validateAndFixManifest(manifest) {
     const fixedManifest = { ...manifest };
@@ -408,12 +388,15 @@ class GitHubUploadService {
     if (!fixedManifest.version) {
       fixedManifest.version = `1.0.${Date.now()}`;
     }
+
     if (!fixedManifest.lastUpdated) {
       fixedManifest.lastUpdated = new Date().toISOString();
     }
+
     if (!fixedManifest.logos || !Array.isArray(fixedManifest.logos)) {
       fixedManifest.logos = [];
     }
+
     if (!fixedManifest.settings) {
       fixedManifest.settings = {
         logoMode: "loop",
@@ -421,6 +404,7 @@ class GitHubUploadService {
         schedules: [],
       };
     }
+
     if (!fixedManifest.metadata) {
       fixedManifest.metadata = {
         author: "Admin Web Interface",
@@ -486,7 +470,7 @@ class GitHubUploadService {
   }
 
   /**
-   * Upload manifest
+   * Upload manifest file
    */
   async uploadManifest(manifest) {
     const manifestPath = "manifest.json";
@@ -498,7 +482,7 @@ class GitHubUploadService {
     const commitData = {
       message: `Update manifest: ${manifest.version}`,
       content: base64Content,
-      branch: this.config.repository.branch,
+      branch: this.config.branch,
     };
 
     if (existingFile) {
@@ -506,7 +490,7 @@ class GitHubUploadService {
     }
 
     const response = await fetch(
-      `${this.config.api.endpoint}/repos/${this.config.repository.owner}/${this.config.repository.repo}/contents/${manifestPath}`,
+      `${this.config.apiEndpoint}/repos/${this.config.owner}/${this.config.repo}/contents/${manifestPath}`,
       {
         method: "PUT",
         headers: {
@@ -527,12 +511,12 @@ class GitHubUploadService {
   }
 
   /**
-   * Get file info
+   * Get file information from repository
    */
   async getFileInfo(filePath) {
     try {
       const response = await fetch(
-        `${this.config.api.endpoint}/repos/${this.config.repository.owner}/${this.config.repository.repo}/contents/${filePath}?ref=${this.config.repository.branch}`,
+        `${this.config.apiEndpoint}/repos/${this.config.owner}/${this.config.repo}/contents/${filePath}?ref=${this.config.branch}`,
         {
           headers: {
             Authorization: `token ${this.token}`,
@@ -549,13 +533,13 @@ class GitHubUploadService {
         throw new Error(`Failed to get file info: ${response.statusText}`);
       }
     } catch (error) {
-      console.error("[GitHubUploadService] Error getting file info:", error);
+      console.error("[GitHub] Error getting file info:", error);
       return null;
     }
   }
 
   /**
-   * File to base64
+   * Convert file to base64
    */
   async fileToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -595,11 +579,11 @@ class GitHubUploadService {
   }
 
   /**
-   * Trigger workflow
+   * Trigger GitHub Actions workflow
    */
   async triggerWorkflow() {
     try {
-      console.log("[GitHubUploadService] Triggering deployment workflow...");
+      console.log("[GitHub] Triggering deployment workflow...");
 
       const workflowNames = [
         "jekyll-gh-pages.yml",
@@ -608,8 +592,10 @@ class GitHubUploadService {
       ];
 
       for (const workflowName of workflowNames) {
+        console.log(`[GitHub] Trying workflow: ${workflowName}`);
+
         const response = await fetch(
-          `${this.config.api.endpoint}/repos/${this.config.repository.owner}/${this.config.repository.repo}/actions/workflows/${workflowName}/dispatches`,
+          `${this.config.apiEndpoint}/repos/${this.config.owner}/${this.config.repo}/actions/workflows/${workflowName}/dispatches`,
           {
             method: "POST",
             headers: {
@@ -618,24 +604,22 @@ class GitHubUploadService {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              ref: this.config.repository.branch,
+              ref: this.config.branch,
               inputs: { force_rebuild: "true" },
             }),
           }
         );
 
         if (response.ok) {
-          console.log(`[GitHubUploadService] Workflow triggered`);
+          console.log(`[GitHub] Workflow '${workflowName}' triggered`);
           return true;
         }
       }
 
-      console.warn(
-        "[GitHubUploadService] No workflow found, GitHub Pages will auto-deploy"
-      );
+      console.warn("[GitHub] No workflow found, GitHub Pages will auto-deploy");
       return false;
     } catch (error) {
-      console.error("[GitHubUploadService] Error triggering workflow:", error);
+      console.error("[GitHub] Error triggering workflow:", error);
       return false;
     }
   }
@@ -646,7 +630,7 @@ class GitHubUploadService {
   async completeUploadWorkflow(files, settings = {}, options = {}) {
     try {
       console.log(
-        `[GitHubUploadService] Starting complete upload workflow for ${files.length} files...`
+        `[GitHub] Starting complete upload workflow for ${files.length} files...`
       );
 
       const { results, errors } = await this.uploadLogoBatch(
@@ -683,7 +667,7 @@ class GitHubUploadService {
       await this.uploadManifest(currentManifest);
       await this.triggerWorkflow();
 
-      console.log("[GitHubUploadService] Complete upload workflow finished");
+      console.log("[GitHub] Complete upload workflow finished");
 
       return {
         success: true,
@@ -693,41 +677,21 @@ class GitHubUploadService {
         manifest: currentManifest,
       };
     } catch (error) {
-      console.error("[GitHubUploadService] Complete upload workflow failed:", error);
-      this._emit("error", { message: error.message });
+      console.error("[GitHub] Complete upload workflow failed:", error);
       throw error;
     }
   }
 
   /**
-   * Get status
+   * Get service status
    */
   getStatus() {
     return {
       authenticated: this.isAuthenticated,
-      repository: `${this.config.repository.owner}/${this.config.repository.repo}`,
-      branch: this.config.repository.branch,
-      uploadPath: this.config.repository.uploadPath,
+      repository: `${this.config.owner}/${this.config.repo}`,
+      branch: this.config.branch,
+      uploadPath: this.config.uploadPath,
+      cdnEndpoint: this.config.cdnEndpoint,
     };
   }
 }
-
-// Create global instance
-window.GitHubUploadService = new GitHubUploadService();
-
-// Global functions for backward compatibility
-window.initializeGitHubService = async function (token) {
-  return await window.GitHubUploadService.initialize(token);
-};
-
-window.uploadLogosToGitHub = async function (files, settings = {}, onProgress) {
-  return await window.GitHubUploadService.completeUploadWorkflow(
-    files,
-    settings,
-    { onProgress }
-  );
-};
-
-window.getGitHubServiceStatus = function () {
-  return window.GitHubUploadService.getStatus();
-};

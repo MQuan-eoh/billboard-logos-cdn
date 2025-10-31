@@ -200,26 +200,32 @@ async function checkForUpdates() {
   }
 }
 
-// Force update on billboard
+// Force update on billboard using UpdateService
 async function forceUpdate() {
   const forceBtn = document.getElementById("forceUpdateBtn");
   const btnText = forceBtn.querySelector(".btn-text");
   const btnLoading = forceBtn.querySelector(".btn-loading");
   const updateStatus = document.getElementById("updateStatus");
   const statusText = document.getElementById("updateStatusText");
-  const updateProgress = document.getElementById("updateProgress");
 
-  // Verify that a check was performed and an update was detected
   if (!lastDetectedUpdateVersion) {
     showToast(
       "Please click 'Check Updates' first to verify an update is available",
       "warning"
     );
-    console.warn(
-      "forceUpdate: No detected update version - user must check first"
-    );
     statusText.textContent =
       "Error: Please check for updates first before forcing update";
+    updateStatus.style.display = "block";
+    return;
+  }
+
+  // ✅ NEW: Check MQTT connection first
+  if (!window.MqttClient || !window.MqttClient.connected) {
+    showToast(
+      "❌ MQTT not connected to billboard. Cannot send update.",
+      "error"
+    );
+    statusText.textContent = "Error: Not connected to billboard display";
     updateStatus.style.display = "block";
     return;
   }
@@ -244,79 +250,129 @@ async function forceUpdate() {
 
     showToast(`Initiating update to v${lastDetectedUpdateVersion}...`, "info");
 
-    if (!window.MqttClient || !window.MqttClient.connected) {
-      throw new Error("MQTT not connected - cannot send update command");
+    updateStatus.style.display = "block";
+    statusText.textContent = "Preparing update...";
+
+    // ✅ NEW: Generate unique message ID for tracking
+    const messageId = `update_${Date.now()}_${Math.random()
+      .toString(36)
+      .substr(2, 9)}`;
+
+    // ✅ IMPROVED: Send command with all required fields
+    const updateCommand = {
+      action: "force_update",
+      version: lastDetectedUpdateVersion,
+      targetVersion: lastDetectedUpdateVersion,
+      messageId: messageId,
+      timestamp: Date.now(),
+      source: "admin_web",
+      deviceTarget: "all",
+    };
+
+    console.log("[Admin-Web OTA] Sending force_update command:", updateCommand);
+
+    // Send via MQTT
+    await window.MqttClient.publish("its/billboard/commands", updateCommand);
+
+    console.log("[Admin-Web OTA] Command sent, waiting for acknowledgment...");
+    showToast("📤 Update command sent to billboard", "info");
+
+    statusText.textContent = "Waiting for billboard acknowledgment...";
+
+    // ✅ NEW: Wait for acknowledgment or timeout
+    const ackTimeout = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(false); // Timeout - no ack received
+      }, 5000); // 5 second timeout
+    });
+
+    const ackReceived = await Promise.race([
+      window.MqttClient.waitForAcknowledgment
+        ? window.MqttClient.waitForAcknowledgment(messageId)
+        : Promise.reject(new Error("ACK support not available")),
+      ackTimeout,
+    ]).catch(() => false);
+
+    if (ackReceived) {
+      statusText.textContent =
+        "✅ Billboard acknowledged! Downloading update...";
+      showToast("✅ Billboard acknowledged update command", "success");
+    } else {
+      statusText.textContent =
+        "⚠️ No acknowledgment yet, update may still be in progress...";
+      showToast("⚠️ No immediate response from billboard", "warning");
     }
 
-    console.log(
-      "Sending force update command for version:",
+    // Setup UpdateService listeners before triggering
+    setupUpdateServiceListeners();
+
+    // Trigger update using UpdateService
+    const success = await window.UpdateService.triggerUpdate(
       lastDetectedUpdateVersion
     );
 
-    // Publish force update command
-    await window.MqttClient.publish("its/billboard/commands", {
-      action: "force_update",
-      timestamp: Date.now(),
-      source: "admin_web",
-      detectedVersion: lastDetectedUpdateVersion,
-    });
+    if (!success) {
+      throw new Error("Update service failed to initialize update");
+    }
 
-    showToast("Update command sent to billboard", "info");
-
-    updateStatus.style.display = "block";
-    updateProgress.style.display = "block";
     statusText.textContent = "Waiting for download to start...";
-
-    // Simulate progress (will be updated via MQTT)
-    let progress = 0;
-    const progressInterval = setInterval(() => {
-      if (progress < 90) {
-        progress += Math.random() * 15;
-        if (progress > 90) progress = 90;
-
-        const progressFill = document.getElementById("updateProgressFill");
-        const progressText = document.getElementById("updateProgressText");
-        progressFill.style.width = progress + "%";
-        progressText.textContent = Math.round(progress) + "%";
-      }
-    }, 1000);
-
-    // Store interval ID for cleanup
-    window.updateProgressInterval = progressInterval;
-
-    // Wait for completion (timeout after 120 seconds for large downloads)
-    const timeoutId = setTimeout(() => {
-      clearInterval(progressInterval);
-      if (
-        statusText.textContent === "Waiting for download to start..." ||
-        statusText.textContent.includes("progress")
-      ) {
-        statusText.textContent =
-          "Update in progress - app will restart when download completes";
-        // Don't show as error - update is likely still happening
-      }
-    }, 120000);
-
-    // Store timeout ID for cleanup
-    window.updateTimeoutId = timeoutId;
   } catch (error) {
     console.error("Force update failed:", error);
     showToast("Force update failed: " + error.message, "error");
     updateStatus.style.display = "block";
     statusText.textContent = "Error: " + error.message;
-
-    // Clear any timers
-    if (window.updateProgressInterval) {
-      clearInterval(window.updateProgressInterval);
-    }
-    if (window.updateTimeoutId) {
-      clearTimeout(window.updateTimeoutId);
-    }
   } finally {
     forceBtn.disabled = false;
     btnText.style.display = "inline";
     btnLoading.style.display = "none";
   }
+}
+
+// Setup UpdateService event listeners
+function setupUpdateServiceListeners() {
+  if (!window.UpdateService) {
+    console.error("UpdateService not available");
+    return;
+  }
+
+  // Listen for status changes
+  window.UpdateService.on("statusChange", (data) => {
+    const statusText = document.getElementById("updateStatusText");
+    if (statusText) {
+      statusText.textContent = data.message;
+    }
+  });
+
+  // Listen for progress updates
+  window.UpdateService.on("progressChange", (data) => {
+    const progressFill = document.getElementById("updateProgressFill");
+    const progressText = document.getElementById("updateProgressText");
+    const updateProgress = document.getElementById("updateProgress");
+
+    if (progressFill && progressText) {
+      updateProgress.style.display = "block";
+      progressFill.style.width = Math.min(data.percent, 100) + "%";
+      progressText.textContent = Math.round(data.percent) + "%";
+    }
+  });
+
+  // Listen for success
+  window.UpdateService.on("success", (result) => {
+    showToast(`Update completed: v${result.version}`, "success");
+    const statusText = document.getElementById("updateStatusText");
+    if (statusText) {
+      statusText.textContent = `Update successful! Restarting app...`;
+    }
+  });
+
+  // Listen for errors
+  window.UpdateService.on("error", (error) => {
+    showToast(`Update error: ${error.message}`, "error");
+    const statusText = document.getElementById("updateStatusText");
+    if (statusText) {
+      statusText.textContent = `Error: ${error.message}`;
+    }
+  });
 }
 
 // Reset App function
@@ -439,30 +495,26 @@ function handleMqttStatusMessage(topic, message) {
   }
 }
 
-// Handle update status from billboard
+// Handle update status from billboard - forward to UpdateService
 function handleUpdateStatus(status) {
   const updateStatus = document.getElementById("updateStatus");
   const statusText = document.getElementById("updateStatusText");
-  const updateProgress = document.getElementById("updateProgress");
-  const progressFill = document.getElementById("updateProgressFill");
-  const progressText = document.getElementById("updateProgressText");
 
   if (!updateStatus) return;
 
   updateStatus.style.display = "block";
 
+  // Forward to UpdateService if available
+  if (window.UpdateService) {
+    window.UpdateService.handleUpdateStatus(status);
+  }
+
+  // Also handle UI updates for compatibility
   switch (status.status) {
     case "update_available":
-      statusText.textContent = `✅ Update available: v${status.version}`;
-
-      // Store detected version for verification
+      statusText.textContent = `Update available: v${status.version}`;
       lastDetectedUpdateVersion = status.version;
-      console.log(
-        "handleUpdateStatus: Detected update version:",
-        status.version
-      );
 
-      // Enable force update button
       const forceUpdateBtn = document.getElementById("forceUpdateBtn");
       if (forceUpdateBtn) {
         forceUpdateBtn.disabled = false;
@@ -471,45 +523,43 @@ function handleUpdateStatus(status) {
       break;
 
     case "no_updates":
-      statusText.textContent = "✅ No updates available - already up to date";
+      statusText.textContent = "Already up to date";
       showToast("Already up to date", "info");
       break;
 
-    case "downloading":
-      statusText.textContent = `⬇️ Downloading v${status.version}...`;
-      updateProgress.style.display = "block";
-      progressFill.style.width = "10%";
-      progressText.textContent = "10%";
-      break;
-
-    case "update_in_progress":
-      statusText.textContent = "🔄 Update in progress...";
-      updateProgress.style.display = "block";
-      break;
-
     case "error":
-      statusText.textContent = `❌ Error: ${status.error}`;
+      statusText.textContent = `Error: ${status.error}`;
       showToast(`Update error: ${status.error}`, "error");
       break;
 
     default:
-      statusText.textContent = `Status: ${status.status}`;
+      statusText.textContent = status.message || `Status: ${status.status}`;
   }
 }
 
-// Handle reset status from billboard
+// Handle reset status from billboard - forward to UpdateService
 function handleResetStatus(status) {
+  // Forward to UpdateService if available
+  if (window.UpdateService) {
+    window.UpdateService.handleResetStatus(status);
+  }
+
+  // Also handle UI updates for compatibility
   switch (status.status) {
     case "reset_started":
-      showToast("🔄 Billboard starting reset...", "info");
+      showToast("Billboard starting reset...", "info");
       break;
 
     case "restarting":
-      showToast("🔄 Billboard restarting...", "success");
+      showToast("Billboard restarting...", "success");
+      break;
+
+    case "reset_success":
+      showToast("Billboard reset completed", "success");
       break;
 
     case "error":
-      showToast(`❌ Reset error: ${status.error}`, "error");
+      showToast(`Reset error: ${status.error}`, "error");
       break;
   }
 }
