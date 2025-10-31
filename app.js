@@ -36,8 +36,13 @@ function showToast(message, type = "info", duration = 5000) {
   console.log(`[${type.toUpperCase()}] ${message}`);
 }
 
-// Track last detected update version from billboard
-let lastDetectedUpdateVersion = null;
+// Track device information
+let currentDeviceInfo = {
+  deviceId: null,
+  deviceVersion: null,
+  mqttStatus: "disconnected",
+  lastUpdateTime: null,
+};
 
 // Show modal
 function showModal(title, content) {
@@ -445,6 +450,7 @@ async function initializeMQTT() {
         // Setup MQTT status monitoring
         window.MqttClient.onStatusChange((status) => {
           updateConnectionStatus(status);
+          updateMqttStatusDisplay(); // Update device info display
         });
 
         // Setup MQTT message handlers for update status
@@ -459,14 +465,17 @@ async function initializeMQTT() {
           "MQTT connection failed, continuing in offline mode",
           "warning"
         );
+        updateMqttStatusDisplay(); // Update even on failure
       }
     } else {
       console.warn("MQTT client not available");
       showToast("MQTT client not available", "warning");
+      updateMqttStatusDisplay(); // Update when not available
     }
   } catch (error) {
     console.error("MQTT initialization error:", error);
     showToast("MQTT initialization failed: " + error.message, "error");
+    updateMqttStatusDisplay(); // Update on error
   }
 }
 
@@ -492,6 +501,11 @@ function handleMqttStatusMessage(topic, message) {
   // Handle reset status messages
   if (topic === "its/billboard/reset/status") {
     handleResetStatus(data);
+  }
+
+  // Handle acknowledgment messages
+  if (topic === "its/billboard/update/ack") {
+    handleUpdateAcknowledgment(data);
   }
 }
 
@@ -562,6 +576,80 @@ function handleResetStatus(status) {
       showToast(`Reset error: ${status.error}`, "error");
       break;
   }
+}
+
+// Handle update acknowledgment from billboard
+function handleUpdateAcknowledgment(ack) {
+  console.log("[Admin-Web] Received update acknowledgment:", ack);
+
+  // Update device information
+  if (ack.deviceId) {
+    currentDeviceInfo.deviceId = ack.deviceId;
+    updateDeviceInfoDisplay();
+  }
+
+  if (ack.deviceVersion) {
+    currentDeviceInfo.deviceVersion = ack.deviceVersion;
+    updateDeviceInfoDisplay();
+  }
+
+  // Update last update time
+  currentDeviceInfo.lastUpdateTime = new Date().toLocaleString("vi-VN");
+  updateDeviceInfoDisplay();
+
+  // Show acknowledgment toast
+  showToast(
+    `✅ Billboard acknowledged: ${ack.message || "Ready for update"}`,
+    "success"
+  );
+}
+
+// Update MQTT status display
+function updateMqttStatusDisplay() {
+  const statusEl = document.getElementById("deviceMqttStatus");
+  if (!statusEl) return;
+
+  const isConnected = window.MqttClient?.connected;
+  currentDeviceInfo.mqttStatus = isConnected ? "connected" : "disconnected";
+
+  const statusIndicator = statusEl.querySelector(".status-indicator");
+  const statusText = statusEl.querySelector(".status-text");
+
+  if (statusIndicator && statusText) {
+    if (isConnected) {
+      statusIndicator.className = "status-indicator online";
+      statusText.textContent = "Đã kết nối";
+    } else {
+      statusIndicator.className = "status-indicator offline";
+      statusText.textContent = "Chưa kết nối";
+    }
+  } else {
+    // Fallback if structure is different
+    statusEl.innerHTML = `
+      <span class="status-indicator ${
+        isConnected ? "online" : "offline"
+      }"></span>
+      ${isConnected ? "Đã kết nối" : "Chưa kết nối"}
+    `;
+  }
+}
+
+// Refresh device info
+function refreshDeviceInfo() {
+  console.log("[Admin-Web] Refreshing device info...");
+
+  // Reset device info
+  currentDeviceInfo = {
+    deviceId: null,
+    deviceVersion: null,
+    mqttStatus: window.MqttClient?.connected ? "connected" : "disconnected",
+    lastUpdateTime: null,
+  };
+
+  updateDeviceInfoDisplay();
+  updateMqttStatusDisplay();
+
+  showToast("Đã làm mới thông tin thiết bị", "info");
 }
 
 // ====================================
@@ -1111,6 +1199,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Initialize Logo Manifest Manager
   console.log("Initializing Logo Manifest Manager...");
   window.logoManifest = new LogoManifestManager();
+
+  // Initialize device info display
+  updateDeviceInfoDisplay();
+  updateMqttStatusDisplay();
 
   // Initialize MQTT
   await initializeMQTT();
