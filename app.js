@@ -219,6 +219,17 @@ async function forceUpdate() {
     return;
   }
 
+  // ✅ NEW: Check MQTT connection first
+  if (!window.MqttClient || !window.MqttClient.connected) {
+    showToast(
+      "❌ MQTT not connected to billboard. Cannot send update.",
+      "error"
+    );
+    statusText.textContent = "Error: Not connected to billboard display";
+    updateStatus.style.display = "block";
+    return;
+  }
+
   const confirmed = confirm(
     "⚠️ XÁC NHẬN CẬP NHẬT\n\n" +
       "Hành động này sẽ:\n" +
@@ -241,6 +252,56 @@ async function forceUpdate() {
 
     updateStatus.style.display = "block";
     statusText.textContent = "Preparing update...";
+
+    // ✅ NEW: Generate unique message ID for tracking
+    const messageId = `update_${Date.now()}_${Math.random()
+      .toString(36)
+      .substr(2, 9)}`;
+
+    // ✅ IMPROVED: Send command with all required fields
+    const updateCommand = {
+      action: "force_update",
+      version: lastDetectedUpdateVersion,
+      targetVersion: lastDetectedUpdateVersion,
+      messageId: messageId,
+      timestamp: Date.now(),
+      source: "admin_web",
+      deviceTarget: "all",
+    };
+
+    console.log("[Admin-Web OTA] Sending force_update command:", updateCommand);
+
+    // Send via MQTT
+    await window.MqttClient.publish("its/billboard/commands", updateCommand);
+
+    console.log("[Admin-Web OTA] Command sent, waiting for acknowledgment...");
+    showToast("📤 Update command sent to billboard", "info");
+
+    statusText.textContent = "Waiting for billboard acknowledgment...";
+
+    // ✅ NEW: Wait for acknowledgment or timeout
+    const ackTimeout = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(false); // Timeout - no ack received
+      }, 5000); // 5 second timeout
+    });
+
+    const ackReceived = await Promise.race([
+      window.MqttClient.waitForAcknowledgment
+        ? window.MqttClient.waitForAcknowledgment(messageId)
+        : Promise.reject(new Error("ACK support not available")),
+      ackTimeout,
+    ]).catch(() => false);
+
+    if (ackReceived) {
+      statusText.textContent =
+        "✅ Billboard acknowledged! Downloading update...";
+      showToast("✅ Billboard acknowledged update command", "success");
+    } else {
+      statusText.textContent =
+        "⚠️ No acknowledgment yet, update may still be in progress...";
+      showToast("⚠️ No immediate response from billboard", "warning");
+    }
 
     // Setup UpdateService listeners before triggering
     setupUpdateServiceListeners();
