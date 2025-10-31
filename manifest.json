@@ -1,37 +1,23 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1761907060824",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "logo1",
-      "name": "EoH ERa Web Banner",
-      "url": "https://github.com/MQuan-eoh/billboard-logos-cdn/blob/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
-      "version": "1.0",
-      "size": "1920x800",
-      "format": "png",
-      "description": "Logo chính EoH ERa"
-    },
-    {
-      "id": "logo2",
-      "name": "Industrial Dashboard Symbol",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo Industrial Dashboard"
-    },
-    {
-      "id": "logo3",
-      "name": "Special Event Logo",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo sự kiện đặc biệt"
+      "id": "era-iot-flowdiagram-crabproject-1761907057601",
+      "name": "ERA_IoT_FlowDiagram_CrabProject",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/era-iot-flowdiagram-crabproject-1761907057601.png",
+      "filename": "era-iot-flowdiagram-crabproject-1761907057601.png",
+      "size": 509074,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-31T10:37:40.468Z",
+      "githubPath": "logos/era-iot-flowdiagram-crabproject-1761907057601.png",
+      "githubSha": "158392487d6a70133f23d0f272c7ac5ba753d03d"
     }
   ],
   "settings": {
-    "logoMode": "scheduled",
+    "logoMode": "loop",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -51,6 +37,14 @@
           "endTime": "22:00"
         }
       ]
-    }
+    },
+    "logoLoopDuration": 10
+  },
+  "lastUpdated": "2025-10-31T10:37:40.824Z",
+  "metadata": {
+    "author": "Admin Web Interface",
+    "description": "Billboard logo manifest",
+    "apiVersion": "v1",
+    "lastModifiedBy": "Admin Web Interface"
   }
 }
