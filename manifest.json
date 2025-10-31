@@ -1,20 +1,48 @@
 {
-  "version": "1.0.1761730318725",
+  "version": "1.0.1761879249780",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "eoh-era-web-banner-1920x800-1-1761730314689",
-      "name": "EoH_ERa_Web-Banner_1920x800-1",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/eoh-era-web-banner-1920x800-1-1761730314689.png",
-      "filename": "eoh-era-web-banner-1920x800-1-1761730314689.png",
-      "size": 733002,
-      "type": "image/png",
-      "checksum": "eoherawebbanner1920x8001png7330021761730318343",
+      "id": "maxresdefault-3-1761879240166",
+      "name": "maxresdefault (3)",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/maxresdefault--3--1761879240166.jpg",
+      "filename": "maxresdefault--3--1761879240166.jpg",
+      "size": 91817,
+      "type": "image/jpeg",
+      "checksum": "maxresdefault3jpg918171761879243206",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-10-29T09:31:58.343Z",
-      "githubPath": "logos/eoh-era-web-banner-1920x800-1-1761730314689.png",
-      "githubSha": "01b768a1a1ba4b07b8043049b12f9ae33d317fbb"
+      "uploadedAt": "2025-10-31T02:54:03.206Z",
+      "githubPath": "logos/maxresdefault--3--1761879240166.jpg",
+      "githubSha": "478c326bb496bb8c7ec726f0b6944971fff1efd1"
+    },
+    {
+      "id": "macos-app-store-glassmorphism-1761879243209",
+      "name": "macos-app-store-glassmorphism",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/macos-app-store-glassmorphism-1761879243209.jpg",
+      "filename": "macos-app-store-glassmorphism-1761879243209.jpg",
+      "size": 71838,
+      "type": "image/jpeg",
+      "checksum": "macosappstoreglassmorphismjpg718381761879245936",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-31T02:54:05.936Z",
+      "githubPath": "logos/macos-app-store-glassmorphism-1761879243209.jpg",
+      "githubSha": "b9ce75d52d93d6369ef7109a2c208b5092a60616"
+    },
+    {
+      "id": "463855777-1198489501665425-7893202219701407131-n-1761879245942",
+      "name": "463855777_1198489501665425_7893202219701407131_n",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/463855777-1198489501665425-7893202219701407131-n-1761879245942.jpg",
+      "filename": "463855777-1198489501665425-7893202219701407131-n-1761879245942.jpg",
+      "size": 608084,
+      "type": "image/jpeg",
+      "checksum": "46385577711984895016654257893202219701407131njpg6080841761879249117",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-10-31T02:54:09.117Z",
+      "githubPath": "logos/463855777-1198489501665425-7893202219701407131-n-1761879245942.jpg",
+      "githubSha": "95fea271ed6928a64e5c4056b5c299ba9d6b0c18"
     }
   ],
   "settings": {
@@ -41,7 +69,7 @@
     },
     "logoLoopDuration": 4
   },
-  "lastUpdated": "2025-10-29T09:31:58.725Z",
+  "lastUpdated": "2025-10-31T02:54:09.780Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
