@@ -1,34 +1,20 @@
 {
-  "version": "1.0.1761884597797",
+  "version": "1.0.1761893713785",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "489039124-4146044149011445-7237451872535066039-n-1761884592680",
-      "name": "489039124_4146044149011445_7237451872535066039_n",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/489039124-4146044149011445-7237451872535066039-n-1761884592680.jpg",
-      "filename": "489039124-4146044149011445-7237451872535066039-n-1761884592680.jpg",
-      "size": 52644,
+      "id": "473034284-122130902966558672-8224023142542524940-n-1761893709581",
+      "name": "473034284_122130902966558672_8224023142542524940_n",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/473034284-122130902966558672-8224023142542524940-n-1761893709581.jpg",
+      "filename": "473034284-122130902966558672-8224023142542524940-n-1761893709581.jpg",
+      "size": 529290,
       "type": "image/jpeg",
-      "checksum": "48903912441460441490114457237451872535066039njpg526441761884595098",
+      "checksum": "4730342841221309029665586728224023142542524940njpg5292901761893713135",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-10-31T04:23:15.098Z",
-      "githubPath": "logos/489039124-4146044149011445-7237451872535066039-n-1761884592680.jpg",
-      "githubSha": "3d3269481163c538c69f9cf6698dff00cda82911"
-    },
-    {
-      "id": "z6810253908044-37c7d32ba11aea83853da2baf0850098-1761884595103",
-      "name": "z6810253908044_37c7d32ba11aea83853da2baf0850098",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z6810253908044-37c7d32ba11aea83853da2baf0850098-1761884595103.jpg",
-      "filename": "z6810253908044-37c7d32ba11aea83853da2baf0850098-1761884595103.jpg",
-      "size": 70042,
-      "type": "image/jpeg",
-      "checksum": "z681025390804437c7d32ba11aea83853da2baf0850098jpg700421761884597461",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-10-31T04:23:17.461Z",
-      "githubPath": "logos/z6810253908044-37c7d32ba11aea83853da2baf0850098-1761884595103.jpg",
-      "githubSha": "b281a956d805b011a05a28936b8a8d507f40412d"
+      "uploadedAt": "2025-10-31T06:55:13.135Z",
+      "githubPath": "logos/473034284-122130902966558672-8224023142542524940-n-1761893709581.jpg",
+      "githubSha": "3b931dd8e8ed1f538258222521ae6509584b6692"
     }
   ],
   "settings": {
@@ -55,7 +41,7 @@
     },
     "logoLoopDuration": 4
   },
-  "lastUpdated": "2025-10-31T04:23:17.797Z",
+  "lastUpdated": "2025-10-31T06:55:13.785Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
