@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762154501470",
+  "version": "1.0.1762155209930",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "giaodien-homepage-1762154498388",
-      "name": "Giaodien_HomePage",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/giaodien-homepage-1762154498388.png",
-      "filename": "giaodien-homepage-1762154498388.png",
-      "size": 472294,
-      "type": "image/png",
+      "id": "channels4-profile-1762155207446",
+      "name": "channels4_profile",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/channels4-profile-1762155207446.jpg",
+      "filename": "channels4-profile-1762155207446.jpg",
+      "size": 25222,
+      "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-03T07:21:41.133Z",
-      "githubPath": "logos/giaodien-homepage-1762154498388.png",
-      "githubSha": "0e5f004487e84a9a755ada8744c0012447822f15"
+      "uploadedAt": "2025-11-03T07:33:29.520Z",
+      "githubPath": "logos/channels4-profile-1762155207446.jpg",
+      "githubSha": "64471360ea91fdb23df60ee5d80bbb7253037c61"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-03T07:21:41.470Z",
+  "lastUpdated": "2025-11-03T07:33:29.930Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
