@@ -51,6 +51,20 @@
           "endTime": "22:00"
         }
       ]
+<<<<<<< HEAD
     }
+=======
+    },
+    "logoLoopDuration": 10
+  },
+  "lastUpdated": "2025-11-03T07:54:22.037Z",
+  "metadata": {
+    "author": "Admin Web Interface",
+    "description": "Billboard logo manifest",
+    "apiVersion": "v1",
+    "lastModifiedBy": "Admin Web Interface",
+    "cleanupDate": "2025-11-03T07:50:54.339Z",
+    "removedLogos": []
+>>>>>>> 457944fed4edfcea1fc52b83b809e5821724c2a4
   }
 }
