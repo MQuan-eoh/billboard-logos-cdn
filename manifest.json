@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762152335918",
+  "version": "1.0.1762152664409",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "channels4-profile-1762152332912",
-      "name": "channels4_profile",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/channels4-profile-1762152332912.jpg",
-      "filename": "channels4-profile-1762152332912.jpg",
-      "size": 25222,
+      "id": "pngtree-close-up-view-of-electronics-industry-concept-with-3d-illustration-of-picture-image-4040934-1762152660615",
+      "name": "pngtree-close-up-view-of-electronics-industry-concept-with-3d-illustration-of-picture-image_4040934",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/pngtree-close-up-view-of-electronics-industry-concept-with-3d-illustration-of-picture-image-4040934-1762152660615.jpg",
+      "filename": "pngtree-close-up-view-of-electronics-industry-concept-with-3d-illustration-of-picture-image-4040934-1762152660615.jpg",
+      "size": 1002416,
       "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-03T06:45:35.201Z",
-      "githubPath": "logos/channels4-profile-1762152332912.jpg",
-      "githubSha": "64471360ea91fdb23df60ee5d80bbb7253037c61"
+      "uploadedAt": "2025-11-03T06:51:03.762Z",
+      "githubPath": "logos/pngtree-close-up-view-of-electronics-industry-concept-with-3d-illustration-of-picture-image-4040934-1762152660615.jpg",
+      "githubSha": "739fa2c10b5a8421cc05e25ea456363b173905ee"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-03T06:45:35.918Z",
+  "lastUpdated": "2025-11-03T06:51:04.409Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
