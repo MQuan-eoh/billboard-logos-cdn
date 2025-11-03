@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762155462910",
+  "version": "1.0.1762155651995",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "z6180714669699-35d93df31173aee86d1a3fb4d1b33c08-1762155460307",
-      "name": "z6180714669699_35d93df31173aee86d1a3fb4d1b33c08",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z6180714669699-35d93df31173aee86d1a3fb4d1b33c08-1762155460307.jpg",
-      "filename": "z6180714669699-35d93df31173aee86d1a3fb4d1b33c08-1762155460307.jpg",
-      "size": 78955,
+      "id": "z6180714682757-682363bf75fae967756857ab024297a2-1762155649165",
+      "name": "z6180714682757_682363bf75fae967756857ab024297a2",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z6180714682757-682363bf75fae967756857ab024297a2-1762155649165.jpg",
+      "filename": "z6180714682757-682363bf75fae967756857ab024297a2-1762155649165.jpg",
+      "size": 313814,
       "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-03T07:37:42.550Z",
-      "githubPath": "logos/z6180714669699-35d93df31173aee86d1a3fb4d1b33c08-1762155460307.jpg",
-      "githubSha": "b2ef1d1f7aea11889114be8653da66aab40100eb"
+      "uploadedAt": "2025-11-03T07:40:51.639Z",
+      "githubPath": "logos/z6180714682757-682363bf75fae967756857ab024297a2-1762155649165.jpg",
+      "githubSha": "d2e8f9c6e37ab4f81457ae645f5fc04c5f2abf2d"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-03T07:37:42.910Z",
+  "lastUpdated": "2025-11-03T07:40:51.995Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
