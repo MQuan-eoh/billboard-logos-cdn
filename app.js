@@ -36,8 +36,13 @@ function showToast(message, type = "info", duration = 5000) {
   console.log(`[${type.toUpperCase()}] ${message}`);
 }
 
-// Track last detected update version from billboard
-let lastDetectedUpdateVersion = null;
+// Track device information
+let currentDeviceInfo = {
+  deviceId: null,
+  deviceVersion: null,
+  mqttStatus: "disconnected",
+  lastUpdateTime: null,
+};
 
 // Show modal
 function showModal(title, content) {
@@ -271,6 +276,13 @@ async function forceUpdate() {
 
     console.log("[Admin-Web OTA] Sending force_update command:", updateCommand);
 
+    // Check MQTT connection before sending
+    if (!window.MqttClient || !window.MqttClient.connected) {
+      throw new Error(
+        "MQTT connection not available. Please check connection."
+      );
+    }
+
     // Send via MQTT
     await window.MqttClient.publish("its/billboard/commands", updateCommand);
 
@@ -445,6 +457,7 @@ async function initializeMQTT() {
         // Setup MQTT status monitoring
         window.MqttClient.onStatusChange((status) => {
           updateConnectionStatus(status);
+          updateMqttStatusDisplay(); // Update device info display
         });
 
         // Setup MQTT message handlers for update status
@@ -459,14 +472,28 @@ async function initializeMQTT() {
           "MQTT connection failed, continuing in offline mode",
           "warning"
         );
+        updateMqttStatusDisplay(); // Update even on failure
+
+        // Retry connection after 5 seconds
+        setTimeout(async () => {
+          console.log("Retrying MQTT connection...");
+          try {
+            await window.MqttClient.connect();
+            showToast("MQTT reconnected successfully", "success");
+          } catch (retryError) {
+            console.warn("MQTT retry failed:", retryError);
+          }
+        }, 5000);
       }
     } else {
       console.warn("MQTT client not available");
       showToast("MQTT client not available", "warning");
+      updateMqttStatusDisplay(); // Update when not available
     }
   } catch (error) {
     console.error("MQTT initialization error:", error);
     showToast("MQTT initialization failed: " + error.message, "error");
+    updateMqttStatusDisplay(); // Update on error
   }
 }
 
@@ -492,6 +519,11 @@ function handleMqttStatusMessage(topic, message) {
   // Handle reset status messages
   if (topic === "its/billboard/reset/status") {
     handleResetStatus(data);
+  }
+
+  // Handle acknowledgment messages
+  if (topic === "its/billboard/update/ack") {
+    handleUpdateAcknowledgment(data);
   }
 }
 
@@ -562,6 +594,80 @@ function handleResetStatus(status) {
       showToast(`Reset error: ${status.error}`, "error");
       break;
   }
+}
+
+// Handle update acknowledgment from billboard
+function handleUpdateAcknowledgment(ack) {
+  console.log("[Admin-Web] Received update acknowledgment:", ack);
+
+  // Update device information
+  if (ack.deviceId) {
+    currentDeviceInfo.deviceId = ack.deviceId;
+    updateDeviceInfoDisplay();
+  }
+
+  if (ack.deviceVersion) {
+    currentDeviceInfo.deviceVersion = ack.deviceVersion;
+    updateDeviceInfoDisplay();
+  }
+
+  // Update last update time
+  currentDeviceInfo.lastUpdateTime = new Date().toLocaleString("vi-VN");
+  updateDeviceInfoDisplay();
+
+  // Show acknowledgment toast
+  showToast(
+    `✅ Billboard acknowledged: ${ack.message || "Ready for update"}`,
+    "success"
+  );
+}
+
+// Update MQTT status display
+function updateMqttStatusDisplay() {
+  const statusEl = document.getElementById("deviceMqttStatus");
+  if (!statusEl) return;
+
+  const isConnected = window.MqttClient?.connected;
+  currentDeviceInfo.mqttStatus = isConnected ? "connected" : "disconnected";
+
+  const statusIndicator = statusEl.querySelector(".status-indicator");
+  const statusText = statusEl.querySelector(".status-text");
+
+  if (statusIndicator && statusText) {
+    if (isConnected) {
+      statusIndicator.className = "status-indicator online";
+      statusText.textContent = "Đã kết nối";
+    } else {
+      statusIndicator.className = "status-indicator offline";
+      statusText.textContent = "Chưa kết nối";
+    }
+  } else {
+    // Fallback if structure is different
+    statusEl.innerHTML = `
+      <span class="status-indicator ${
+        isConnected ? "online" : "offline"
+      }"></span>
+      ${isConnected ? "Đã kết nối" : "Chưa kết nối"}
+    `;
+  }
+}
+
+// Refresh device info
+function refreshDeviceInfo() {
+  console.log("[Admin-Web] Refreshing device info...");
+
+  // Reset device info
+  currentDeviceInfo = {
+    deviceId: null,
+    deviceVersion: null,
+    mqttStatus: window.MqttClient?.connected ? "connected" : "disconnected",
+    lastUpdateTime: null,
+  };
+
+  updateDeviceInfoDisplay();
+  updateMqttStatusDisplay();
+
+  showToast("Đã làm mới thông tin thiết bị", "info");
 }
 
 // ====================================
@@ -880,28 +986,101 @@ async function authenticateGitHub() {
     return;
   }
 
+  // Show loading state
+  const authBtn = document.querySelector("#githubAuthCard button");
+  const originalText = authBtn.textContent;
+  authBtn.disabled = true;
+  authBtn.textContent = "Authenticating...";
+
   try {
+    console.log("[Auth] Starting GitHub authentication...");
+
+    // Initialize GitHub service with enhanced error handling
     const success = await window.initializeGitHubService(token);
 
     if (success) {
+      // Store token securely for this machine
+      const status = window.getGitHubServiceStatus();
+      if (window.TokenManager && status.authenticatedUser) {
+        const stored = window.TokenManager.storeToken(
+          token,
+          status.authenticatedUser
+        );
+        if (stored) {
+          console.log("[Auth] Token stored successfully for future use");
+        }
+      }
+
+      // Update UI
       document.getElementById("githubAuthCard").style.display = "none";
       document.getElementById("githubUploadSection").style.display = "block";
 
-      // Show repository information
-      const status = window.getGitHubServiceStatus();
+      // Clear token input for security
+      tokenInput.value = "";
+
       showToast(
-        `✅ GitHub authentication successful - Using repository: ${status.repository}`,
+        `GitHub authentication successful - Using repository: ${status.repository}`,
         "success"
       );
 
-      // Update the UI to show which repository is being used
       updateRepositoryDisplay(status);
     } else {
-      showToast("❌ GitHub authentication failed", "error");
+      throw new Error(
+        "Authentication failed - Please check your token and repository access"
+      );
     }
   } catch (error) {
-    console.error("GitHub auth error:", error);
-    showToast("GitHub auth error: " + error.message, "error");
+    console.error("[Auth] GitHub authentication failed:", error);
+
+    // Provide specific error messages
+    let errorMessage = "GitHub authentication failed";
+    if (error.message.includes("401")) {
+      errorMessage = "Invalid GitHub token - Please check your token";
+    } else if (error.message.includes("403")) {
+      errorMessage =
+        "Token doesn't have required permissions - Need 'repo' access";
+    } else if (error.message.includes("404")) {
+      errorMessage = "Repository not found or no access - Will try fallback";
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+
+    showToast(errorMessage, "error");
+  } finally {
+    // Restore button state
+    authBtn.disabled = false;
+    authBtn.textContent = originalText;
+  }
+}
+
+// Auto-load stored token on page load
+async function autoLoadStoredToken() {
+  if (!window.TokenManager) return;
+
+  const tokenData = window.TokenManager.getStoredToken();
+  if (tokenData && tokenData.token) {
+    console.log("[Auth] Found stored token, attempting auto-authentication...");
+
+    try {
+      const success = await window.initializeGitHubService(tokenData.token);
+
+      if (success) {
+        document.getElementById("githubAuthCard").style.display = "none";
+        document.getElementById("githubUploadSection").style.display = "block";
+
+        const status = window.getGitHubServiceStatus();
+        showToast(`Auto-authenticated as ${tokenData.userLogin}`, "info");
+        updateRepositoryDisplay(status);
+
+        console.log("[Auth] Auto-authentication successful");
+      } else {
+        console.log("[Auth] Auto-authentication failed, clearing stored token");
+        window.TokenManager.clearToken();
+      }
+    } catch (error) {
+      console.error("[Auth] Auto-authentication error:", error);
+      window.TokenManager.clearToken();
+    }
   }
 }
 
@@ -1099,6 +1278,11 @@ async function uploadLogoToGithub() {
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOM loaded, initializing simplified banner management app...");
 
+  // Auto-load stored GitHub token
+  setTimeout(() => {
+    autoLoadStoredToken();
+  }, 1000); // Delay to ensure all services are loaded
+
   // Setup GitHub file input handler
   const githubFileInput = document.getElementById("githubFileInput");
   if (githubFileInput) {
@@ -1112,6 +1296,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log("Initializing Logo Manifest Manager...");
   window.logoManifest = new LogoManifestManager();
 
+  // Initialize device info display
+  updateDeviceInfoDisplay();
+  updateMqttStatusDisplay();
+
   // Initialize MQTT
   await initializeMQTT();
 
@@ -1123,6 +1311,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Repository display update function
 function updateRepositoryDisplay(status) {
+  console.log("[UI] Updating repository display with status:", status);
+
   // Create or update repository info display
   let repoInfo = document.getElementById("repoInfo");
   if (!repoInfo) {
@@ -1136,20 +1326,74 @@ function updateRepositoryDisplay(status) {
     }
   }
 
+  // Update repository info with enhanced display
   repoInfo.innerHTML = `
-    <div class="repo-info-content">
-      <h4>📂 Repository Information</h4>
-      <p><strong>Repository:</strong> <a href="https://github.com/${
-        status.repository
-      }" target="_blank">${status.repository}</a></p>
-      <p><strong>Branch:</strong> ${status.branch}</p>
-      <p><strong>Upload Path:</strong> ${status.uploadPath}</p>
-      <p><strong>CDN URL:</strong> <a href="${
-        window.GitHubConfig?.api?.cdnEndpoint ||
-        `https://${status.repository.split("/")[0]}.github.io/${
-          status.repository.split("/")[1]
-        }`
-      }" target="_blank">View CDN</a></p>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+      <div>
+        <strong>Repository:</strong> ${status.repository || "Unknown"}<br>
+        <small style="color: #666;">User: ${
+          status.authenticatedUser || "Unknown"
+        }</small>
+      </div>
+      <button id="githubLogoutBtn" class="btn btn-outline btn-sm" onclick="logoutGitHub()">
+        Logout
+      </button>
     </div>
   `;
+}
+
+// Add logout functionality
+function logoutGitHub() {
+  if (window.TokenManager) {
+    window.TokenManager.clearToken();
+  }
+
+  // Reset UI
+  document.getElementById("githubAuthCard").style.display = "block";
+  document.getElementById("githubUploadSection").style.display = "none";
+
+  // Clear file selection
+  githubSelectedFiles = [];
+  const fileInput = document.getElementById("githubFileInput");
+  if (fileInput) {
+    fileInput.value = "";
+  }
+
+  // Reset GitHub service
+  if (window.GitHubUploadService) {
+    window.GitHubUploadService.isAuthenticated = false;
+    window.GitHubUploadService.token = null;
+    window.GitHubUploadService.authenticatedUser = null;
+  }
+
+  showToast("Logged out successfully", "info");
+  console.log("[Auth] GitHub logout completed");
+}
+
+// Add logout functionality
+function logoutGitHub() {
+  if (window.TokenManager) {
+    window.TokenManager.clearToken();
+  }
+
+  // Reset UI
+  document.getElementById("githubAuthCard").style.display = "block";
+  document.getElementById("githubUploadSection").style.display = "none";
+
+  // Clear file selection
+  githubSelectedFiles = [];
+  const fileInput = document.getElementById("githubFileInput");
+  if (fileInput) {
+    fileInput.value = "";
+  }
+
+  // Reset GitHub service
+  if (window.GitHubUploadService) {
+    window.GitHubUploadService.isAuthenticated = false;
+    window.GitHubUploadService.token = null;
+    window.GitHubUploadService.authenticatedUser = null;
+  }
+
+  showToast("Logged out successfully", "info");
+  console.log("[Auth] GitHub logout completed");
 }
