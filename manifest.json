@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762311254280",
+  "version": "1.0.1762315710099",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "z7186917793801-a778b637779c7e4cd0caa1ef14f0515c-1762311250754",
-      "name": "z7186917793801_a778b637779c7e4cd0caa1ef14f0515c",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7186917793801-a778b637779c7e4cd0caa1ef14f0515c-1762311250754.jpg",
-      "filename": "z7186917793801-a778b637779c7e4cd0caa1ef14f0515c-1762311250754.jpg",
-      "size": 417698,
+      "id": "hq720-1762315706798",
+      "name": "hq720",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/hq720-1762315706798.jpg",
+      "filename": "hq720-1762315706798.jpg",
+      "size": 40535,
       "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-05T02:54:13.634Z",
-      "githubPath": "logos/z7186917793801-a778b637779c7e4cd0caa1ef14f0515c-1762311250754.jpg",
-      "githubSha": "8350ff9c36d71dbe195c64ea6a22e71f60b4e683"
+      "uploadedAt": "2025-11-05T04:08:29.585Z",
+      "githubPath": "logos/hq720-1762315706798.jpg",
+      "githubSha": "c8cbb0e478f98d2a01733eefa42498218905b1d6"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-05T02:54:14.280Z",
+  "lastUpdated": "2025-11-05T04:08:30.099Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
