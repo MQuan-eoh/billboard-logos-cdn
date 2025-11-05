@@ -1328,16 +1328,17 @@ function updateRepositoryDisplay(status) {
 
   // Update repository info with enhanced display
   repoInfo.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
-      <div>
-        <strong>Repository:</strong> ${status.repository || "Unknown"}<br>
-        <small style="color: #666;">User: ${
-          status.authenticatedUser || "Unknown"
-        }</small>
+    <div class="repo-info-content">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h4>Repository Information</h4>
+          <p><strong>Repository:</strong> ${status.repository || "Unknown"}</p>
+          <p><strong>User:</strong> ${status.authenticatedUser || "Unknown"}</p>
+        </div>
+        <button id="githubLogoutBtn" class="btn btn-outline btn-sm" onclick="logoutGitHub()">
+          Logout
+        </button>
       </div>
-      <button id="githubLogoutBtn" class="btn btn-outline btn-sm" onclick="logoutGitHub()">
-        Logout
-      </button>
     </div>
   `;
 }
