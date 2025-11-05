@@ -546,25 +546,36 @@ function handleUpdateStatus(status) {
 
   // Also handle UI updates for compatibility
   switch (status.status) {
+    case "checking":
+      statusText.textContent = "Checking for updates...";
+      showToast("🔍 Checking for updates...", "info");
+      break;
+
     case "update_available":
-      statusText.textContent = `Update available: v${status.version}`;
-      lastDetectedUpdateVersion = status.version;
+      statusText.textContent = `Update available: v${
+        status.latestVersion || status.version
+      }`;
+      lastDetectedUpdateVersion = status.latestVersion || status.version;
 
       const forceUpdateBtn = document.getElementById("forceUpdateBtn");
       if (forceUpdateBtn) {
         forceUpdateBtn.disabled = false;
       }
-      showToast(`Update available: v${status.version}`, "success");
+      showToast(
+        `✅ Update available: v${status.latestVersion || status.version}`,
+        "success"
+      );
       break;
 
+    case "up_to_date":
     case "no_updates":
-      statusText.textContent = "Already up to date";
-      showToast("Already up to date", "info");
+      statusText.textContent = `Already up to date (v${status.currentVersion})`;
+      showToast("✅ Already up to date", "success");
       break;
 
     case "error":
       statusText.textContent = `Error: ${status.error}`;
-      showToast(`Update error: ${status.error}`, "error");
+      showToast(`❌ Update error: ${status.error}`, "error");
       break;
 
     default:
