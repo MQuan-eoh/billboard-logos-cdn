@@ -31,8 +31,8 @@ class GitHubUploadService {
   getDefaultConfig() {
     return {
       repository: {
-        owner: "MinhQuan7",
-        repo: "ITS_OurdoorBillboard-",
+        owner: "MQuan-eoh",
+        repo: "OutdoorBillboard_Dashboard",
         branch: "main",
         uploadPath: "logos/",
       },
