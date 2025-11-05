@@ -1,37 +1,49 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1762337389549",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "logo1",
-      "name": "EoH ERa Web Banner",
-      "url": "https://github.com/MQuan-eoh/billboard-logos-cdn/blob/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
-      "version": "1.0",
-      "size": "1920x800",
-      "format": "png",
-      "description": "Logo chính EoH ERa"
+      "id": "background6-1762337377093",
+      "name": "background6",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/background6-1762337377093.png",
+      "filename": "background6-1762337377093.png",
+      "size": 4092287,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T10:09:41.129Z",
+      "githubPath": "logos/background6-1762337377093.png",
+      "githubSha": "5ee735164758943734365ffe8025d9cb479d0f93"
     },
     {
-      "id": "logo2",
-      "name": "Industrial Dashboard Symbol",  
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo Industrial Dashboard"
+      "id": "background2-1762337381136",
+      "name": "background2",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/background2-1762337381136.jpg",
+      "filename": "background2-1762337381136.jpg",
+      "size": 732142,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T10:09:44.293Z",
+      "githubPath": "logos/background2-1762337381136.jpg",
+      "githubSha": "21fc669380a718ba2ef4c4c771a82282b07f3f83"
     },
     {
-      "id": "logo3",
-      "name": "Special Event Logo",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo sự kiện đặc biệt"
+      "id": "iphone-16-stock-wallpaper-bright-orange-default-best-high-resolution-iphone-16-pro-max-wallpaper-4k-hd-16pro-13-mini-17-air-27-10-2024-1730073680-hd-wallpaper-1-1762337384328",
+      "name": "iphone-16-stock-wallpaper-bright-orange-default-best-high-resolution-iphone-16-pro-max-wallpaper-4k-hd-16pro-13-mini-17-air-27-10-2024-1730073680-hd-wallpaper (1)",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/iphone-16-stock-wallpaper-bright-orange-default-best-high-resolution-iphone-16-pro-max-wallpaper-4k-hd-16pro-13-mini-17-air-27-10-2024-1730073680-hd-wallpaper--1--1762337384328.png",
+      "filename": "iphone-16-stock-wallpaper-bright-orange-default-best-high-resolution-iphone-16-pro-max-wallpaper-4k-hd-16pro-13-mini-17-air-27-10-2024-1730073680-hd-wallpaper--1--1762337384328.png",
+      "size": 4095757,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T10:09:48.428Z",
+      "githubPath": "logos/iphone-16-stock-wallpaper-bright-orange-default-best-high-resolution-iphone-16-pro-max-wallpaper-4k-hd-16pro-13-mini-17-air-27-10-2024-1730073680-hd-wallpaper--1--1762337384328.png",
+      "githubSha": "440c54557c56366af263c87d1040b5bcfe02ee19"
     }
   ],
   "settings": {
-    "logoMode": "scheduled",
+    "logoMode": "loop",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -51,6 +63,14 @@
           "endTime": "22:00"
         }
       ]
-    }
+    },
+    "logoLoopDuration": 10
+  },
+  "lastUpdated": "2025-11-05T10:09:49.549Z",
+  "metadata": {
+    "author": "Admin Web Interface",
+    "description": "Billboard logo manifest",
+    "apiVersion": "v1",
+    "lastModifiedBy": "Admin Web Interface"
   }
 }
