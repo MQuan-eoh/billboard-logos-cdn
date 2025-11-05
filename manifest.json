@@ -1,23 +1,37 @@
 {
-  "version": "1.0.1762311254280",
+  "version": "1.0.0",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "z7186917793801-a778b637779c7e4cd0caa1ef14f0515c-1762311250754",
-      "name": "z7186917793801_a778b637779c7e4cd0caa1ef14f0515c",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7186917793801-a778b637779c7e4cd0caa1ef14f0515c-1762311250754.jpg",
-      "filename": "z7186917793801-a778b637779c7e4cd0caa1ef14f0515c-1762311250754.jpg",
-      "size": 417698,
-      "type": "image/jpeg",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-05T02:54:13.634Z",
-      "githubPath": "logos/z7186917793801-a778b637779c7e4cd0caa1ef14f0515c-1762311250754.jpg",
-      "githubSha": "8350ff9c36d71dbe195c64ea6a22e71f60b4e683"
+      "id": "logo1",
+      "name": "EoH ERa Web Banner",
+      "url": "https://github.com/MQuan-eoh/billboard-logos-cdn/blob/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
+      "version": "1.0",
+      "size": "1920x800",
+      "format": "png",
+      "description": "Logo chính EoH ERa"
+    },
+    {
+      "id": "logo2",
+      "name": "Industrial Dashboard Symbol",
+      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
+      "version": "1.0",
+      "size": "1920x1080",
+      "format": "png",
+      "description": "Logo Industrial Dashboard"
+    },
+    {
+      "id": "logo3",
+      "name": "Special Event Logo",
+      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
+      "version": "1.0",
+      "size": "1920x1080",
+      "format": "png",
+      "description": "Logo sự kiện đặc biệt"
     }
   ],
   "settings": {
-    "logoMode": "loop",
+    "logoMode": "scheduled",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -37,14 +51,6 @@
           "endTime": "22:00"
         }
       ]
-    },
-    "logoLoopDuration": 10
-  },
-  "lastUpdated": "2025-11-05T02:54:14.280Z",
-  "metadata": {
-    "author": "Admin Web Interface",
-    "description": "Billboard logo manifest",
-    "apiVersion": "v1",
-    "lastModifiedBy": "Admin Web Interface"
+    }
   }
 }
