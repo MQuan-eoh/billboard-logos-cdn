@@ -31,15 +31,14 @@ class GitHubUploadService {
   getDefaultConfig() {
     return {
       repository: {
-        owner: "MQuan-eoh",
-        repo: "OutdoorBillboard_Dashboard",
+        owner: "MinhQuan7",
+        repo: "billboard-logos-cdn",
         branch: "main",
         uploadPath: "logos/",
       },
       api: {
         endpoint: "https://api.github.com",
-        cdnEndpoint:
-          "https://mquan-eoh.github.io/ITS_OurdoorBillboard-/logos-cdn",
+        cdnEndpoint: "https://mquan-eoh.github.io/billboard-logos-cdn",
       },
     };
   }
