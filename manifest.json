@@ -1,37 +1,49 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1762328129215",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "logo1",
-      "name": "EoH ERa Web Banner",
-      "url": "https://github.com/MQuan-eoh/billboard-logos-cdn/blob/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
-      "version": "1.0",
-      "size": "1920x800",
-      "format": "png",
-      "description": "Logo chính EoH ERa"
+      "id": "maxresdefault-3-1762328121837",
+      "name": "maxresdefault (3)",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/maxresdefault--3--1762328121837.jpg",
+      "filename": "maxresdefault--3--1762328121837.jpg",
+      "size": 91817,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T07:35:24.505Z",
+      "githubPath": "logos/maxresdefault--3--1762328121837.jpg",
+      "githubSha": "478c326bb496bb8c7ec726f0b6944971fff1efd1"
     },
     {
-      "id": "logo2",
-      "name": "Industrial Dashboard Symbol",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo Industrial Dashboard"
+      "id": "macos-app-store-glassmorphism-1762328124510",
+      "name": "macos-app-store-glassmorphism",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/macos-app-store-glassmorphism-1762328124510.jpg",
+      "filename": "macos-app-store-glassmorphism-1762328124510.jpg",
+      "size": 71838,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T07:35:26.246Z",
+      "githubPath": "logos/macos-app-store-glassmorphism-1762328124510.jpg",
+      "githubSha": "b9ce75d52d93d6369ef7109a2c208b5092a60616"
     },
     {
-      "id": "logo3",
-      "name": "Special Event Logo",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo sự kiện đặc biệt"
+      "id": "463855777-1198489501665425-7893202219701407131-n-1762328126257",
+      "name": "463855777_1198489501665425_7893202219701407131_n",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/463855777-1198489501665425-7893202219701407131-n-1762328126257.jpg",
+      "filename": "463855777-1198489501665425-7893202219701407131-n-1762328126257.jpg",
+      "size": 608084,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T07:35:28.499Z",
+      "githubPath": "logos/463855777-1198489501665425-7893202219701407131-n-1762328126257.jpg",
+      "githubSha": "95fea271ed6928a64e5c4056b5c299ba9d6b0c18"
     }
   ],
   "settings": {
-    "logoMode": "scheduled",
+    "logoMode": "loop",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -51,6 +63,14 @@
           "endTime": "22:00"
         }
       ]
-    }
+    },
+    "logoLoopDuration": 10
+  },
+  "lastUpdated": "2025-11-05T07:35:29.215Z",
+  "metadata": {
+    "author": "Admin Web Interface",
+    "description": "Billboard logo manifest",
+    "apiVersion": "v1",
+    "lastModifiedBy": "Admin Web Interface"
   }
 }
