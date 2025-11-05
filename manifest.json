@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762338466157",
+  "version": "1.0.1762338688063",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "era-iot-flowdiagram-crabproject-1762338462309",
-      "name": "ERA_IoT_FlowDiagram_CrabProject",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/era-iot-flowdiagram-crabproject-1762338462309.png",
-      "filename": "era-iot-flowdiagram-crabproject-1762338462309.png",
-      "size": 509074,
-      "type": "image/png",
+      "id": "channels4-profile-1762338685210",
+      "name": "channels4_profile",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/channels4-profile-1762338685210.jpg",
+      "filename": "channels4-profile-1762338685210.jpg",
+      "size": 25222,
+      "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-05T10:27:45.777Z",
-      "githubPath": "logos/era-iot-flowdiagram-crabproject-1762338462309.png",
-      "githubSha": "158392487d6a70133f23d0f272c7ac5ba753d03d"
+      "uploadedAt": "2025-11-05T10:31:27.658Z",
+      "githubPath": "logos/channels4-profile-1762338685210.jpg",
+      "githubSha": "64471360ea91fdb23df60ee5d80bbb7253037c61"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-05T10:27:46.157Z",
+  "lastUpdated": "2025-11-05T10:31:28.063Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
