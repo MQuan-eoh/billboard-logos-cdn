@@ -218,11 +218,11 @@ async function forceUpdate() {
 
   if (!lastDetectedUpdateVersion) {
     showToast(
-      "Please click 'Check Updates' first to verify an update is available",
+      "⚠️ Vui lòng click 'KIỂM TRA CẬP NHẬT' trước để xác định phiên bản",
       "warning"
     );
     statusText.textContent =
-      "Error: Please check for updates first before forcing update";
+      "Lỗi: Cần kiểm tra cập nhật trước khi thực hiện force update";
     updateStatus.style.display = "block";
     return;
   }
@@ -241,9 +241,11 @@ async function forceUpdate() {
   const confirmed = confirm(
     "⚠️ XÁC NHẬN CẬP NHẬT\n\n" +
       "Hành động này sẽ:\n" +
-      "- Tải phiên bản mới nhất\n" +
-      "- Cài đặt bản cập nhật\n" +
-      "- Khởi động lại ứng dụng\n\n" +
+      "- Tải và cài đặt phiên bản v" +
+      lastDetectedUpdateVersion +
+      "\n" +
+      "- Khởi động lại ứng dụng\n" +
+      "- Áp dụng mọi thay đổi cấu hình\n\n" +
       "Bạn có chắc chắn muốn tiếp tục?"
   );
 
@@ -256,7 +258,10 @@ async function forceUpdate() {
     btnText.style.display = "none";
     btnLoading.style.display = "inline";
 
-    showToast(`Initiating update to v${lastDetectedUpdateVersion}...`, "info");
+    showToast(
+      `🚀 Bắt đầu cập nhật/cài đặt lại v${lastDetectedUpdateVersion}...`,
+      "info"
+    );
 
     updateStatus.style.display = "block";
     statusText.textContent = "Preparing update...";
@@ -570,6 +575,13 @@ function handleUpdateStatus(status) {
     case "up_to_date":
     case "no_updates":
       statusText.textContent = `Already up to date (v${status.currentVersion})`;
+  
+      lastDetectedUpdateVersion = status.currentVersion;
+
+      const forceUpdateBtnUpToDate = document.getElementById("forceUpdateBtn");
+      if (forceUpdateBtnUpToDate) {
+        forceUpdateBtnUpToDate.disabled = false;
+      }
       showToast("✅ Already up to date", "success");
       break;
 
