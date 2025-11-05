@@ -44,6 +44,9 @@ let currentDeviceInfo = {
   lastUpdateTime: null,
 };
 
+// Track last detected update version
+let lastDetectedUpdateVersion = null;
+
 // Show modal
 function showModal(title, content) {
   const modal = document.getElementById("modal");
@@ -620,6 +623,31 @@ function handleUpdateAcknowledgment(ack) {
     `✅ Billboard acknowledged: ${ack.message || "Ready for update"}`,
     "success"
   );
+}
+
+// Update device information display
+function updateDeviceInfoDisplay() {
+  // Update device version
+  const deviceVersionEl = document.getElementById("currentDeviceVersion");
+  if (deviceVersionEl) {
+    deviceVersionEl.textContent =
+      currentDeviceInfo.deviceVersion || "Đang tải...";
+  }
+
+  // Update device ID
+  const deviceIdEl = document.getElementById("deviceId");
+  if (deviceIdEl) {
+    deviceIdEl.textContent = currentDeviceInfo.deviceId || "Chưa kết nối";
+  }
+
+  // Update last update time
+  const lastUpdateEl = document.getElementById("lastUpdateTime");
+  if (lastUpdateEl) {
+    lastUpdateEl.textContent = currentDeviceInfo.lastUpdateTime || "Chưa có";
+  }
+
+  // Update MQTT status (handled by separate function for modularity)
+  updateMqttStatusDisplay();
 }
 
 // Update MQTT status display
