@@ -1,37 +1,101 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1762317860145",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "logo1",
-      "name": "EoH ERa Web Banner",
-      "url": "https://github.com/MQuan-eoh/billboard-logos-cdn/blob/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
-      "version": "1.0",
-      "size": "1920x800",
-      "format": "png",
-      "description": "Logo chính EoH ERa"
+      "id": "tarotframe-1762317842395",
+      "name": "tarotFrame",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/tarotframe-1762317842395.png",
+      "filename": "tarotframe-1762317842395.png",
+      "size": 19102,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T04:44:04.376Z",
+      "githubPath": "logos/tarotframe-1762317842395.png",
+      "githubSha": "f25df4ec8c80ee2b9b37205ea39df8961bae6c8d"
     },
     {
-      "id": "logo2",
-      "name": "Industrial Dashboard Symbol",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo Industrial Dashboard"
+      "id": "screenshot-2025-11-03-104227-1762317844378",
+      "name": "Screenshot 2025-11-03 104227",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/screenshot-2025-11-03-104227-1762317844378.png",
+      "filename": "screenshot-2025-11-03-104227-1762317844378.png",
+      "size": 31233,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T04:44:06.425Z",
+      "githubPath": "logos/screenshot-2025-11-03-104227-1762317844378.png",
+      "githubSha": "c782d462fccca7d0204ddca171f4440f23187b7b"
     },
     {
-      "id": "logo3",
-      "name": "Special Event Logo",
-      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
-      "version": "1.0",
-      "size": "1920x1080",
-      "format": "png",
-      "description": "Logo sự kiện đặc biệt"
+      "id": "channels4-profile-1762317846428",
+      "name": "channels4_profile",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/channels4-profile-1762317846428.jpg",
+      "filename": "channels4-profile-1762317846428.jpg",
+      "size": 25222,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T04:44:08.372Z",
+      "githubPath": "logos/channels4-profile-1762317846428.jpg",
+      "githubSha": "64471360ea91fdb23df60ee5d80bbb7253037c61"
+    },
+    {
+      "id": "z7171950880874-e672016366f23f41c14eb3e1a15b0407-1762317848383",
+      "name": "z7171950880874_e672016366f23f41c14eb3e1a15b0407",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7171950880874-e672016366f23f41c14eb3e1a15b0407-1762317848383.jpg",
+      "filename": "z7171950880874-e672016366f23f41c14eb3e1a15b0407-1762317848383.jpg",
+      "size": 1279896,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T04:44:11.647Z",
+      "githubPath": "logos/z7171950880874-e672016366f23f41c14eb3e1a15b0407-1762317848383.jpg",
+      "githubSha": "d3fb9c87b641ce807eb8c63f4e7649df81d994c6"
+    },
+    {
+      "id": "571680883-122290259996227882-3324364988241267479-n-1762317851649",
+      "name": "571680883_122290259996227882_3324364988241267479_n",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/571680883-122290259996227882-3324364988241267479-n-1762317851649.jpg",
+      "filename": "571680883-122290259996227882-3324364988241267479-n-1762317851649.jpg",
+      "size": 43401,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T04:44:13.886Z",
+      "githubPath": "logos/571680883-122290259996227882-3324364988241267479-n-1762317851649.jpg",
+      "githubSha": "67dba3e01791757a6951d5cf7fb8909a187e178b"
+    },
+    {
+      "id": "era-iot-flowdiagram-crabproject-1762317853930",
+      "name": "ERA_IoT_FlowDiagram_CrabProject",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/era-iot-flowdiagram-crabproject-1762317853930.png",
+      "filename": "era-iot-flowdiagram-crabproject-1762317853930.png",
+      "size": 509074,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T04:44:17.679Z",
+      "githubPath": "logos/era-iot-flowdiagram-crabproject-1762317853930.png",
+      "githubSha": "158392487d6a70133f23d0f272c7ac5ba753d03d"
+    },
+    {
+      "id": "567230140-1336515570730102-9117310122204051264-n-1762317857683",
+      "name": "567230140_1336515570730102_9117310122204051264_n",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/567230140-1336515570730102-9117310122204051264-n-1762317857683.jpg",
+      "filename": "567230140-1336515570730102-9117310122204051264-n-1762317857683.jpg",
+      "size": 169319,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-05T04:44:20.138Z",
+      "githubPath": "logos/567230140-1336515570730102-9117310122204051264-n-1762317857683.jpg",
+      "githubSha": "991c3b2c3dda5ab85abbe3fbc767eba2f9fbc146"
     }
   ],
   "settings": {
-    "logoMode": "scheduled",
+    "logoMode": "loop",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -51,6 +115,14 @@
           "endTime": "22:00"
         }
       ]
-    }
+    },
+    "logoLoopDuration": 10
+  },
+  "lastUpdated": "2025-11-05T04:44:20.145Z",
+  "metadata": {
+    "author": "Admin Web Interface",
+    "description": "Billboard logo manifest",
+    "apiVersion": "v1",
+    "lastModifiedBy": "Admin Web Interface"
   }
 }
