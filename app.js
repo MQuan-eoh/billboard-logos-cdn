@@ -745,7 +745,7 @@ function refreshDeviceInfo() {
 class LogoManifestManager {
   constructor() {
     this.manifestUrl =
-      "https://mquan-eoh.github.io/billboard-logos-cdn/manifest.json";
+      "https://mquan-eoh.github.io/ITS_OurdoorBillboard-/logos-cdn/manifest.json";
     this.currentManifest = null;
 
     this.initializeManifestUI();
