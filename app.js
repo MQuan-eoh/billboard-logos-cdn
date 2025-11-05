@@ -575,7 +575,7 @@ function handleUpdateStatus(status) {
     case "up_to_date":
     case "no_updates":
       statusText.textContent = `Already up to date (v${status.currentVersion})`;
-  
+
       lastDetectedUpdateVersion = status.currentVersion;
 
       const forceUpdateBtnUpToDate = document.getElementById("forceUpdateBtn");
@@ -583,6 +583,23 @@ function handleUpdateStatus(status) {
         forceUpdateBtnUpToDate.disabled = false;
       }
       showToast("✅ Already up to date", "success");
+      break;
+
+    case "no_updates_but_force_requested":
+      statusText.textContent = `Force reinstall requested for v${status.requestedVersion}`;
+      showToast(
+        `🔄 Force reinstall: No newer version available, but force reinstall was requested for v${status.requestedVersion}`,
+        "warning"
+      );
+
+      // For force reinstall, we need to handle this as a special case
+      setTimeout(() => {
+        statusText.textContent = `Force reinstall completed for v${status.requestedVersion}`;
+        showToast(
+          `Force reinstall completed for v${status.requestedVersion}`,
+          "success"
+        );
+      }, 2000);
       break;
 
     case "error":

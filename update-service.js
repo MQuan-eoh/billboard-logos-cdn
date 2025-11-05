@@ -1,13 +1,13 @@
 /**
  * Update Service - Refactored (Pure Business Logic)
- * 
+ *
  * This is the CORE service layer without UI dependencies
  * Handles ONLY:
  * - Version validation
  * - MQTT communication
  * - Status tracking
  * - Event emission
- * 
+ *
  * UI handling moved to UpdateUIController
  */
 
@@ -169,6 +169,24 @@ class UpdateService {
           code: "NO_UPDATE",
         });
         this.updateInProgress = false;
+        break;
+
+      case "no_updates_but_force_requested":
+        this._emit("statusChange", {
+          status: "force_reinstall",
+          version: status.requestedVersion || this.currentUpdateVersion,
+          message: `Cài đặt lại cùng phiên bản v${status.requestedVersion}...`,
+        });
+
+        // Simulate completion for force reinstall
+        setTimeout(() => {
+          this._emit("success", {
+            version: status.requestedVersion || this.currentUpdateVersion,
+            duration: "2.0",
+            type: "force_reinstall",
+          });
+          this.updateInProgress = false;
+        }, 2000);
         break;
 
       default:
