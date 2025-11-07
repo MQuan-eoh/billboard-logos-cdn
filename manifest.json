@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762516079343",
+  "version": "1.0.1762516223592",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "2-1762516076159",
-      "name": "2",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/2-1762516076159.png",
-      "filename": "2-1762516076159.png",
-      "size": 136717,
+      "id": "addsymbol-industrialdashboard-1762516220762",
+      "name": "addSymbol_IndustrialDashboard",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/addsymbol-industrialdashboard-1762516220762.png",
+      "filename": "addsymbol-industrialdashboard-1762516220762.png",
+      "size": 120198,
       "type": "image/png",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T11:47:58.948Z",
-      "githubPath": "logos/2-1762516076159.png",
-      "githubSha": "0a4be759b521079f42fbc8cc67ad176c2b8534ee"
+      "uploadedAt": "2025-11-07T11:50:23.224Z",
+      "githubPath": "logos/addsymbol-industrialdashboard-1762516220762.png",
+      "githubSha": "ef10e36be1bc4b5baf352f5f8dbd0b59d98d5ca2"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T11:47:59.343Z",
+  "lastUpdated": "2025-11-07T11:50:23.592Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
