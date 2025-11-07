@@ -1,45 +1,19 @@
 {
-  "version": "1.0.1762535162116",
+  "version": "1.0.1762535342742",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "buttonliquidglass-1762535150676",
-      "name": "buttonLiquidGlass",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/buttonliquidglass-1762535150676.jpeg",
-      "filename": "buttonliquidglass-1762535150676.jpeg",
-      "size": 1259221,
+      "id": "z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1762535338952",
+      "name": "z7085121749220_c83d918f22452e1f42f4482f2e22fb03",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1762535338952.jpg",
+      "filename": "z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1762535338952.jpg",
+      "size": 380580,
       "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T17:05:54.451Z",
-      "githubPath": "logos/buttonliquidglass-1762535150676.jpeg",
-      "githubSha": "f38701568e89ebb2bd14f044c6ae6af7beac0b2e"
-    },
-    {
-      "id": "lidquidglassbutton-1762535154468",
-      "name": "lidquidGlassButton",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/lidquidglassbutton-1762535154468.png",
-      "filename": "lidquidglassbutton-1762535154468.png",
-      "size": 1280455,
-      "type": "image/png",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-07T17:05:58.967Z",
-      "githubPath": "logos/lidquidglassbutton-1762535154468.png",
-      "githubSha": "62dee2833c327208022f95d75521901244d077fb"
-    },
-    {
-      "id": "buttonglassapple-1762535158969",
-      "name": "buttonGlassApple",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/buttonglassapple-1762535158969.jpeg",
-      "filename": "buttonglassapple-1762535158969.jpeg",
-      "size": 121826,
-      "type": "image/jpeg",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-07T17:06:01.277Z",
-      "githubPath": "logos/buttonglassapple-1762535158969.jpeg",
-      "githubSha": "178549c34e8a43f70eaf5b1350b339809ca2ea40"
+      "uploadedAt": "2025-11-07T17:09:02.330Z",
+      "githubPath": "logos/z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1762535338952.jpg",
+      "githubSha": "5e43780debe668458d08d0b2c521eb186088b74d"
     }
   ],
   "settings": {
@@ -66,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T17:06:02.116Z",
+  "lastUpdated": "2025-11-07T17:09:02.742Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
