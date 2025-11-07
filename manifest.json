@@ -1,32 +1,45 @@
 {
-  "version": "1.0.1762537952570",
+  "version": "1.0.1762539116583",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "2-1762537944614",
+      "id": "4-1762539105920",
+      "name": "4",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/4-1762539105920.jpg",
+      "filename": "4-1762539105920.jpg",
+      "size": 595248,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-07T18:11:49.618Z",
+      "githubPath": "logos/4-1762539105920.jpg",
+      "githubSha": "48bdfc8d06e6bbc6f9ca133cc183f3305e677287"
+    },
+    {
+      "id": "1-1762539109625",
+      "name": "1",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/1-1762539109625.jpg",
+      "filename": "1-1762539109625.jpg",
+      "size": 773587,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-07T18:11:53.099Z",
+      "githubPath": "logos/1-1762539109625.jpg",
+      "githubSha": "0db43d5ae9e0fdc68eb643ab555a160ad02a3791"
+    },
+    {
+      "id": "2-1762539113113",
       "name": "2",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/2-1762537944614.jpg",
-      "filename": "2-1762537944614.jpg",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/2-1762539113113.jpg",
+      "filename": "2-1762539113113.jpg",
       "size": 831404,
       "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T17:52:28.593Z",
-      "githubPath": "logos/2-1762537944614.jpg",
+      "uploadedAt": "2025-11-07T18:11:56.183Z",
+      "githubPath": "logos/2-1762539113113.jpg",
       "githubSha": "5c0a09d28758ada3224530e0cf3f152c807dfcc4"
-    },
-    {
-      "id": "3-1762537948601",
-      "name": "3",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/3-1762537948601.jpg",
-      "filename": "3-1762537948601.jpg",
-      "size": 839327,
-      "type": "image/jpeg",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-07T17:52:32.170Z",
-      "githubPath": "logos/3-1762537948601.jpg",
-      "githubSha": "20c55396c414d47ee8dee6cc00b2260465174c97"
     }
   ],
   "settings": {
@@ -53,7 +66,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T17:52:32.570Z",
+  "lastUpdated": "2025-11-07T18:11:56.583Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
