@@ -1,45 +1,45 @@
 {
-  "version": "1.0.1762542817187",
+  "version": "1.0.1762544220347",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "fkdsbjdsf-1762542806708",
-      "name": "fkdsbjdsf",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/fkdsbjdsf-1762542806708.png",
-      "filename": "fkdsbjdsf-1762542806708.png",
-      "size": 185521,
+      "id": "addsymbol-industrialdashboard-1762544210110",
+      "name": "addSymbol_IndustrialDashboard",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/addsymbol-industrialdashboard-1762544210110.png",
+      "filename": "addsymbol-industrialdashboard-1762544210110.png",
+      "size": 120198,
       "type": "image/png",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T19:13:29.833Z",
-      "githubPath": "logos/fkdsbjdsf-1762542806708.png",
-      "githubSha": "db90701a72f38959ec3c312b7756985b35c8ec9f"
+      "uploadedAt": "2025-11-07T19:36:52.443Z",
+      "githubPath": "logos/addsymbol-industrialdashboard-1762544210110.png",
+      "githubSha": "ef10e36be1bc4b5baf352f5f8dbd0b59d98d5ca2"
     },
     {
-      "id": "gfgfgfg-1762542809850",
-      "name": "gfgfgfg",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/gfgfgfg-1762542809850.png",
-      "filename": "gfgfgfg-1762542809850.png",
-      "size": 854013,
+      "id": "cong-dong-iot-e-ra-fb-en-1762544212448",
+      "name": "Cong-Dong-IoT-E-Ra_FB_EN",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/cong-dong-iot-e-ra-fb-en-1762544212448.png",
+      "filename": "cong-dong-iot-e-ra-fb-en-1762544212448.png",
+      "size": 630895,
       "type": "image/png",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T19:13:33.100Z",
-      "githubPath": "logos/gfgfgfg-1762542809850.png",
-      "githubSha": "204c46a193f572bf86e2a0e14ac13618f71d4a28"
+      "uploadedAt": "2025-11-07T19:36:56.213Z",
+      "githubPath": "logos/cong-dong-iot-e-ra-fb-en-1762544212448.png",
+      "githubSha": "43fe6586e0cf5ef6a22006bfd514655f75e80e53"
     },
     {
-      "id": "kgjdhfgfd-1762542813109",
-      "name": "kgjdhfgfd",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/kgjdhfgfd-1762542813109.png",
-      "filename": "kgjdhfgfd-1762542813109.png",
-      "size": 900784,
+      "id": "eoh-era-web-banner-1920x800-1-1762544216218",
+      "name": "EoH_ERa_Web-Banner_1920x800-1",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/eoh-era-web-banner-1920x800-1-1762544216218.png",
+      "filename": "eoh-era-web-banner-1920x800-1-1762544216218.png",
+      "size": 733002,
       "type": "image/png",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T19:13:36.779Z",
-      "githubPath": "logos/kgjdhfgfd-1762542813109.png",
-      "githubSha": "333ed011479c1d27434007904f9b2000ba33bf12"
+      "uploadedAt": "2025-11-07T19:36:59.690Z",
+      "githubPath": "logos/eoh-era-web-banner-1920x800-1-1762544216218.png",
+      "githubSha": "01b768a1a1ba4b07b8043049b12f9ae33d317fbb"
     }
   ],
   "settings": {
@@ -64,9 +64,9 @@
         }
       ]
     },
-    "logoLoopDuration": 10
+    "logoLoopDuration": 7
   },
-  "lastUpdated": "2025-11-07T19:13:37.187Z",
+  "lastUpdated": "2025-11-07T19:37:00.347Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
