@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762527458346",
+  "version": "1.0.1762527644164",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "tarotframe-1762527456050",
-      "name": "tarotFrame",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/tarotframe-1762527456050.png",
-      "filename": "tarotframe-1762527456050.png",
-      "size": 19102,
-      "type": "image/png",
+      "id": "567230140-1336515570730102-9117310122204051264-n-1762527641226",
+      "name": "567230140_1336515570730102_9117310122204051264_n",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/567230140-1336515570730102-9117310122204051264-n-1762527641226.jpg",
+      "filename": "567230140-1336515570730102-9117310122204051264-n-1762527641226.jpg",
+      "size": 169319,
+      "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T14:57:37.985Z",
-      "githubPath": "logos/tarotframe-1762527456050.png",
-      "githubSha": "f25df4ec8c80ee2b9b37205ea39df8961bae6c8d"
+      "uploadedAt": "2025-11-07T15:00:43.816Z",
+      "githubPath": "logos/567230140-1336515570730102-9117310122204051264-n-1762527641226.jpg",
+      "githubSha": "991c3b2c3dda5ab85abbe3fbc767eba2f9fbc146"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T14:57:38.346Z",
+  "lastUpdated": "2025-11-07T15:00:44.164Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
