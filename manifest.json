@@ -1,45 +1,45 @@
 {
-  "version": "1.0.1762541254420",
+  "version": "1.0.1762542110013",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "background-1762541246969",
-      "name": "background",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/background-1762541246969.png",
-      "filename": "background-1762541246969.png",
-      "size": 38002,
-      "type": "image/png",
+      "id": "z7193333843210-1de479b810bfcbe3df1b5753af56c8d5-1762542098100",
+      "name": "z7193333843210_1de479b810bfcbe3df1b5753af56c8d5",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7193333843210-1de479b810bfcbe3df1b5753af56c8d5-1762542098100.jpg",
+      "filename": "z7193333843210-1de479b810bfcbe3df1b5753af56c8d5-1762542098100.jpg",
+      "size": 821260,
+      "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T18:47:29.533Z",
-      "githubPath": "logos/background-1762541246969.png",
-      "githubSha": "8165af643ad7d1f3ffa2e85dc4b0e55d48f46be0"
+      "uploadedAt": "2025-11-07T19:01:42.254Z",
+      "githubPath": "logos/z7193333843210-1de479b810bfcbe3df1b5753af56c8d5-1762542098100.jpg",
+      "githubSha": "cc360b74a2c5bd14645ce602010942e1f0cc2b42"
     },
     {
-      "id": "glassliquiddashboard2-1762541249536",
-      "name": "glassLiquidDashboard2",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/glassliquiddashboard2-1762541249536.png",
-      "filename": "glassliquiddashboard2-1762541249536.png",
-      "size": 55898,
-      "type": "image/png",
+      "id": "z7193333846423-7947f76afa00bff3dabcc6acc8218e04-1762542102264",
+      "name": "z7193333846423_7947f76afa00bff3dabcc6acc8218e04",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7193333846423-7947f76afa00bff3dabcc6acc8218e04-1762542102264.jpg",
+      "filename": "z7193333846423-7947f76afa00bff3dabcc6acc8218e04-1762542102264.jpg",
+      "size": 542920,
+      "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T18:47:32.064Z",
-      "githubPath": "logos/glassliquiddashboard2-1762541249536.png",
-      "githubSha": "6e7cc00822b4165d224708ee6c7f141eb768611c"
+      "uploadedAt": "2025-11-07T19:01:46.013Z",
+      "githubPath": "logos/z7193333846423-7947f76afa00bff3dabcc6acc8218e04-1762542102264.jpg",
+      "githubSha": "dbca84ada567b1a58e494c148c39fcbca7b480ad"
     },
     {
-      "id": "glassliquiddashboard-1762541252066",
-      "name": "glassLiquidDashboard",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/glassliquiddashboard-1762541252066.png",
-      "filename": "glassliquiddashboard-1762541252066.png",
-      "size": 60484,
-      "type": "image/png",
+      "id": "z7193333869159-41045818634676f219ad1404c27df66c-1762542106024",
+      "name": "z7193333869159_41045818634676f219ad1404c27df66c",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7193333869159-41045818634676f219ad1404c27df66c-1762542106024.jpg",
+      "filename": "z7193333869159-41045818634676f219ad1404c27df66c-1762542106024.jpg",
+      "size": 681818,
+      "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T18:47:34.049Z",
-      "githubPath": "logos/glassliquiddashboard-1762541252066.png",
-      "githubSha": "54f635640755359a64b70bea5da01d4277a3c919"
+      "uploadedAt": "2025-11-07T19:01:49.594Z",
+      "githubPath": "logos/z7193333869159-41045818634676f219ad1404c27df66c-1762542106024.jpg",
+      "githubSha": "808d6fe4e917954b82218346f128fc3e32693491"
     }
   ],
   "settings": {
@@ -66,7 +66,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T18:47:34.420Z",
+  "lastUpdated": "2025-11-07T19:01:50.013Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
