@@ -1,58 +1,19 @@
 {
-  "version": "1.0.1762528308283",
+  "version": "1.0.1762528689450",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "pm12-2018-1762528295121",
-      "name": "pm12-2018",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/pm12-2018-1762528295121.jpg",
-      "filename": "pm12-2018-1762528295121.jpg",
-      "size": 463895,
+      "id": "z7171950880874-e672016366f23f41c14eb3e1a15b0407-1762528685368",
+      "name": "z7171950880874_e672016366f23f41c14eb3e1a15b0407",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7171950880874-e672016366f23f41c14eb3e1a15b0407-1762528685368.jpg",
+      "filename": "z7171950880874-e672016366f23f41c14eb3e1a15b0407-1762528685368.jpg",
+      "size": 1279896,
       "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T15:11:37.988Z",
-      "githubPath": "logos/pm12-2018-1762528295121.jpg",
-      "githubSha": "223d498849abf78e8ef694f76e134deb4d5549b4"
-    },
-    {
-      "id": "chatgpt-image-17-31-35-6-thg-7-2025-1762528298002",
-      "name": "ChatGPT Image 17_31_35 6 thg 7, 2025",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/chatgpt-image-17-31-35-6-thg-7--2025-1762528298002.png",
-      "filename": "chatgpt-image-17-31-35-6-thg-7--2025-1762528298002.png",
-      "size": 776772,
-      "type": "image/png",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-07T15:11:41.678Z",
-      "githubPath": "logos/chatgpt-image-17-31-35-6-thg-7--2025-1762528298002.png",
-      "githubSha": "ce4a0b51a7d095c70e9b759655b1dbaf376bb4a2"
-    },
-    {
-      "id": "deepseek-mermaid-20250706-f92b9c-1762528301683",
-      "name": "deepseek_mermaid_20250706_f92b9c",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/deepseek-mermaid-20250706-f92b9c-1762528301683.png",
-      "filename": "deepseek-mermaid-20250706-f92b9c-1762528301683.png",
-      "size": 329755,
-      "type": "image/png",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-07T15:11:45.254Z",
-      "githubPath": "logos/deepseek-mermaid-20250706-f92b9c-1762528301683.png",
-      "githubSha": "6430c53119c4cbf46ec8224e4954ce9e83b8ba43"
-    },
-    {
-      "id": "error-thirdparty-1762528305256",
-      "name": "error_thirdParty",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/error-thirdparty-1762528305256.png",
-      "filename": "error-thirdparty-1762528305256.png",
-      "size": 83652,
-      "type": "image/png",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-07T15:11:47.893Z",
-      "githubPath": "logos/error-thirdparty-1762528305256.png",
-      "githubSha": "23234d61663875b5a76c6dcdc2c1171314c932a4"
+      "uploadedAt": "2025-11-07T15:18:09.078Z",
+      "githubPath": "logos/z7171950880874-e672016366f23f41c14eb3e1a15b0407-1762528685368.jpg",
+      "githubSha": "d3fb9c87b641ce807eb8c63f4e7649df81d994c6"
     }
   ],
   "settings": {
@@ -79,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T15:11:48.283Z",
+  "lastUpdated": "2025-11-07T15:18:09.450Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
