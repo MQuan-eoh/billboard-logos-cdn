@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762527330649",
+  "version": "1.0.1762527458346",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "era-iot-flowdiagram-crabproject-1762527327457",
-      "name": "ERA_IoT_FlowDiagram_CrabProject",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/era-iot-flowdiagram-crabproject-1762527327457.png",
-      "filename": "era-iot-flowdiagram-crabproject-1762527327457.png",
-      "size": 509074,
+      "id": "tarotframe-1762527456050",
+      "name": "tarotFrame",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/tarotframe-1762527456050.png",
+      "filename": "tarotframe-1762527456050.png",
+      "size": 19102,
       "type": "image/png",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T14:55:30.268Z",
-      "githubPath": "logos/era-iot-flowdiagram-crabproject-1762527327457.png",
-      "githubSha": "158392487d6a70133f23d0f272c7ac5ba753d03d"
+      "uploadedAt": "2025-11-07T14:57:37.985Z",
+      "githubPath": "logos/tarotframe-1762527456050.png",
+      "githubSha": "f25df4ec8c80ee2b9b37205ea39df8961bae6c8d"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T14:55:30.649Z",
+  "lastUpdated": "2025-11-07T14:57:38.346Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
