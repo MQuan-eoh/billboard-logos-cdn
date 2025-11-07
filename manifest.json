@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1762522714304",
+  "version": "1.0.1762523024478",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "addsymbol-industrialdashboard-1762522711356",
-      "name": "addSymbol_IndustrialDashboard",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/addsymbol-industrialdashboard-1762522711356.png",
-      "filename": "addsymbol-industrialdashboard-1762522711356.png",
-      "size": 120198,
-      "type": "image/png",
+      "id": "channels4-profile-1762523022027",
+      "name": "channels4_profile",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/channels4-profile-1762523022027.jpg",
+      "filename": "channels4-profile-1762523022027.jpg",
+      "size": 25222,
+      "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T13:38:33.839Z",
-      "githubPath": "logos/addsymbol-industrialdashboard-1762522711356.png",
-      "githubSha": "ef10e36be1bc4b5baf352f5f8dbd0b59d98d5ca2"
+      "uploadedAt": "2025-11-07T13:43:44.017Z",
+      "githubPath": "logos/channels4-profile-1762523022027.jpg",
+      "githubSha": "64471360ea91fdb23df60ee5d80bbb7253037c61"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T13:38:34.304Z",
+  "lastUpdated": "2025-11-07T13:43:44.478Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
