@@ -1,19 +1,71 @@
 {
-  "version": "1.0.1762533085912",
+  "version": "1.0.1762533232548",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "z7193333843210-1de479b810bfcbe3df1b5753af56c8d5-1762533081881",
-      "name": "z7193333843210_1de479b810bfcbe3df1b5753af56c8d5",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7193333843210-1de479b810bfcbe3df1b5753af56c8d5-1762533081881.jpg",
-      "filename": "z7193333843210-1de479b810bfcbe3df1b5753af56c8d5-1762533081881.jpg",
-      "size": 821260,
+      "id": "z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1762533214121",
+      "name": "z7085121749220_c83d918f22452e1f42f4482f2e22fb03",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1762533214121.jpg",
+      "filename": "z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1762533214121.jpg",
+      "size": 380580,
       "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T16:31:25.519Z",
-      "githubPath": "logos/z7193333843210-1de479b810bfcbe3df1b5753af56c8d5-1762533081881.jpg",
-      "githubSha": "cc360b74a2c5bd14645ce602010942e1f0cc2b42"
+      "uploadedAt": "2025-11-07T16:33:38.144Z",
+      "githubPath": "logos/z7085121749220-c83d918f22452e1f42f4482f2e22fb03-1762533214121.jpg",
+      "githubSha": "5e43780debe668458d08d0b2c521eb186088b74d"
+    },
+    {
+      "id": "z7085121748382-2e70b519ccb0599d9938ad438aea41f7-1762533218152",
+      "name": "z7085121748382_2e70b519ccb0599d9938ad438aea41f7",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121748382-2e70b519ccb0599d9938ad438aea41f7-1762533218152.jpg",
+      "filename": "z7085121748382-2e70b519ccb0599d9938ad438aea41f7-1762533218152.jpg",
+      "size": 561794,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-07T16:33:41.589Z",
+      "githubPath": "logos/z7085121748382-2e70b519ccb0599d9938ad438aea41f7-1762533218152.jpg",
+      "githubSha": "e7ef7cb5f24cb93b5da58111b48f0885c83c6ea3"
+    },
+    {
+      "id": "z7085121756040-358cffc35564647bef9a6fef40de1c01-1762533221597",
+      "name": "z7085121756040_358cffc35564647bef9a6fef40de1c01",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121756040-358cffc35564647bef9a6fef40de1c01-1762533221597.jpg",
+      "filename": "z7085121756040-358cffc35564647bef9a6fef40de1c01-1762533221597.jpg",
+      "size": 430656,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-07T16:33:45.276Z",
+      "githubPath": "logos/z7085121756040-358cffc35564647bef9a6fef40de1c01-1762533221597.jpg",
+      "githubSha": "fbde9ee1c51f195b9dadb7e530e142d51f5e791b"
+    },
+    {
+      "id": "z7085121758183-3cef29c288a9bfb27eecd7aeeb7a36c9-1762533225284",
+      "name": "z7085121758183_3cef29c288a9bfb27eecd7aeeb7a36c9",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7085121758183-3cef29c288a9bfb27eecd7aeeb7a36c9-1762533225284.jpg",
+      "filename": "z7085121758183-3cef29c288a9bfb27eecd7aeeb7a36c9-1762533225284.jpg",
+      "size": 437338,
+      "type": "image/jpeg",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-07T16:33:48.348Z",
+      "githubPath": "logos/z7085121758183-3cef29c288a9bfb27eecd7aeeb7a36c9-1762533225284.jpg",
+      "githubSha": "bc0510e332b1be51e9232865d138032e08526279"
+    },
+    {
+      "id": "d-342-1762533228352",
+      "name": "dá342",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/d-342-1762533228352.png",
+      "filename": "d-342-1762533228352.png",
+      "size": 513970,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-07T16:33:51.657Z",
+      "githubPath": "logos/d-342-1762533228352.png",
+      "githubSha": "a718f7cf50f5e30fdcbc4d260a3d874e7221981c"
     }
   ],
   "settings": {
@@ -40,7 +92,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-07T16:31:25.912Z",
+  "lastUpdated": "2025-11-07T16:33:52.548Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
