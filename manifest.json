@@ -1,19 +1,32 @@
 {
-  "version": "1.0.1762845075165",
+  "version": "1.0.1762845266552",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "addsymbol-industrialdashboard-1762845071864",
-      "name": "addSymbol_IndustrialDashboard",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/addsymbol-industrialdashboard-1762845071864.png",
-      "filename": "addsymbol-industrialdashboard-1762845071864.png",
-      "size": 120198,
+      "id": "cong-dong-iot-e-ra-fb-en-1762845255892",
+      "name": "Cong-Dong-IoT-E-Ra_FB_EN",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/cong-dong-iot-e-ra-fb-en-1762845255892.png",
+      "filename": "cong-dong-iot-e-ra-fb-en-1762845255892.png",
+      "size": 630895,
       "type": "image/png",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-11T07:11:14.441Z",
-      "githubPath": "logos/addsymbol-industrialdashboard-1762845071864.png",
-      "githubSha": "ef10e36be1bc4b5baf352f5f8dbd0b59d98d5ca2"
+      "uploadedAt": "2025-11-11T07:14:19.672Z",
+      "githubPath": "logos/cong-dong-iot-e-ra-fb-en-1762845255892.png",
+      "githubSha": "43fe6586e0cf5ef6a22006bfd514655f75e80e53"
+    },
+    {
+      "id": "eoh-era-web-banner-1920x800-1-1762845259691",
+      "name": "EoH_ERa_Web-Banner_1920x800-1",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/eoh-era-web-banner-1920x800-1-1762845259691.png",
+      "filename": "eoh-era-web-banner-1920x800-1-1762845259691.png",
+      "size": 733002,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2025-11-11T07:14:26.140Z",
+      "githubPath": "logos/eoh-era-web-banner-1920x800-1-1762845259691.png",
+      "githubSha": "01b768a1a1ba4b07b8043049b12f9ae33d317fbb"
     }
   ],
   "settings": {
@@ -40,7 +53,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-11T07:11:15.165Z",
+  "lastUpdated": "2025-11-11T07:14:26.552Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
