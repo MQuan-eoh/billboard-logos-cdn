@@ -1,45 +1,19 @@
 {
-  "version": "1.0.1762544220347",
+  "version": "1.0.1762830688301",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "addsymbol-industrialdashboard-1762544210110",
-      "name": "addSymbol_IndustrialDashboard",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/addsymbol-industrialdashboard-1762544210110.png",
-      "filename": "addsymbol-industrialdashboard-1762544210110.png",
-      "size": 120198,
+      "id": "2-1762830685168",
+      "name": "2",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/2-1762830685168.png",
+      "filename": "2-1762830685168.png",
+      "size": 136717,
       "type": "image/png",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-07T19:36:52.443Z",
-      "githubPath": "logos/addsymbol-industrialdashboard-1762544210110.png",
-      "githubSha": "ef10e36be1bc4b5baf352f5f8dbd0b59d98d5ca2"
-    },
-    {
-      "id": "cong-dong-iot-e-ra-fb-en-1762544212448",
-      "name": "Cong-Dong-IoT-E-Ra_FB_EN",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/cong-dong-iot-e-ra-fb-en-1762544212448.png",
-      "filename": "cong-dong-iot-e-ra-fb-en-1762544212448.png",
-      "size": 630895,
-      "type": "image/png",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-07T19:36:56.213Z",
-      "githubPath": "logos/cong-dong-iot-e-ra-fb-en-1762544212448.png",
-      "githubSha": "43fe6586e0cf5ef6a22006bfd514655f75e80e53"
-    },
-    {
-      "id": "eoh-era-web-banner-1920x800-1-1762544216218",
-      "name": "EoH_ERa_Web-Banner_1920x800-1",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/eoh-era-web-banner-1920x800-1-1762544216218.png",
-      "filename": "eoh-era-web-banner-1920x800-1-1762544216218.png",
-      "size": 733002,
-      "type": "image/png",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-07T19:36:59.690Z",
-      "githubPath": "logos/eoh-era-web-banner-1920x800-1-1762544216218.png",
-      "githubSha": "01b768a1a1ba4b07b8043049b12f9ae33d317fbb"
+      "uploadedAt": "2025-11-11T03:11:27.583Z",
+      "githubPath": "logos/2-1762830685168.png",
+      "githubSha": "0a4be759b521079f42fbc8cc67ad176c2b8534ee"
     }
   ],
   "settings": {
@@ -66,7 +40,7 @@
     },
     "logoLoopDuration": 7
   },
-  "lastUpdated": "2025-11-07T19:37:00.347Z",
+  "lastUpdated": "2025-11-11T03:11:28.301Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
