@@ -1,23 +1,37 @@
 {
-  "version": "1.0.1762338688063",
+  "version": "1.0.0",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "channels4-profile-1762338685210",
-      "name": "channels4_profile",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/channels4-profile-1762338685210.jpg",
-      "filename": "channels4-profile-1762338685210.jpg",
-      "size": 25222,
-      "type": "image/jpeg",
-      "priority": 1,
-      "active": true,
-      "uploadedAt": "2025-11-05T10:31:27.658Z",
-      "githubPath": "logos/channels4-profile-1762338685210.jpg",
-      "githubSha": "64471360ea91fdb23df60ee5d80bbb7253037c61"
+      "id": "logo1",
+      "name": "EoH ERa Web Banner",
+      "url": "https://github.com/MQuan-eoh/billboard-logos-cdn/blob/main/logos/EoH_ERa_Web-Banner_1920x800-1.png",
+      "version": "1.0",
+      "size": "1920x800",
+      "format": "png",
+      "description": "Logo chính EoH ERa"
+    },
+    {
+      "id": "logo2",
+      "name": "Industrial Dashboard Symbol",  
+      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/addSymbol_IndustrialDashboard.png",
+      "version": "1.0",
+      "size": "1920x1080",
+      "format": "png",
+      "description": "Logo Industrial Dashboard"
+    },
+    {
+      "id": "logo3",
+      "name": "Special Event Logo",
+      "url": "https://mquan-eoh.github.io/billboard-logos-cdn/logos/company-logo-3.png",
+      "version": "1.0",
+      "size": "1920x1080",
+      "format": "png",
+      "description": "Logo sự kiện đặc biệt"
     }
   ],
   "settings": {
-    "logoMode": "loop",
+    "logoMode": "scheduled",
     "defaultLogo": "logo1",
     "scheduling": {
       "intervals": [
@@ -37,14 +51,6 @@
           "endTime": "22:00"
         }
       ]
-    },
-    "logoLoopDuration": 10
-  },
-  "lastUpdated": "2025-11-05T10:31:28.063Z",
-  "metadata": {
-    "author": "Admin Web Interface",
-    "description": "Billboard logo manifest",
-    "apiVersion": "v1",
-    "lastModifiedBy": "Admin Web Interface"
+    }
   }
 }

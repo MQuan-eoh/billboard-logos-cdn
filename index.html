@@ -192,67 +192,6 @@
             </p>
           </div>
 
-          <!-- Display Settings Card -->
-          <div class="settings-card">
-            <div class="card-header">
-              <h3 class="card-title">📺 Cài Đặt Hiển Thị</h3>
-              <p class="card-subtitle">
-                Cấu hình cách banner được hiển thị trên billboard
-              </p>
-            </div>
-            <div class="card-body">
-              <div class="settings-form">
-                <div class="form-group">
-                  <label class="form-label">
-                    <span class="label-icon">🔄</span>
-                    <span class="label-text">Chế độ hiển thị</span>
-                  </label>
-                  <select class="form-input select-input" id="displayMode">
-                    <option value="loop">
-                      🔁 Xoay vòng (Loop) - Tự động chuyển banner theo thời gian
-                    </option>
-                    <option value="fixed">
-                      📌 Cố định (Fixed) - Hiển thị một banner duy nhất
-                    </option>
-                    <option value="scheduled">
-                      📅 Theo lịch (Scheduled) - Hiển thị theo lịch trình
-                    </option>
-                  </select>
-                  <div class="input-hint">
-                    Lựa chọn chế độ hiển thị banner trên billboard
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label">
-                    <span class="label-icon">⏱️</span>
-                    <span class="label-text">Thời gian xoay (giây)</span>
-                  </label>
-                  <div class="input-wrapper">
-                    <input
-                      type="number"
-                      class="form-input"
-                      id="loopDuration"
-                      value="10"
-                      min="1"
-                      max="60"
-                    />
-                    <span class="input-unit">giây</span>
-                  </div>
-                  <div class="input-hint">
-                    Khoảng thời gian giữa các lần chuyển banner (từ 1 đến 60
-                    giây)
-                  </div>
-                </div>
-
-                <button class="btn btn-primary btn-lg" onclick="syncSettings()">
-                  <span class="btn-icon">💾</span>
-                  <span class="btn-text">Lưu & Đồng Bộ Cài Đặt</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
           <!-- App Control Card -->
           <div class="settings-card">
             <div class="card-header">
@@ -353,48 +292,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Device Information Card - NEW -->
-          <div class="settings-card">
-            <div class="card-header">
-              <h3 class="card-title">� Thông Tin Thiết Bị</h3>
-              <p class="card-subtitle">
-                Trạng thái và thông tin của billboard display
-              </p>
-            </div>
-            <div class="card-body">
-              <div class="device-info-grid">
-                <div class="device-info-item">
-                  <div class="info-label">Phiên Bản Hiện Tại</div>
-                  <div class="info-value" id="currentDeviceVersion">
-                    Đang tải...
-                  </div>
-                </div>
-                <div class="device-info-item">
-                  <div class="info-label">ID Thiết Bị</div>
-                  <div class="info-value" id="deviceId">Chưa kết nối</div>
-                </div>
-                <div class="device-info-item">
-                  <div class="info-label">Trạng Thái MQTT</div>
-                  <div class="info-value" id="deviceMqttStatus">
-                    <span class="status-indicator offline"></span>
-                    Chưa kết nối
-                  </div>
-                </div>
-                <div class="device-info-item">
-                  <div class="info-label">Lần Cập Nhật Cuối</div>
-                  <div class="info-value" id="lastUpdateTime">Chưa có</div>
-                </div>
-              </div>
-              <button
-                class="btn btn-outline btn-sm"
-                onclick="refreshDeviceInfo()"
-              >
-                <span class="btn-icon">🔄</span>
-                <span class="btn-text">Làm Mới</span>
-              </button>
-            </div>
-          </div>
         </section>
       </main>
 
@@ -424,6 +321,92 @@
       </div>
     </div>
 
+    <!-- Display Settings Modal -->
+    <div class="modal" id="displaySettingsModal" style="display: none">
+      <div class="modal-content glass-panel">
+        <div class="modal-header">
+          <h3 class="modal-title">📺 Cài Đặt Hiển Thị Banner</h3>
+          <button class="modal-close" onclick="closeDisplaySettingsModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-form">
+            <div class="form-group">
+              <label class="form-label">
+                <span class="label-icon">🔄</span>
+                <span class="label-text">Chế độ hiển thị</span>
+              </label>
+              <select class="form-input select-input" id="modalDisplayMode">
+                <option value="loop">
+                  🔁 Xoay vòng (Loop) - Tự động chuyển banner theo thời gian
+                </option>
+                <option value="fixed">
+                  📌 Cố định (Fixed) - Hiển thị một banner duy nhất
+                </option>
+                <option value="scheduled">
+                  📅 Theo lịch (Scheduled) - Hiển thị theo lịch trình
+                </option>
+              </select>
+              <div class="input-hint">
+                Lựa chọn chế độ hiển thị banner trên billboard
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span class="label-icon">⏱️</span>
+                <span class="label-text">Thời gian xoay (giây)</span>
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  class="form-input"
+                  id="modalLoopDuration"
+                  value="10"
+                  min="1"
+                  max="60"
+                />
+                <span class="input-unit">giây</span>
+              </div>
+              <div class="input-hint">
+                Khoảng thời gian giữa các lần chuyển banner (từ 1 đến 60 giây)
+              </div>
+            </div>
+
+            <div
+              class="form-group"
+              id="scheduledOptionsGroup"
+              style="display: none"
+            >
+              <label class="form-label">
+                <span class="label-icon">📅</span>
+                <span class="label-text">Cài đặt lịch trình</span>
+              </label>
+              <div class="input-hint">
+                Tính năng này sẽ được phát triển trong phiên bản tiếp theo
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="closeDisplaySettingsModal()"
+          >
+            Bỏ qua
+          </button>
+          <button
+            class="btn btn-primary btn-lg"
+            onclick="saveDisplaySettingsAndClose()"
+          >
+            <span class="btn-icon">💾</span>
+            <span class="btn-text">Lưu & Áp Dụng</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Toast Notifications -->
     <div class="toast-container" id="toastContainer"></div>
 
@@ -441,5 +424,99 @@
     <script src="config.js"></script>
     <script src="app.js"></script>
     <script src="test-github-upload.js"></script>
+
+    <!-- Display Settings Modal Logic -->
+    <script>
+      // Function to show display settings modal after successful upload
+      function showDisplaySettingsModal() {
+        const modal = document.getElementById("displaySettingsModal");
+        if (modal) {
+          // Copy current settings from main form if available
+          const currentDisplayMode = document.getElementById("displayMode");
+          const currentLoopDuration = document.getElementById("loopDuration");
+          const modalDisplayMode = document.getElementById("modalDisplayMode");
+          const modalLoopDuration =
+            document.getElementById("modalLoopDuration");
+
+          if (currentDisplayMode && modalDisplayMode) {
+            modalDisplayMode.value = currentDisplayMode.value;
+          }
+          if (currentLoopDuration && modalLoopDuration) {
+            modalLoopDuration.value = currentLoopDuration.value;
+          }
+
+          modal.style.display = "flex";
+          document.body.style.overflow = "hidden"; // Prevent background scrolling
+        }
+      }
+
+      // Function to close display settings modal
+      function closeDisplaySettingsModal() {
+        const modal = document.getElementById("displaySettingsModal");
+        if (modal) {
+          modal.style.display = "none";
+          document.body.style.overflow = "auto"; // Restore scrolling
+        }
+      }
+
+      // Function to save settings and close modal
+      function saveDisplaySettingsAndClose() {
+        const modalDisplayMode = document.getElementById("modalDisplayMode");
+        const modalLoopDuration = document.getElementById("modalLoopDuration");
+
+        // Copy values back to main form (if it exists)
+        const currentDisplayMode = document.getElementById("displayMode");
+        const currentLoopDuration = document.getElementById("loopDuration");
+
+        if (modalDisplayMode && currentDisplayMode) {
+          currentDisplayMode.value = modalDisplayMode.value;
+        }
+        if (modalLoopDuration && currentLoopDuration) {
+          currentLoopDuration.value = modalLoopDuration.value;
+        }
+
+        // Call the original sync function
+        if (typeof syncSettings === "function") {
+          syncSettings();
+        }
+
+        // Show success message
+        if (typeof showToast === "function") {
+          showToast("Cài đặt hiển thị đã được lưu thành công!", "success");
+        }
+
+        // Close modal
+        closeDisplaySettingsModal();
+      }
+
+      // Handle scheduled mode visibility
+      document.addEventListener("DOMContentLoaded", function () {
+        const modalDisplayMode = document.getElementById("modalDisplayMode");
+        const scheduledOptionsGroup = document.getElementById(
+          "scheduledOptionsGroup"
+        );
+
+        if (modalDisplayMode && scheduledOptionsGroup) {
+          modalDisplayMode.addEventListener("change", function () {
+            if (this.value === "scheduled") {
+              scheduledOptionsGroup.style.display = "block";
+            } else {
+              scheduledOptionsGroup.style.display = "none";
+            }
+          });
+        }
+      });
+
+      // Override uploadLogoToGithub function to show modal after success
+      // (We'll need to modify the original function to call showDisplaySettingsModal())
+
+      // Close modal when clicking outside
+      document.addEventListener("click", function (e) {
+        const modal = document.getElementById("displaySettingsModal");
+        if (e.target === modal) {
+          closeDisplaySettingsModal();
+        }
+      });
+    </script>
   </body>
 </html>

@@ -1207,6 +1207,14 @@ function handleGitHubFileSelection(files) {
     `Selected ${githubSelectedFiles.length} valid banner files`,
     "info"
   );
+
+  // Show display settings modal immediately after valid file selection
+  if (
+    githubSelectedFiles.length > 0 &&
+    typeof showDisplaySettingsModal === "function"
+  ) {
+    showDisplaySettingsModal();
+  }
 }
 
 async function testGitHubConnection() {
