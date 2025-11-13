@@ -1,19 +1,19 @@
 {
-  "version": "1.0.1763004233035",
+  "version": "1.0.1763023436518",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "2-1763004230104",
-      "name": "2",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/2-1763004230104.png",
-      "filename": "2-1763004230104.png",
-      "size": 136717,
-      "type": "image/png",
+      "id": "channels4-profile-1763023433976",
+      "name": "channels4_profile",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/channels4-profile-1763023433976.jpg",
+      "filename": "channels4-profile-1763023433976.jpg",
+      "size": 25222,
+      "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2025-11-13T03:23:52.410Z",
-      "githubPath": "logos/2-1763004230104.png",
-      "githubSha": "0a4be759b521079f42fbc8cc67ad176c2b8534ee"
+      "uploadedAt": "2025-11-13T08:43:55.857Z",
+      "githubPath": "logos/channels4-profile-1763023433976.jpg",
+      "githubSha": "64471360ea91fdb23df60ee5d80bbb7253037c61"
     }
   ],
   "settings": {
@@ -40,7 +40,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2025-11-13T03:23:53.035Z",
+  "lastUpdated": "2025-11-13T08:43:56.518Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
