@@ -1,32 +1,84 @@
 {
-  "version": "1.0.1768882786747",
+  "version": "1.0.1768884270315",
   "lastModified": "2024-10-27T10:00:00Z",
   "logos": [
     {
-      "id": "z7448916207550-3e7d3a273a02b93786c355713ea64c8d-1768882781248",
+      "id": "z7448916207550-3e7d3a273a02b93786c355713ea64c8d-1768884253429",
       "name": "z7448916207550_3e7d3a273a02b93786c355713ea64c8d",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7448916207550-3e7d3a273a02b93786c355713ea64c8d-1768882781248.jpg",
-      "filename": "z7448916207550-3e7d3a273a02b93786c355713ea64c8d-1768882781248.jpg",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/z7448916207550-3e7d3a273a02b93786c355713ea64c8d-1768884253429.jpg",
+      "filename": "z7448916207550-3e7d3a273a02b93786c355713ea64c8d-1768884253429.jpg",
       "size": 78168,
       "type": "image/jpeg",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2026-01-20T04:19:43.657Z",
-      "githubPath": "logos/z7448916207550-3e7d3a273a02b93786c355713ea64c8d-1768882781248.jpg",
+      "uploadedAt": "2026-01-20T04:44:15.864Z",
+      "githubPath": "logos/z7448916207550-3e7d3a273a02b93786c355713ea64c8d-1768884253429.jpg",
       "githubSha": "c6a30c5bfbad38c57b21e2f209719f6aa7179bd1"
     },
     {
-      "id": "powermon-chart-ha-8be19683e98e02b63d4532a91f8f9426-1768882783659",
-      "name": "powermon_chart_ha-8be19683e98e02b63d4532a91f8f9426",
-      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/powermon-chart-ha-8be19683e98e02b63d4532a91f8f9426-1768882783659.png",
-      "filename": "powermon-chart-ha-8be19683e98e02b63d4532a91f8f9426-1768882783659.png",
-      "size": 88491,
+      "id": "book-1768884255866",
+      "name": "book",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/book-1768884255866.png",
+      "filename": "book-1768884255866.png",
+      "size": 15195,
       "type": "image/png",
       "priority": 1,
       "active": true,
-      "uploadedAt": "2026-01-20T04:19:46.428Z",
-      "githubPath": "logos/powermon-chart-ha-8be19683e98e02b63d4532a91f8f9426-1768882783659.png",
-      "githubSha": "176f148f7453fde990fb3a8b122569c17270091e"
+      "uploadedAt": "2026-01-20T04:44:17.730Z",
+      "githubPath": "logos/book-1768884255866.png",
+      "githubSha": "431128ab667f10a03ae75ff4c89ef79c4dbf9939"
+    },
+    {
+      "id": "pump-energy-monitoring-1768884257735",
+      "name": "pump energy monitoring",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/pump-energy-monitoring-1768884257735.png",
+      "filename": "pump-energy-monitoring-1768884257735.png",
+      "size": 139045,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2026-01-20T04:44:20.198Z",
+      "githubPath": "logos/pump-energy-monitoring-1768884257735.png",
+      "githubSha": "19ea692ab9d0bb3a07418779a0864390695b1e71"
+    },
+    {
+      "id": "plant-asset-monitoing-1-1768884260216",
+      "name": "plant asset monitoing (1)",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/plant-asset-monitoing--1--1768884260216.png",
+      "filename": "plant-asset-monitoing--1--1768884260216.png",
+      "size": 216194,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2026-01-20T04:44:23.525Z",
+      "githubPath": "logos/plant-asset-monitoing--1--1768884260216.png",
+      "githubSha": "faae3563b53b1b256233970c27fb5705b684e2d7"
+    },
+    {
+      "id": "energy-monitoring-1768884263646",
+      "name": "energy-monitoring",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/energy-monitoring-1768884263646.png",
+      "filename": "energy-monitoring-1768884263646.png",
+      "size": 396224,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2026-01-20T04:44:26.579Z",
+      "githubPath": "logos/energy-monitoring-1768884263646.png",
+      "githubSha": "9dbe86d8b7d8b91b47eb483157cb06df70ceadd5"
+    },
+    {
+      "id": "screenshot-2021-12-03-at-10-52-20-1768884266586",
+      "name": "screenshot-2021-12-03-at-10-52-20",
+      "url": "https://raw.githubusercontent.com/MQuan-eoh/billboard-logos-cdn/main/logos/screenshot-2021-12-03-at-10-52-20-1768884266586.png",
+      "filename": "screenshot-2021-12-03-at-10-52-20-1768884266586.png",
+      "size": 335538,
+      "type": "image/png",
+      "priority": 1,
+      "active": true,
+      "uploadedAt": "2026-01-20T04:44:29.968Z",
+      "githubPath": "logos/screenshot-2021-12-03-at-10-52-20-1768884266586.png",
+      "githubSha": "a65d0a849d35ab5e563cc0b1380f9b8be0c0fac2"
     }
   ],
   "settings": {
@@ -53,7 +105,7 @@
     },
     "logoLoopDuration": 10
   },
-  "lastUpdated": "2026-01-20T04:19:46.747Z",
+  "lastUpdated": "2026-01-20T04:44:30.315Z",
   "metadata": {
     "author": "Admin Web Interface",
     "description": "Billboard logo manifest",
